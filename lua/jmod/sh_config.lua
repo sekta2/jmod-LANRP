@@ -121,6 +121,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			ChangePitchWithHostTimeScale = true,
 			AllowActiveItemsInInventory = false,
 			SeasonalEventsEnabled = false
+			InventorySizeMult = 1
 		},
 		FoodSpecs = {
 			DigestSpeed = 1,
