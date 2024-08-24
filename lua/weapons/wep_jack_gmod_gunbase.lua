@@ -5,7 +5,7 @@ SWEP.AdminOnly = false
 ----
 SWEP.Trivia_Class = "Freedom Gun"
 SWEP.Trivia_Desc = "Gun that maintains a healty amount of freedom, or tyranny, depending on the user"
-SWEP.Trivia_Manufacturer = "Jackarunda Industries and Company"
+SWEP.Trivia_Manufacturer = "LANRP INDUSTRIES and Company"
 SWEP.Trivia_Calibre = "50 cal."
 SWEP.Trivia_Mechanism = "Patriotism"
 SWEP.Trivia_Country = "'Murica"

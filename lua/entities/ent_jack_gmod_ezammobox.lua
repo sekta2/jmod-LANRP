@@ -113,7 +113,7 @@ elseif CLIENT then
 			local Up, Right, Forward, Ammo = Ang:Up(), Ang:Right(), Ang:Forward(), tostring(self:GetCount())
 			Ang:RotateAroundAxis(Up, 180)
 			cam.Start3D2D(Pos + Up * 4.1 + Right * 5, Ang, .019)
-			draw.SimpleText("JACKARUNDA INDUSTRIES", "JMod-Stencil-MS", 0, 340, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("LANRP INDUSTRIES", "JMod-Stencil-MS", 0, 340, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(self.PrintName, "JMod-Stencil-MS", 0, 390, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(Ammo .. " COUNT", "JMod-Stencil-MS", 0, 440, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			---

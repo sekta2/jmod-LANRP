@@ -120,7 +120,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			NiceFire = true,
 			ChangePitchWithHostTimeScale = true,
 			AllowActiveItemsInInventory = false,
-			SeasonalEventsEnabled = false
+			SeasonalEventsEnabled = false,
 			InventorySizeMult = 1
 		},
 		FoodSpecs = {
@@ -151,7 +151,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					}
 				},]]
 				["armor"] = {
-					description = "A random collection of armor*.\n\n *Jackarunda Industries outsources package sorting. We are not liable for any unusual items.",
+					description = "A random collection of armor*.\n\n *LANRP INDUSTRIES outsources package sorting. We are not liable for any unusual items.",
 					category = "Apparel",
 					JBuxPrice = 300,
 					results = {

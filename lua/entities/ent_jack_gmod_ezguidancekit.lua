@@ -93,7 +93,7 @@ elseif CLIENT then
 			Ang:RotateAroundAxis(Ang:Forward(), 180)
 			Ang:RotateAroundAxis(Ang:Up(), -90)
 			cam.Start3D2D(Pos + Forward * 2.6 + Up * 9, Ang, .02)
-			draw.SimpleText("JACKARUNDA INDUSTRIES", "JMod-Stencil", 0, 0, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("LANRP INDUSTRIES", "JMod-Stencil", 0, 0, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText("EZ BOMB GUIDANCE KIT", "JMod-Stencil", 0, 50, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			cam.End3D2D()
 		end

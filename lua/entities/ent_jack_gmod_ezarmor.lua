@@ -136,7 +136,7 @@ elseif CLIENT then
 			local Up, Right, Forward, TxtCol = Ang:Up(), Ang:Right(), Ang:Forward(), Color(0, 0, 0, 220)
 			Ang:RotateAroundAxis(Ang:Up(), 90)
 			cam.Start3D2D(Pos + Up * 4.3 - Right * 2 + Forward * 6, Ang, .03)
-			draw.SimpleText("JACKARUNDA INDUSTRIES", "JMod-Stencil", 0, 0, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("LANRP INDUSTRIES", "JMod-Stencil", 0, 0, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(Label, "JMod-Stencil", 0, 100, TxtCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			cam.End3D2D()
 		end

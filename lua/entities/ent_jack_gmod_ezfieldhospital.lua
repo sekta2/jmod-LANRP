@@ -488,7 +488,7 @@ elseif(CLIENT)then
 				local ElecFrac = self:GetElectricity() / self.MaxElectricity
 				local R, G, B = JMod.GoodBadColor(ElecFrac)
 				cam.Start3D2D(BasePos + Up * 22 + Right * 22 + Forward * 21, DisplayAng, .08)
-				draw.SimpleTextOutlined("Jackarunda Industries", "JMod-Display", 0, 0, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
+				draw.SimpleTextOutlined("LANRP INDUSTRIES", "JMod-Display", 0, 0, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("POWER " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", 0, 40, Color(R, G, B, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("SUPPLIES " .. self:GetSupplies() .. "/" .. self.MaxSupplies * JMod.EZ_GRADE_BUFFS[Grade], "JMod-Display", 0, 80, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				cam.End3D2D()
