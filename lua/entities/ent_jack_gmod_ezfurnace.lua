@@ -11,7 +11,6 @@ ENT.Base = "ent_jack_gmod_ezmachine_base"
 ENT.Model = "models/jmod/machines/gas_smelter.mdl"
 ENT.Mass = 750
 ENT.SpawnHeight = 10
-ENT.EZcolorable = true
 ---
 ENT.EZconsumes = {
 	JMod.EZ_RESOURCE_TYPES.BASICPARTS,
@@ -224,7 +223,7 @@ if(SERVER)then
 				else
 					self.LastOreTime = Time
 					local OreConsumeAmt = GradeBuff ^ 2
-					local MetalProduceAmt = GradeBuff ^ 2 * JMod.SmeltingTable[OreTyp][2]
+					local MetalProduceAmt = (GradeBuff ^ 2 * JMod.SmeltingTable[OreTyp][2]) * 1.7
 					self:SetOre(self:GetOre() - OreConsumeAmt)
 					self:SetProgress(self:GetProgress() + MetalProduceAmt)
 					if self:GetProgress() >= 100 then
@@ -248,7 +247,7 @@ if(SERVER)then
 			local Tr=util.QuickTrace(self:GetPos(), Vector(0, 0, 9e9), self)
 			if not (Tr.HitSky) then
 				for i = 1, 1 do
-					local Gas = ents.Create("ent_jack_gmod_ezcoparticle")
+					local Gas = ents.Create("ent_jack_gmod_ezgasparticle")
 					Gas:SetPos(self:GetPos() + Vector(0, 0, 100))
 					JMod.SetEZowner(Gas, self.EZowner)
 					Gas:SetDTBool(0, true)

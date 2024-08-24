@@ -16,7 +16,6 @@ ENT.EZconsumes={
     JMod.EZ_RESOURCE_TYPES.BASICPARTS,
 	JMod.EZ_RESOURCE_TYPES.MEDICALSUPPLIES
 }
-ENT.EZcolorable = true
 -- Config --
 ENT.StaticPerfSpecs={
 	MaxDurability=100

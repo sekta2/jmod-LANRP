@@ -93,6 +93,7 @@ if SERVER then
 	end
 
 	local function SpawnItem(itemClass, pos, owner, resourceAmt)
+		--print(itemClass)
 		local ItemNameParts = string.Explode(" ", itemClass)
 
 		if ItemNameParts and ItemNameParts[1] == "FUNC" then
@@ -101,10 +102,19 @@ if SERVER then
 			end
 		else
 			local Yay = ents.Create(itemClass)
-			Yay:SetPos(pos + VectorRand() * math.Rand(0, 30))
 			Yay:SetAngles(VectorRand():Angle())
 			Yay:Spawn()
 			Yay:Activate()
+
+			local tr = util.TraceHull( {
+				start = pos,
+				endpos = pos + Vector(0, 0, 128),
+				mins = Yay:OBBMins(),
+				maxs = Yay:OBBMaxs(),
+				mask = MASK_SHOT_HULL
+			} )
+
+			Yay:SetPos(tr.HitPos)
 
 			if resourceAmt then
 				Yay:SetResource(resourceAmt)

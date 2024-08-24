@@ -115,6 +115,8 @@ if SERVER then
 				if self.EZbuoyancy then
 					Phys:SetBuoyancyRatio(self.EZbuoyancy)
 				end
+
+				self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
 			end
 		end)
 

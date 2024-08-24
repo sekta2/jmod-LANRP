@@ -69,7 +69,7 @@ JMod.EZ_RESOURCE_TYPES = {
 
 JMod.PrimitiveResourceTypes = {
 	["wood"] = { JMod.EZ_RESOURCE_TYPES.WOOD },
-	["metal"] = { JMod.EZ_RESOURCE_TYPES.ALUMINUM, JMod.EZ_RESOURCE_TYPES.COPPER, JMod.EZ_RESOURCE_TYPES.STEEL },
+	["metal"] = {JMod.EZ_RESOURCE_TYPES.COPPER, JMod.EZ_RESOURCE_TYPES.STEEL },
 	["rock"] = { JMod.EZ_RESOURCE_TYPES.CONCRETE, JMod.EZ_RESOURCE_TYPES.CERAMIC }
 }
 
@@ -161,6 +161,11 @@ JMod.EZ_RESOURCE_TYPE_METHODS = {
 	[JMod.EZ_RESOURCE_TYPES.CONCRETE] = "Concrete"
 }
 
+JMod.EZ_WEIGHTLESS_RESOURCE_TYPES = {
+	[JMod.EZ_RESOURCE_TYPES.POWER] = true,
+	[JMod.EZ_RESOURCE_TYPES.ANTIMATTER] = true
+}
+
 -- EZ item quality grade (upgrade level) definitions
 JMod.EZ_GRADE_BASIC = 1
 JMod.EZ_GRADE_COPPER = 2
@@ -188,7 +193,6 @@ JMod.EZ_STATE_WARNING = 5
 
 JMod.EZ_HAZARD_PARTICLES = {
 	["ent_jack_gmod_ezcsparticle"] = {JMod.EZ_RESOURCE_TYPES.CHEMICALS, .2},
-	["ent_jack_gmod_ezcoparticle"] = {JMod.EZ_RESOURCE_TYPES.CHEMICALS, 0},
 	["ent_jack_gmod_ezgasparticle"] = {JMod.EZ_RESOURCE_TYPES.CHEMICALS, .5},
 	["ent_jack_gmod_ezvirusparticle"] = {JMod.EZ_RESOURCE_TYPES.CHEMICALS, .1},
 	["ent_jack_gmod_ezfalloutparticle"] = {JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL, .2}
@@ -342,7 +346,7 @@ for i, f in pairs(file.Find("jmod/*.lua", "LUA")) do
 	end
 end
 
-local PrimitiveBenchReqs = {[JMod.EZ_RESOURCE_TYPES.WOOD] = 25, [JMod.EZ_RESOURCE_TYPES.CERAMIC] = 15, [JMod.EZ_RESOURCE_TYPES.ALUMINUM] = 8}
+local PrimitiveBenchReqs = {[JMod.EZ_RESOURCE_TYPES.WOOD] = 25, [JMod.EZ_RESOURCE_TYPES.CERAMIC] = 15, [JMod.EZ_RESOURCE_TYPES.STEEL] = 8}
 
 local Handcraft = function(ply, cmd, args)
 	local Pos = ply:GetPos()

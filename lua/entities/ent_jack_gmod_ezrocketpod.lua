@@ -9,7 +9,6 @@ ENT.Spawnable = true
 ENT.AdminSpawnable = false
 ---
 ENT.JModPreferredCarryAngles = Angle(0, -90, 0)
-ENT.EZcolorable = true
 ENT.EZlowFragPlease = true
 ENT.EZbuoyancy = .3
 ENT.RocketDisplaySpecs = {
@@ -70,7 +69,7 @@ if SERVER then
 		local phys = self:GetPhysicsObject()
 		timer.Simple(.01, function()
 			if IsValid(phys) then
-				phys:SetMass(150)
+				phys:SetMass(50)
 				phys:Wake()
 				phys:EnableDrag(false)
 				phys:SetBuoyancyRatio(self.EZbuoyancy)
@@ -154,7 +153,7 @@ if SERVER then
 	end
 
 	function ENT:LoadRocket(rocket)
-		if not (IsValid(rocket) and rocket:IsPlayerHolding() or JMod.Config.ResourceEconomy.ForceLoadAllResources) then return end
+		if not (IsValid(rocket)) then return end
 		local RoomLeft = 6 - #self.Rockets
 
 		if RoomLeft > 0 then

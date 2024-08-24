@@ -29,7 +29,7 @@ if SERVER then
 	concommand.Add("jmod_debug_cluster_minelayer", function(ply, cmd, args, argStr)
 		if not JMod.IsAdmin(ply) then return end
 		local SpawnPos = ply:GetEyeTrace().HitPos + Vector(0, 0, 5000)
-		local Bomb = ents.Create("ent_jack_gmod_ezclusterminebomb")
+		local Bomb = ents.Create("ent_jack_gmod_ezbigbomb")
 		Bomb:SetPos(SpawnPos)
 		JMod.SetEZowner(Bomb, ply)
 		Bomb:Spawn()

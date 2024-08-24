@@ -58,7 +58,7 @@ if SERVER then
 		---
 		self:SetState(STATE_OFF)
 		self.NextDet = 0
-		self.FuelLeft = 100
+		self.FuelLeft = 30
 
 		if istable(WireLib) then
 			self.Inputs = WireLib.CreateInputs(self, {"Detonate", "Arm", "Launch"}, {"Directly detonates rocket", "Arms rocket", "Launches rocket"})

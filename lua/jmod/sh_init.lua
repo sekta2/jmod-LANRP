@@ -66,14 +66,9 @@ end
 --
 function JMod.PlayersCanComm(listener, talker)
 	if listener == talker then return true end
-
-	if engine.ActiveGamemode() == "sandbox" then
-		return talker.JModFriends and table.HasValue(talker.JModFriends, listener)
-	else
-		if talker.JModFriends and table.HasValue(talker.JModFriends, listener) then return true end
-
-		return listener:Team() == talker:Team()
-	end
+	if talker.JModFriends and table.HasValue(talker.JModFriends, listener) then return true end
+	
+	return listener:Team() == talker:Team()
 end
 
 ---

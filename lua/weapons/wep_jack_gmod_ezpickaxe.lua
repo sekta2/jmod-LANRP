@@ -40,7 +40,7 @@ SWEP.WElements = {
 --
 SWEP.DropEnt = "ent_jack_gmod_ezpickaxe"
 --
-SWEP.HitDistance		= 50
+SWEP.HitDistance		= 70
 SWEP.HitInclination		= 5
 SWEP.HitPushback		= 1000
 SWEP.MaxSwingAngle		= 120

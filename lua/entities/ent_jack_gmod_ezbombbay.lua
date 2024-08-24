@@ -115,12 +115,14 @@ if SERVER then
 
 			if ent.EZbombBaySize then
 				self:LoadBomb(ent)
+			else
+				
 			end
 		end
 	end
 
 	function ENT:LoadBomb(bomb)
-		if not (IsValid(bomb) and bomb:IsPlayerHolding() or JMod.Config.ResourceEconomy.ForceLoadAllResources) then return end
+		if not IsValid(bomb) then return end
 		local RoomLeft = 100
 
 		for k, bombInfo in pairs(self.Bombs) do

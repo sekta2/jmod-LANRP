@@ -15,7 +15,6 @@ ENT.Mat="models/mat_jack_gmod_groundscanner"
 ENT.Mass=200
 ---
 ENT.JModPreferredCarryAngles=Angle(-90,180,0)
-ENT.EZcolorable = true
 ENT.PhysMatDetectionWhitelist={
 	"metal",
 	"metalvehicle",
@@ -53,8 +52,8 @@ if(SERVER)then
 		---
 		self:SetProgress(0)
 		self.Snd1=CreateSound(self,"snds_jack_gmod/40hz_sine1.wav")
-		self.Snd2=CreateSound(self,"snds_jack_gmod/40hz_sine2.wav")
-		self.Snd3=CreateSound(self,"snds_jack_gmod/40hz_sine3.wav")
+		self.Snd2=CreateSound(self,"snds_jack_gmod/40hz_sine1.wav")
+		self.Snd3=CreateSound(self,"snds_jack_gmod/40hz_sine1.wav")
 		self.Snd1:SetSoundLevel(100)
 		self.Snd2:SetSoundLevel(100)
 		self.Snd3:SetSoundLevel(100)

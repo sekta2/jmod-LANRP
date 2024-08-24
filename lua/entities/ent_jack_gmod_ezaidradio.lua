@@ -13,7 +13,6 @@ ENT.Model="models/props_phx/oildrum001_explosive.mdl"
 ENT.Mat="models/mat_jack_gmod_ezradio"
 ENT.Mass=150
 ----
-ENT.EZcolorable = true
 ENT.JModPreferredCarryAngles=Angle(0,0,0)
 ENT.SpawnHeight=20
 ENT.EZradio = true
@@ -121,6 +120,8 @@ if(SERVER)then
 						self:Connect(activator, true)
 					end
 				else
+					if activator:GetSquadID() != self.EZowner:GetSquadID() then return end
+					
 					self:TurnOff()
 					JMod.Hint(activator, "toggle")
 				end
@@ -196,12 +197,12 @@ if(SERVER)then
 	end
 
 	function ENT:Connect(ply, reassign)
-		local Team = 0
+		local Team = -1
 		if IsValid(ply) then
-			if engine.ActiveGamemode() == "sandbox" and ply:Team() == TEAM_UNASSIGNED then
+			if ply:GetSquadID() == -1 then
 				Team = ply:AccountID()
 			else
-				Team = ply:Team()
+				Team = ply:GetSquadID()
 			end
 		end
 
@@ -238,22 +239,22 @@ if(SERVER)then
 				self:ConsumeElectricity()
 
 				if self:TryFindSky() then
-					self:Speak("Attempting to establish comm line...")
+					self:Speak("Broadcast received, establishing comm line...")
 					self:Connect(self.EZowner)
 				else
 					JMod.Hint(JMod.GetEZowner(self), "aid sky")
 				end
 				self.ConnectionAttempts = self.ConnectionAttempts + 1
 
-				if self.ConnectionAttempts > 3 then
-					self:Speak("Can not establish connection to any outpost. Shutting down.")
+					if self.ConnectionAttempts > 3 then
+						self:Speak("Can not establish connection to any outpost. Shutting down.")
 
-					timer.Simple(1.2, function()
-						if IsValid(self) then
-							self:TurnOff()
-						end
-					end)
-				end
+						timer.Simple(1.2, function()
+							if IsValid(self) then
+								self:TurnOff()
+							end
+						end)
+					end
 			elseif State > 0 then
 				self:ConsumeElectricity(0.3)
 
@@ -289,15 +290,14 @@ if(SERVER)then
 	end
 
 	function ENT:TryFindSky()
-		local TestPos = self:LocalToWorld(Vector(10, 0, 45))
+		local SelfPos = self:LocalToWorld(Vector(10, 0, 45))
 
 		for i = 1, 3 do
 			local Dir = self:LocalToWorldAngles(Angle(-50 + i * 5, 0, 0)):Forward()
 
-			--debugoverlay.Line(TestPos, TestPos + Dir * 9e9, 2, Color(0, 89, 255), true)
 			local HitSky = util.TraceLine({
-				start = TestPos,
-				endpos = TestPos + Dir * 9e9,
+				start = SelfPos,
+				endpos = SelfPos + Dir * 9e9,
 				filter = {self},
 				mask = MASK_OPAQUE
 			}).HitSky
@@ -324,14 +324,14 @@ if(SERVER)then
 		local Allies = (self.EZowner and self.EZowner.JModFriends) or {}
 		if table.HasValue(Allies, ply) then return true end
 
-		if not (engine.ActiveGamemode() == "sandbox" and ply:Team() == TEAM_UNASSIGNED) then
+		if not (ply:GetSquadID() == -1) then
 			local OurTeam = nil
 
 			if IsValid(self.EZowner) then
-				OurTeam = self.EZowner:Team()
+				OurTeam = self.EZowner:GetSquadID()
 			end
 
-			return (OurTeam and ply:Team() == OurTeam) or false
+			return (OurTeam and ply:GetSquadID() == OurTeam) or false
 		end
 
 		return false

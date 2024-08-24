@@ -41,6 +41,7 @@ if SERVER then
 		self:DrawShadow(true)
 		self:SetUseType(SIMPLE_USE)
 		self:GetPhysicsObject():SetMass(5)
+		self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
 
 		local Phys = self:GetPhysicsObject()
 		timer.Simple(.01, function()

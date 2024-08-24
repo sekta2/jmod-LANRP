@@ -14,7 +14,6 @@ ENT.EZupgradable = true
 ENT.EZcolorable = true
 --
 ENT.JModPreferredCarryAngles = Angle(0, -90, 0)
-ENT.EZcolorable = true
 ENT.Mass = 250
 ENT.SpawnHeight = 1
 --
@@ -118,7 +117,7 @@ if(SERVER)then
 			self.NextResourceThink = Time + 1
 			if State == STATE_ON then
 				local PowerPerMin = 10
-				local PowerToProduce = (PowerPerMin/60) * JMod.EZ_GRADE_BUFFS[Grade]
+				local PowerToProduce = ((PowerPerMin/60) * JMod.EZ_GRADE_BUFFS[Grade]) * 2
 
 				self:SetProgress(self:GetProgress() + PowerToProduce)
 

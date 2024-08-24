@@ -96,9 +96,7 @@ if SERVER then
 			self:SetState(STATE_ON)
 			self:CheckWaterLevel()
 			self.NextUseTime = CurTime() + 1
-			if self.SoundLoop then
-				self.SoundLoop:Stop()
-			end
+			self.SoundLoop:Play()
 		else
 			self:EmitSound("buttons/button2.wav", 60, 100)
 		end
@@ -112,9 +110,7 @@ if SERVER then
 		self:SetState(STATE_OFF)
 		self:SetProgress(0)
 		self.NextUseTime = CurTime() + 1
-		if self.SoundLoop then
-			self.SoundLoop:Stop()
-		end
+		self.SoundLoop:Stop()
 	end
 
 	function ENT:CheckWaterLevel()

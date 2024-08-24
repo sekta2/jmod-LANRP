@@ -462,6 +462,22 @@ local function PopulateItems(parent, items, typ, motherFrame, entity, enableFunc
 					X = X - (32 + 6)
 				end
 			end
+
+			if typ == "selecting" then
+				local X = w - 70 -- let's draw the resources right to left
+				local Txt
+				--PrintTable(items)
+				if itemInfo.JBuxPrice then
+					Txt = itemInfo.JBuxPrice .. "$"
+				else
+					Txt = GAMEMODE:AutoCalcPrice(itemInfo.results, false)  .. "$"
+				end
+				
+				local TxtSize = surface.GetTextSize(Txt)
+
+				--print(AutoCalcPrice(items.results, false))
+				draw.SimpleText(Txt, "ChatFont", X - TxtSize, 12, Color(7, 197, 0), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+			end
 		end
 
 		function Butt:DoClick()
@@ -1008,13 +1024,6 @@ net.Receive("JMod_EZradio", function()
 
 	local Radio = net.ReadEntity()
 	local Orderables = net.ReadTable()
-	JMod.Config.RadioSpecs = {
-		DeliveryTimeMult = 1,
-		ParachuteDragMult = 1,
-		StartingOutpostCount = 1,
-		AvailablePackages = {}
-	}
-	JMod.Config.RadioSpecs.AvailablePackages = Orderables
 
 	if SelectionMenuOpen then return end
 	StandardSelectionMenu('selecting', "EZ Radio", Orderables, Radio, function(name, info, ply, ent)
@@ -1408,6 +1417,8 @@ local function CreateInvButton(parent, itemTable, x, y, w, h, scrollFrame, invEn
 				option.actionFunc(itemTable)
 				if IsValid(parent) then
 					parent:Close()
+
+					--LocalPlayer():ConCommand("jmod_ez_inv")
 				end
 			end
 		end
@@ -1478,6 +1489,7 @@ local function CreateResButton(parent, resourceType, amt, x, y, w, h, scrollFram
 				net.WriteString(resourceType)
 				net.WriteEntity(invEnt)
 			net.SendToServer()
+
 			frame:Close()
 			if IsValid(parent) then
 				parent:Close()
@@ -1863,42 +1875,11 @@ net.Receive("JMod_ModifyConnections", function()
 			SelectButton:SetHeight(22)
 			SelectButton:Dock(BOTTOM)
 			SelectButton.DoClick = function()
-				if v.Func == "disconnect_all" then
-					local ConfirmPopup = vgui.Create("DFrame")
-					ConfirmPopup:SetTitle("Confirm Disconnect All")
-					ConfirmPopup:SetSize(300, 100)
-					ConfirmPopup:Center()
-					ConfirmPopup:MakePopup()
-
-					local ConfirmButton = vgui.Create("DButton", ConfirmPopup)
-					ConfirmButton:SetText("Disconnect All")
-					ConfirmButton:SetHeight(22)
-					ConfirmButton:Dock(BOTTOM)
-					ConfirmButton.DoClick = function()
-						net.Start("JMod_ModifyConnections")
-							net.WriteEntity(Ent)
-							net.WriteString(v.Func)
-							net.WriteEntity(NULL)
-						net.SendToServer()
-						ConfirmPopup:Close()
-					end
-					ConfirmButton:DockPadding(2, 2, 2, 2)
-
-					local CancelButton = vgui.Create("DButton", ConfirmPopup)
-					CancelButton:SetText("Cancel")
-					CancelButton:SetHeight(22)
-					CancelButton:Dock(BOTTOM)
-					CancelButton.DoClick = function()
-						ConfirmPopup:Close()
-					end
-					CancelButton:DockPadding(2, 2, 2, 2)
-				else
-					net.Start("JMod_ModifyConnections")
-						net.WriteEntity(Ent)
-						net.WriteString(v.Func)
-						net.WriteEntity(NULL)
-					net.SendToServer()
-				end
+				net.Start("JMod_ModifyConnections")
+					net.WriteEntity(Ent)
+					net.WriteString(v.Func)
+					net.WriteEntity(NULL)
+				net.SendToServer()
 				Frame:Close()
 			end
 			SelectButton:DockPadding(2, 2, 2, 2)

@@ -55,6 +55,7 @@ if SERVER then
 		self:SetSolid(SOLID_VPHYSICS)
 		self:DrawShadow(true)
 		self:SetUseType(SIMPLE_USE)
+		self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
 		---
 		local Phys = self:GetPhysicsObject()

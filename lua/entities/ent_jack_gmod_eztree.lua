@@ -152,9 +152,9 @@ if(SERVER)then
 				if (Tr.MatType == MAT_GRASS) then
 					Ground = 1
 				elseif (Tr.MatType == MAT_DIRT or Tr.MatType == MAT_SLOSH) then
-					Ground = .5
+					Ground = 1
 				elseif (Tr.MatType == MAT_SAND) then
-					Ground = .25
+					Ground = 1
 				end
 			end
 			--

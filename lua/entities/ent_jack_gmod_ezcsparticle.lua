@@ -27,32 +27,31 @@ if SERVER then
 	function ENT:DamageObj(obj)
 		local Time = CurTime()
 		if obj:IsPlayer() then
-			local inhaleProt, skinProt, eyeProt = JMod.GetArmorBiologicalResistance(obj, DMG_NERVEGAS)
+			local faceProt, skinProt = JMod.GetArmorBiologicalResistance(obj, DMG_NERVEGAS)
 
-			JMod.DepleteArmorChemicalCharge(obj, (inhaleProt + skinProt + eyeProt) * .06)
+			JMod.DepleteArmorChemicalCharge(obj, (faceProt + skinProt) * 4 * .02)
 
-			if eyeProt < 1 then
+			if faceProt < 1 then
 				net.Start("JMod_VisionBlur")
-				net.WriteFloat(5 * math.Clamp(1 - eyeProt, 0, 1))
+				net.WriteFloat(5 * math.Clamp(1 - faceProt, 0, 1))
 				net.WriteFloat(2)
 				net.WriteBit(false)
 				net.Send(obj)
 				JMod.Hint(obj, "tear gas")
-			end
-			if inhaleProt < .75 then
 				JMod.TryCough(obj)
-				if math.random(1, 10) == 1 then
-					local Dmg = DamageInfo()
-					Dmg:SetDamageType(DMG_NERVEGAS)
-					Dmg:SetDamage(math.random(1, 4) * JMod.Config.Particles.PoisonGasDamage)
-					Dmg:SetInflictor(self)
-					Dmg:SetAttacker(JMod.GetEZowner(self))
-					Dmg:SetDamagePosition(obj:GetPos())
-					obj:TakeDamageInfo(Dmg)
-				end
 			end
 		elseif obj:IsNPC() then
 			obj.EZNPCincapacitate = Time + math.Rand(2, 5)
+		end
+
+		if math.random(1, 20) == 1 then
+			local Dmg = DamageInfo()
+			Dmg:SetDamageType(DMG_NERVEGAS)
+			Dmg:SetDamage(math.random(1, 4) * JMod.Config.Particles.PoisonGasDamage)
+			Dmg:SetInflictor(self)
+			Dmg:SetAttacker(JMod.GetEZowner(self))
+			Dmg:SetDamagePosition(obj:GetPos())
+			obj:TakeDamageInfo(Dmg)
 		end
 	end
 
@@ -125,6 +124,8 @@ elseif CLIENT then
 
 		self.NextVisCheck = CurTime() + 6
 		self.DebugShow = LocalPlayer().EZshowGasParticles or false
+		
+		self:SetModelScale(2)
 	end
 
 	function ENT:DrawTranslucent()

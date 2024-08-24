@@ -5,6 +5,8 @@ JMod.NukeFlashIntensity = 1
 JMod.NukeFlashSmokeEndTime = 0
 JMod.Wind = JMod.Wind or Vector(0, 0, 0)
 
+local wf = Material("debug/debugwireframe")
+
 surface.CreateFont("JMod-Display", {
 	font = "Arial",
 	extended = false,
@@ -661,17 +663,30 @@ hook.Add("PostDrawTranslucentRenderables", "JMOD_PLAYEREFFECTS", function(bDepth
 		
 		if ToolBox.EZpreview then
 		 	if ToolBox.EZpreview.Box then
-		 		if ToolBox:GetSelectedBuild() ~= "" then
-		 			local Filter = {ply}
-		 			for k, v in pairs(ents.FindByClass("npc_bullseye")) do
-		 				table.insert(Filter, v)
-		 			end
-		 			local Tr = util.QuickTrace(ply:GetShootPos(), ply:GetAimVector() * 100 * math.Clamp((ToolBox.CurrentBuildSize or 1), .5, 100), Filter)
-		 			-- this trace code ^ is stolen from the toolbox, had to filter out ply to get a correct trace
-		 																																											--HSVToColor( CurTime() * 50 % 360, 1, 1 ) :troll:
-		 			render.DrawWireframeBox(Tr.HitPos + Tr.HitNormal * 20 * (ToolBox.EZpreview.SizeScale or 1), ToolBox.EZpreview.SpawnAngles or Angle(0, ply:EyeAngles().y, 0), ToolBox.EZpreview.Box.mins, ToolBox.EZpreview.Box.maxs, Translucent, true)
-		 		end
+				if ToolBox:GetSelectedBuild() == "Conveyor" then
+					local Filter = {ply, }
+					for k, v in pairs(ents.FindByClass("npc_bullseye")) do
+						table.insert(Filter, v)
+					end
+					local Tr = util.QuickTrace(ply:GetShootPos(), ply:GetAimVector() * 150 * math.Clamp((ToolBox.CurrentBuildSize or 1), .5, 100), Filter)
+					-- this trace code ^ is stolen from the toolbox, had to filter out ply to get a correct trace
+					render.MaterialOverride( wf )
+					//render.SetMaterial(wf)
+					render.Model({model = "models/digaly/conveyorbelt/conveyorbelt.mdl", pos =  Tr.HitPos + Tr.HitNormal * 8, angle = Angle(0, ply:EyeAngles().y , 0) + Angle(90,180,0)})
+					render.MaterialOverride( nil )
+					
+				elseif ToolBox:GetSelectedBuild() ~= "" then
+					local Filter = {ply}
+					for k, v in pairs(ents.FindByClass("npc_bullseye")) do
+						table.insert(Filter, v)
+					end
+					local Tr = util.QuickTrace(ply:GetShootPos(), ply:GetAimVector() * 100 * math.Clamp((ToolBox.CurrentBuildSize or 1), .5, 100), Filter)
+					-- this trace code ^ is stolen from the toolbox, had to filter out ply to get a correct trace
+																																													--HSVToColor( CurTime() * 50 % 360, 1, 1 ) :troll:
+					render.DrawWireframeBox(Tr.HitPos + Tr.HitNormal * 20 * (ToolBox.EZpreview.SizeScale or 1), ToolBox.EZpreview.SpawnAngles or Angle(180, ply:EyeAngles().y, 0), ToolBox.EZpreview.Box.mins, ToolBox.EZpreview.Box.maxs, Translucent, true)
+				end
 
+			
 		 	elseif ToolBox:GetSelectedBuild() == "EZ Nail" then
 		 		local Pos, Vec = ply:GetShootPos(), ply:GetAimVector()
 

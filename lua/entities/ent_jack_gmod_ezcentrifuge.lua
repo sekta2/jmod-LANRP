@@ -154,7 +154,7 @@ if(SERVER)then
 				local UtoConsume = JMod.EZ_GRADE_BUFFS[Grade]
 				local FissileToProduce = FissilePerU * UtoConsume
 				local GasToConsume = UtoConsume * .4
-				local SpeedModifier = JMod.EZ_GRADE_BUFFS[Grade] ^ 2 * .1
+				local SpeedModifier = JMod.EZ_GRADE_BUFFS[Grade] ^ 2
 
 				self:ConsumeUranium(UtoConsume * SpeedModifier)
 				self:ConsumeGas(GasToConsume * SpeedModifier)

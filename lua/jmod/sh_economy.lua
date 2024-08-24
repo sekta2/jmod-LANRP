@@ -11,16 +11,16 @@ JMod.SmeltingTable = {
 		JMod.EZ_RESOURCE_TYPES.ALUMINUM, .5
 	},
 	[JMod.EZ_RESOURCE_TYPES.COPPERORE] = {
-		JMod.EZ_RESOURCE_TYPES.COPPER, .5
+		JMod.EZ_RESOURCE_TYPES.COPPER, 1
 	},
 	[JMod.EZ_RESOURCE_TYPES.TUNGSTENORE] = {
-		JMod.EZ_RESOURCE_TYPES.TUNGSTEN, .4
+		JMod.EZ_RESOURCE_TYPES.TUNGSTEN, .7
 	},
 	[JMod.EZ_RESOURCE_TYPES.TITANIUMORE] = {
-		JMod.EZ_RESOURCE_TYPES.TITANIUM, .4
+		JMod.EZ_RESOURCE_TYPES.TITANIUM, .7
 	},
 	[JMod.EZ_RESOURCE_TYPES.SILVERORE] = {
-		JMod.EZ_RESOURCE_TYPES.SILVER, .3
+		JMod.EZ_RESOURCE_TYPES.SILVER, .7
 	},
 	[JMod.EZ_RESOURCE_TYPES.GOLDORE] = {
 		JMod.EZ_RESOURCE_TYPES.GOLD, .2
@@ -32,7 +32,7 @@ JMod.SmeltingTable = {
 		JMod.EZ_RESOURCE_TYPES.PLATINUM, .2
 	},
 	[JMod.EZ_RESOURCE_TYPES.SAND] = {
-		JMod.EZ_RESOURCE_TYPES.GLASS, .75
+		JMod.EZ_RESOURCE_TYPES.GLASS, 5
 	},
 }
 
@@ -134,7 +134,7 @@ JMod.ResourceDepositInfo = {
 			rock = 2
 		}
 	},
-	[JMod.EZ_RESOURCE_TYPES.LEADORE] = {
+	--[[[JMod.EZ_RESOURCE_TYPES.LEADORE] = {
 		frequency = 7,
 		avgamt = 600,
 		avgsize = 200,
@@ -144,8 +144,8 @@ JMod.ResourceDepositInfo = {
 		boosts = {
 			rock = 2
 		}
-	},
-	[JMod.EZ_RESOURCE_TYPES.ALUMINUMORE] = {
+	},]]
+	--[[[JMod.EZ_RESOURCE_TYPES.ALUMINUMORE] = {
 		frequency = 9,
 		avgamt = 500,
 		avgsize = 200,
@@ -155,7 +155,7 @@ JMod.ResourceDepositInfo = {
 		boosts = {
 			rock = 2
 		}
-	},
+	},]]
 	[JMod.EZ_RESOURCE_TYPES.COPPERORE] = {
 		frequency = 10,
 		avgamt = 500,
@@ -178,7 +178,7 @@ JMod.ResourceDepositInfo = {
 			rock = 2
 		}
 	},
-	[JMod.EZ_RESOURCE_TYPES.TITANIUMORE] = {
+	--[[[JMod.EZ_RESOURCE_TYPES.TITANIUMORE] = {
 		frequency = 4,
 		avgamt = 350,
 		avgsize = 100,
@@ -188,7 +188,7 @@ JMod.ResourceDepositInfo = {
 		boosts = {
 			rock = 2
 		}
-	},
+	},]]
 	[JMod.EZ_RESOURCE_TYPES.SILVERORE] = {
 		frequency = 3,
 		avgamt = 300,
@@ -256,8 +256,8 @@ JMod.ResourceDepositInfo = {
 
 local SalvagingTable = {
 	metalgrate = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .1,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 	},
 	default = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2
@@ -280,8 +280,8 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.WOOD] = .7
 	},
 	metal = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .3,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .5,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2
 	},
 	metal_barrel = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .4
@@ -298,14 +298,14 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .5
 	},
 	metalvehicle = {
-		[JMod.EZ_RESOURCE_TYPES.LEAD] = .05,
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
+		--[JMod.EZ_RESOURCE_TYPES.LEAD] = .05,
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .25,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 		[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .1,
 		[JMod.EZ_RESOURCE_TYPES.COPPER] = .05,
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
 		[JMod.EZ_RESOURCE_TYPES.RUBBER] = .1,
-		[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = .05
+		[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .05
 	},
 	canister = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
@@ -328,9 +328,9 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.WATER] = .3
 	},
 	plastic_box = {
-		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .2,
-		[JMod.EZ_RESOURCE_TYPES.GLASS] = .2,
-		[JMod.EZ_RESOURCE_TYPES.COPPER] = .2
+		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .5,
+		--[JMod.EZ_RESOURCE_TYPES.GLASS] = .2,
+		[JMod.EZ_RESOURCE_TYPES.COPPER] = .5
 	},
 	computer = {
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .2,
@@ -379,13 +379,14 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .3
 	},
 	glassbottle = {
-		[JMod.EZ_RESOURCE_TYPES.GLASS] = .4
+		[JMod.EZ_RESOURCE_TYPES.WATER] = .4,
+		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .2
 	},
 	glass = {
 		[JMod.EZ_RESOURCE_TYPES.GLASS] = .5
 	},
 	popcan = {
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .8
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .8
 	},
 	pottery = {
 		[JMod.EZ_RESOURCE_TYPES.CERAMIC] = .4
@@ -397,8 +398,8 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.CERAMIC] = .4
 	},
 	metalvent = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .1,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
 		[JMod.EZ_RESOURCE_TYPES.PAPER] = .1
 	},
@@ -417,8 +418,8 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .7
 	},
 	weapon = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .1,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 		[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .05,
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
 		[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .2,
@@ -430,7 +431,7 @@ local SalvagingTable = {
 	},
 	jeeptire = {
 		[JMod.EZ_RESOURCE_TYPES.RUBBER] = .3,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2
 	},
 	hay = {
 		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .3
@@ -441,12 +442,12 @@ local SalvagingTable = {
 	solidmetal = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .4,
 		[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .1,
-		[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1
+		--[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1
 	},
 	combine_metal = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .4,
 		[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .1,
-		[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1
+		--[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1
 	},
 	gm_torpedo = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
@@ -482,12 +483,12 @@ local SalvagingTable = {
 	strider = {
 		[JMod.EZ_RESOURCE_TYPES.CERAMIC] = .1,
 		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .1,
-		[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1,
+		--[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1,
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1
 	},
 	slipperymetal = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .3,
-		[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .3
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .6,
+		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .3
 	},
 	chainlink = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .5
@@ -506,7 +507,7 @@ local SalvagingTable = {
 	},
 	grass = {
 		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .5
-	}
+	},
 }
 
 local SpecializedSalvagingTable = {
@@ -550,6 +551,12 @@ local SpecializedSalvagingTable = {
 			}
 		},
 		{
+			substrings = {"primitive_bench"},
+			yield = {
+				[JMod.EZ_RESOURCE_TYPES.WOOD] = .05,
+			}
+		},
+		{
 			substrings = {"machine", "laundry_washer", "engine", "laundry_dryer"},
 			yield = {
 				[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
@@ -569,8 +576,8 @@ local SpecializedSalvagingTable = {
 		{
 			substrings = {"forklift"},
 			yield = {
-				[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
-				[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
+				[JMod.EZ_RESOURCE_TYPES.STEEL] = .3,
+				--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 				[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .1,
 				[JMod.EZ_RESOURCE_TYPES.COPPER] = .05,
 				[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
@@ -595,8 +602,8 @@ local SpecializedSalvagingTable = {
 		{
 			substrings = {"spotlight"},
 			yield = {
-				[JMod.EZ_RESOURCE_TYPES.STEEL] = .1,
-				[JMod.EZ_RESOURCE_TYPES.GLASS] = .5
+				[JMod.EZ_RESOURCE_TYPES.STEEL] = .5,
+				--[JMod.EZ_RESOURCE_TYPES.GLASS] = .5
 			}
 		},
 		{
@@ -626,8 +633,8 @@ local SpecializedSalvagingTable = {
 		{
 			substrings = {"helicopter"},
 			yield = {
-				[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1,
-				[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2,
+				--[JMod.EZ_RESOURCE_TYPES.TITANIUM] = .1,
+				--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2,
 				[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .2,
 				[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = .2,
 				[JMod.EZ_RESOURCE_TYPES.COPPER] = .1
@@ -658,7 +665,7 @@ local SpecializedSalvagingTable = {
 			substrings = {"garbage_plasticbottle"},
 			yield = {
 				[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
-				[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .8
+				[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .9
 			}
 		},
 		{
@@ -689,8 +696,8 @@ local SpecializedSalvagingTable = {
 		{
 			substrings = {"pot"},
 			yield = {
-				[JMod.EZ_RESOURCE_TYPES.STEEL] = .4,
-				[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2,
+				[JMod.EZ_RESOURCE_TYPES.STEEL] = .6,
+				--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2,
 				[JMod.EZ_RESOURCE_TYPES.COPPER] = .1
 			}
 		},
@@ -718,11 +725,18 @@ local SpecializedSalvagingTable = {
 				[JMod.EZ_RESOURCE_TYPES.STEEL] = .7,
 				[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .2,
 			}
-		}
+		},
+		{
+			substrings = {"conveyorbelt"},
+			yield = {
+				[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .06,
+				--[JMod.EZ_RESOURCE_TYPES.STEEL] = .20,
+			}
+		},
 	}
 }
 
-local BlacklistedGroups = {COLLISION_GROUP_DEBRIS, COLLISION_GROUP_WEAPON}
+local BlacklistedGroups = {COLLISION_GROUP_DEBRIS}
 
 function JMod.GetSalvageYield(ent)
 	if not IsValid(ent) then return {}, "" end
@@ -829,6 +843,15 @@ function JMod.GetSalvageYield(ent)
 		end
 	end
 
+	local EZMachine = JMod.Config[ent.PrintName or ""]
+
+	if EZMachine then
+		Results = {}
+		for k, v in pairs(EZMachine.craftingReqs or {}) do
+			Results[k] = v * 0.8
+		end
+	end
+
 	if ent.IsJackyEZmachine then
 		for k, v in pairs(JMod.EZ_RESOURCE_TYPE_METHODS) do
 			local ResourceMethod = ent["Get"..v]
@@ -852,11 +875,11 @@ function JMod.GetSalvageYield(ent)
 		end
 	end
 
-	--[[if ent.JModInv then
+	if ent.JModInv then
 		for k, v in pairs(ent.JModInv.EZresources) do
 			Results[k] = (Results[k] or 0) + v
 		end
-	end--]]
+	end
 
 	local FinalResults, Message = hook.Run("JMod_SalvageResults", ent, Results, Mat, Mdl, Specialized)
 
@@ -1031,8 +1054,8 @@ if SERVER then
 		end
 	end
 	--]]
-	JMod.NatureMats = {[MAT_SNOW]="snow", [MAT_SAND]="sand", [MAT_FOLIAGE]="foliage", [MAT_SLOSH]="slime", [MAT_GRASS]="grass", [MAT_DIRT]="dirt"}
-	JMod.CityMats = {[MAT_CONCRETE]="concrete", [MAT_GLASS]="glass", [MAT_METAL]="metal", [MAT_GRATE]="chainlink", [MAT_TILE]="tile", [MAT_VENT]="metalvent", [MAT_PLASTIC]="plastic"}
+	JMod.NatureMats = {[MAT_SNOW]="snow", [MAT_SAND]="sand", [MAT_FOLIAGE]="foliage", [MAT_SLOSH]="slime", [MAT_GRASS]="grass", [MAT_DIRT]="dirt", [MAT_CONCRETE]="concrete", [MAT_GLASS]="glass", [MAT_METAL]="metal", [MAT_GRATE]="chainlink", [MAT_TILE]="tile", [MAT_VENT]="metalvent", [MAT_PLASTIC]="plastic"}
+	--JMod.CityMats = {[MAT_CONCRETE]="concrete", [MAT_GLASS]="glass", [MAT_METAL]="metal", [MAT_GRATE]="chainlink", [MAT_TILE]="tile", [MAT_VENT]="metalvent", [MAT_PLASTIC]="plastic"}
 
 	local MaxTries, SurfacePropBlacklist, RockNames = 10000, {"paper", "plaster", "rubber", "carpet"}, {"rock", "boulder"}
 
@@ -1298,13 +1321,24 @@ if SERVER then
 	end
 
 	JMod.ScroungeTableItems = {
-		["urban"] = {
+		["rural"] = {
+			["ent_jack_gmod_ezwheatseed"] = 1,
+			["ent_jack_gmod_ezcornkernals"] = 1,
+			["ent_jack_gmod_ezacorn"] = 1.5,
+			["models/jmod_scrounge/logs.mdl"] = 2,
+			["models/props_debris/wood_chunk06a.mdl"] = 3,
+			["models/props_junk/watermelon01.mdl"] = 1,
+			["models/jmod/resources/rock05a.mdl"] = 2,
+			["models/props_junk/rock001a.mdl"] = 1,
+			["models/props_vehicles/car003b_physics.mdl"] = 0.1,
+			["models/props_c17/streetsign004f.mdl"] = 1,
+			["models/items/car_battery01.mdl"] = 0.1,
+
 			["models/props_junk/PopCan01a.mdl"] = 5,
 			["models/props_interiors/furniture_chair01a.mdl"] = 1,
 			["models/nova/chair_wood01.mdl"] = 1,
 			["models/props_junk/cardboard_box004a.mdl"] = 1,
 			["models/props_c17/metalpot002a.mdl"] = 1,
-			["models/props_debris/wood_chunk06a.mdl"] = 1,
 			["models/props_interiors/pot01a.mdl"] = 2,
 			["models/jmod_scrounge/garbage_coffeemug001a_jmod.mdl"] = 1,
 			["models/jmod_scrounge/garbage_glassbottle001a_jmod.mdl"] = 2,
@@ -1328,20 +1362,11 @@ if SERVER then
 			["models/props_wasteland/barricade001a.mdl"] = 1,
 			["models/props_interiors/SinkKitchen01a.mdl"] = 1,
 			["models/props_borealis/mooring_cleat01.mdl"] = 2,
-			["models/items/car_battery01.mdl"] = 0.3
-		},
-		["rural"] = {
-			["ent_jack_gmod_ezwheatseed"] = 1,
-			["ent_jack_gmod_ezcornkernals"] = 1,
-			["ent_jack_gmod_ezacorn"] = 1.5,
-			["models/jmod_scrounge/logs.mdl"] = 2,
-			["models/props_debris/wood_chunk06a.mdl"] = 3,
-			["models/props_junk/watermelon01.mdl"] = 1,
-			["models/jmod/resources/rock05a.mdl"] = 2,
-			["models/props_junk/rock001a.mdl"] = 1,
-			["models/props_vehicles/car003b_physics.mdl"] = 0.1,
-			["models/props_c17/streetsign004f.mdl"] = 1,
-			["models/items/car_battery01.mdl"] = 0.1
+			["models/props_trainstation/payphone_reciever001a.mdl"] = 0.7,
+			["models/props_lab/reciever01a.mdl"] = 0.3,
+			["models/props_lab/reciever01b.mdl"] = 0.3,
+			["models/props_lab/reciever01c.mdl"] = 0.3,
+			["models/props_lab/reciever01d.mdl"] = 0.3,
 		}
 	}
 
@@ -1356,7 +1381,7 @@ if SERVER then
 			if not GetConVar("sv_cheats"):GetBool() then print("JMod: This needs sv_cheats set to 1") return end
 		end
 
-		local Pos, Range = ply:GetShootPos(), 500
+		local Pos, Range = ply:GetShootPos(), 128
 
 		if not(JMod.Config.General.AllowScrounging) and not(Debug) then ply:PrintMessage(HUD_PRINTCENTER, "Scrounging is not allowed") return end
 		if not (Debug) then
@@ -1395,10 +1420,10 @@ if SERVER then
 				if DownTr.Hit then
 					local Mat = DownTr.MatType
 					local IsNatureMat = not not JMod.NatureMats[Mat]
-					local IsCityMat = not not JMod.CityMats[Mat]
+					--local IsCityMat = not not JMod.CityMats[Mat]
 
 					if (IsNatureMat or IsCityMat) then
-						table.insert(ScroungeResults, (IsNatureMat and "rural") or (IsCityMat and "urban"))
+						table.insert(ScroungeResults, "rural")
 					end
 				end
 			end
@@ -1469,7 +1494,7 @@ if SERVER then
 									timer.Simple(120 * JMod.Config.ResourceEconomy.ScroungeDespawnTimeMult, function()
 										if (IsValid(Loot)) then
 										local CurPos = Loot:GetPos()
-											if (CurPos:Distance(Loot.SpawnPos) <= 1) then
+											if (CurPos:Distance(Loot.SpawnPos) <= 128) then
 												-- it hasn't moved an inch in a whole two minutes
 												constraint.RemoveAll(Loot)
 												Loot:SetNotSolid(true)
@@ -1491,7 +1516,7 @@ if SERVER then
 
 		if not Debug then
 			table.insert(ScroungedPositions, Pos)
-			timer.Simple(300 * JMod.Config.ResourceEconomy.ScroungeAreaRefreshMult, function()
+			timer.Simple(150 * JMod.Config.ResourceEconomy.ScroungeAreaRefreshMult, function()
 				if not table.IsEmpty(ScroungedPositions) then
 					table.remove(ScroungedPositions, 1)
 				end
