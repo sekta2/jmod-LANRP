@@ -193,7 +193,7 @@ function SWEP:ApplyForce()
 		end
 
 		if self.CarryEnt:GetClass() == "prop_ragdoll" then
-			mul = mul * 10
+			mul = mul * 5
 		end
 
 		vec:Normalize()

@@ -167,7 +167,7 @@ end
 function JMod.VisCheck(pos, targPos, sourceEnt)
 	local filter = {}
 	pos = (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter())) or pos
-
+	
 	if sourceEnt then
 		table.insert(filter, sourceEnt)
 	end
@@ -178,12 +178,15 @@ function JMod.VisCheck(pos, targPos, sourceEnt)
 		targPos = targPos:LocalToWorld(targPos:OBBCenter())
 	end
 
-	return not util.TraceLine({
-		start = pos,
+	local Tr = util.TraceLine({
+		start = pos + Vector(0,0,50),
 		endpos = targPos,
 		filter = filter,
 		mask = MASK_SOLID_BRUSHONLY
-	}).Hit
+	})
+
+	print(Tr.start)
+	return not Tr.Hit
 end
 
 function JMod.CountResourcesInRange(pos, range, sourceEnt, cache)
@@ -194,7 +197,7 @@ function JMod.CountResourcesInRange(pos, range, sourceEnt, cache)
 	for k, obj in pairs(ents.FindInSphere(pos, range or 150)) do
 		if obj.GetEZsupplies and JMod.VisCheck(pos, obj, sourceEnt) then
 			local Supplies = obj:GetEZsupplies()
-			if obj.ClassName == "ent_aboot_gmod_ezshippingcontainer" then PrintTable(Supplies) end
+			--if obj.ClassName == "ent_aboot_gmod_ezshippingcontainer" then PrintTable(Supplies) end
 			for k, v in pairs(Supplies) do
 				if k ~= "generic" then 
 					Results[k] = (Results[k] or 0) + v
