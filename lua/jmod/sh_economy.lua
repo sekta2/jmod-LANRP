@@ -309,14 +309,15 @@ local SalvagingTable = {
 	},
 	canister = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .2,
-		[JMod.EZ_RESOURCE_TYPES.GAS] = .4
+		[JMod.EZ_RESOURCE_TYPES.GAS] = .4,
+		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .5,
 	},
 	plastic = {
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .5
 	},
 	paintcan = {
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .2,
-		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .4,
+		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .7,
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .1
 	},
 	plastic_barrel = {
@@ -376,17 +377,19 @@ local SalvagingTable = {
 	item = {
 		[JMod.EZ_RESOURCE_TYPES.POWER] = .3,
 		[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .2,
-		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .3
+		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .5
 	},
 	glassbottle = {
 		[JMod.EZ_RESOURCE_TYPES.WATER] = .4,
-		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .2
+		[JMod.EZ_RESOURCE_TYPES.ORGANICS] = .2,
+		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .4
 	},
 	glass = {
 		[JMod.EZ_RESOURCE_TYPES.GLASS] = .5
 	},
 	popcan = {
-		[JMod.EZ_RESOURCE_TYPES.STEEL] = .8
+		[JMod.EZ_RESOURCE_TYPES.STEEL] = .8,
+		[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .4,
 	},
 	pottery = {
 		[JMod.EZ_RESOURCE_TYPES.CERAMIC] = .4
@@ -665,7 +668,7 @@ local SpecializedSalvagingTable = {
 			substrings = {"garbage_plasticbottle"},
 			yield = {
 				[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
-				[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .9
+				[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = .9,
 			}
 		},
 		{

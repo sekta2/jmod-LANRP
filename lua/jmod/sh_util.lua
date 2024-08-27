@@ -179,13 +179,13 @@ function JMod.VisCheck(pos, targPos, sourceEnt)
 	end
 
 	local Tr = util.TraceLine({
-		start = pos + Vector(0,0,50),
+		start = pos + Vector(0,0,100),
 		endpos = targPos,
 		filter = filter,
 		mask = MASK_SOLID_BRUSHONLY
 	})
 
-	print(Tr.start)
+	print(pos + Vector(0,0,100))
 	return not Tr.Hit
 end
 

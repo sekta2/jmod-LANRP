@@ -184,7 +184,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					description = "80 units of Precision Parts, used for machine upgrading and various recipes.",
 					category = "Resources",
 					results = {
-						{"ent_jack_gmod_ezprecparts", 1, 80}
+						{"ent_jack_gmod_ezprecparts", 1, 150}
 					}
 				},
 				["advanced textiles"] = {
@@ -1253,7 +1253,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 200
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 55
 				},
 				sizeScale = 2,
 				category = "Explosives",
@@ -1266,7 +1266,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 200,
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 55,
 					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 300
 				},
 				sizeScale = 4,
@@ -1291,7 +1291,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 50,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 100,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 75
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 25
 				},
 				sizeScale = 1,
 				category = "Explosives",
@@ -2969,13 +2969,27 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				results = "FUNC SpawnConveyor",
 				craftingReqs = {
 					--[JMod.EZ_RESOURCE_TYPES.STEEL] = 30,
-					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 15
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 10
 				},
 				sizeScale = 1,
 				category = "Tools",
 				craftingType = "toolbox",
 				description = "Конвейр для автоматизации."
 			},
+
+			["Pipe"] = {
+				results = "ent_rus_jsmod_pipe",
+				craftingReqs = {
+					--[JMod.EZ_RESOURCE_TYPES.STEEL] = 30,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 15
+				},
+				sizeScale = 1,
+				category = "Tools",
+				craftingType = "toolbox",
+				description = "Труба для автоматизации."
+			},
+
+			
 
 			["Crate Fulton"] = {
 				results = "ent_aboot_jsmod_ezcrate_fulton",
