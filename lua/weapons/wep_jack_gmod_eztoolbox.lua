@@ -32,8 +32,8 @@ SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 SWEP.ShowWorldModel = true
 SWEP.EZconsumes = {JMod.EZ_RESOURCE_TYPES.POWER, JMod.EZ_RESOURCE_TYPES.GAS}
-SWEP.MaxElectricity = 100
-SWEP.MaxGas = 100
+SWEP.MaxElectricity = 200
+SWEP.MaxGas = 200
 
 SWEP.VElements = {
 	--[[["wrench"] = {
@@ -639,7 +639,7 @@ function SWEP:TryLoadResource(typ, amt)
 
 	for _, v in pairs(self.EZconsumes) do
 		if typ == v then
-			local CurAmt = (self:GetEZsupplies(typ) or 0) + 8 * (self.CurrentBuildSize or 1)
+			local CurAmt = (self:GetEZsupplies(typ) or 0) + 8 --* (self.CurrentBuildSize or 1)
 			local Take = math.min(amt, self.MaxElectricity - CurAmt)
 			
 			if Take > 0 then

@@ -1149,7 +1149,7 @@ local function CreateArmorSlotButton(parent, slot, x, y)
 		surface.DrawRect(0, 0, w, h)
 		draw.SimpleText(JMod.ArmorSlotNiceNames[slot], "DermaDefault", Buttalony:GetWide() / 2, 10, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-		local Str = "--EMPTY--"
+		local Str = ""
 		if ItemID then
 			Str = ItemData.name --..": "..math.Round(ItemData.dur/ItemInfo.dur*100).."%"
 

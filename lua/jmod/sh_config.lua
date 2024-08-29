@@ -660,10 +660,10 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				-- 	}
 				-- },
 				["uranium"] = {
-					description = "20 units of Uranium, used in fissile material enrichment.",
+					description = "50 units of Uranium, used in fissile material enrichment.",
 					category = "Resources",
 					results = {
-						{"ent_jack_gmod_ezuranium", 1, 20}
+						{"ent_jack_gmod_ezuranium", 1, 50}
 					}
 				},
 				["diamond"] = {
@@ -1253,7 +1253,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 55
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 35
 				},
 				sizeScale = 2,
 				category = "Explosives",
@@ -1266,7 +1266,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 55,
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 35,
 					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 300
 				},
 				sizeScale = 4,
@@ -1291,7 +1291,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 50,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 100,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 25
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 15
 				},
 				sizeScale = 1,
 				category = "Explosives",
@@ -1394,7 +1394,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 400,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 600,
-					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 300
+					[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = 75
 				},
 				sizeScale = 1,
 				category = "Explosives",
@@ -1507,7 +1507,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 300,
 					--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = 100,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 200,
-					[JMod.EZ_RESOURCE_TYPES.URANIUM] = 300
+					[JMod.EZ_RESOURCE_TYPES.URANIUM] = 150
 				},
 				sizeScale = 6,
 				category = "Machines",
@@ -3161,7 +3161,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.FUEL] = 150,
 					--[JMod.EZ_RESOURCE_TYPES.MUNITIONS] = 100
 				},
-				sizeScale = 4.5,
+				sizeScale = 10,
 				category = "Other",
 				craftingType = "toolbox",
 				description = "МАШИНАА."

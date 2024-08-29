@@ -151,11 +151,12 @@ if SERVER then
 	function ENT:ProduceResource(activator)
 		local SelfPos, Up, Forward, Right = self:GetPos(), self:GetUp(), self:GetForward(), self:GetRight()
 		local PowerLeft = self:GetElectricity()
-		local Amt = math.Clamp(math.floor(PowerLeft), 0, 100)
+		local Amt = math.Clamp(math.floor(PowerLeft), 0, 200)
 
 		if Amt <= 0 then return end
 		local SpawnPos = self:WorldToLocal(SelfPos + Up * 16 + Forward * 32)
 		self:SetElectricity(PowerLeft - Amt)
+
 		JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.POWER, Amt, SpawnPos, Angle(0, 0, 0), Forward * 10, false)
 	end
 

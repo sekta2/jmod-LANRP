@@ -185,7 +185,6 @@ function JMod.VisCheck(pos, targPos, sourceEnt)
 		mask = MASK_SOLID_BRUSHONLY
 	})
 
-	print(pos + Vector(0,0,100))
 	return not Tr.Hit
 end
 

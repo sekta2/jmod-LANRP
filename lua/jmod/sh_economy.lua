@@ -26,7 +26,7 @@ JMod.SmeltingTable = {
 		JMod.EZ_RESOURCE_TYPES.GOLD, .2
 	},
 	[JMod.EZ_RESOURCE_TYPES.URANIUMORE] = {
-		JMod.EZ_RESOURCE_TYPES.URANIUM, .2
+		JMod.EZ_RESOURCE_TYPES.URANIUM, .4
 	},
 	[JMod.EZ_RESOURCE_TYPES.PLATINUMORE] = {
 		JMod.EZ_RESOURCE_TYPES.PLATINUM, .2
@@ -72,7 +72,7 @@ JMod.EnergyEconomyParameters = {
 }
 
 JMod.ResourceDepositInfo = {
-	[JMod.EZ_RESOURCE_TYPES.WATER] = {
+	--[[[JMod.EZ_RESOURCE_TYPES.WATER] = {
 		frequency = 10,
 		avgrate = .5,
 		avgsize = 400,
@@ -82,7 +82,7 @@ JMod.ResourceDepositInfo = {
 		boosts = {
 			sand = 2
 		}
-	},
+	},]]
 	--[[[JMod.EZ_RESOURCE_TYPES.SAND] = {
 		frequency = 5,
 		avgamt = 800,
@@ -94,15 +94,17 @@ JMod.ResourceDepositInfo = {
 			sand = 2
 		}
 	},--]]
-	--[[[JMod.EZ_RESOURCE_TYPES.CERAMIC] = {
+	[JMod.EZ_RESOURCE_TYPES.CERAMIC] = {
 		frequency = 6,
-		avgamt = 200,
-		avgsize = 200,
-		limits = {},
+		avgamt = 700,
+		avgsize = 100,
+		limits = {
+			nowater = true
+		},
 		boosts = {
-			water = 3
+			rock = 2
 		}
-	},]]--
+	},
 	[JMod.EZ_RESOURCE_TYPES.OIL] = {
 		frequency = 8,
 		avgamt = 600,
@@ -222,7 +224,7 @@ JMod.ResourceDepositInfo = {
 			rock = 2
 		}
 	},
-	[JMod.EZ_RESOURCE_TYPES.PLATINUMORE] = {
+	--[[JMod.EZ_RESOURCE_TYPES.PLATINUMORE] = {
 		frequency = 2,
 		avgamt = 300,
 		avgsize = 100,
@@ -232,7 +234,7 @@ JMod.ResourceDepositInfo = {
 		boosts = {
 			rock = 2
 		}
-	},
+	},]]
 	[JMod.EZ_RESOURCE_TYPES.DIAMOND] = {
 		dependency = JMod.EZ_RESOURCE_TYPES.COAL,
 		frequency = .2,
@@ -302,7 +304,7 @@ local SalvagingTable = {
 		[JMod.EZ_RESOURCE_TYPES.STEEL] = .25,
 		--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 		[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .1,
-		[JMod.EZ_RESOURCE_TYPES.COPPER] = .05,
+		[JMod.EZ_RESOURCE_TYPES.COPPER] = .25,
 		[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
 		[JMod.EZ_RESOURCE_TYPES.RUBBER] = .1,
 		[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .05
@@ -582,7 +584,7 @@ local SpecializedSalvagingTable = {
 				[JMod.EZ_RESOURCE_TYPES.STEEL] = .3,
 				--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .1,
 				[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .1,
-				[JMod.EZ_RESOURCE_TYPES.COPPER] = .05,
+				[JMod.EZ_RESOURCE_TYPES.COPPER] = .2,
 				[JMod.EZ_RESOURCE_TYPES.PLASTIC] = .1,
 				[JMod.EZ_RESOURCE_TYPES.RUBBER] = .1,
 				[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = .05
@@ -676,7 +678,7 @@ local SpecializedSalvagingTable = {
 			yield = {
 				[JMod.EZ_RESOURCE_TYPES.STEEL] = .3,
 				[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = .2,
-				[JMod.EZ_RESOURCE_TYPES.COPPER] = .05,
+				[JMod.EZ_RESOURCE_TYPES.COPPER] = .2,
 				[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = .1,
 				[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = .1,
 				[JMod.EZ_RESOURCE_TYPES.RUBBER] = .05
@@ -701,7 +703,7 @@ local SpecializedSalvagingTable = {
 			yield = {
 				[JMod.EZ_RESOURCE_TYPES.STEEL] = .6,
 				--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = .2,
-				[JMod.EZ_RESOURCE_TYPES.COPPER] = .1
+				[JMod.EZ_RESOURCE_TYPES.COPPER] = .5
 			}
 		},
 		{
@@ -1060,7 +1062,7 @@ if SERVER then
 	JMod.NatureMats = {[MAT_SNOW]="snow", [MAT_SAND]="sand", [MAT_FOLIAGE]="foliage", [MAT_SLOSH]="slime", [MAT_GRASS]="grass", [MAT_DIRT]="dirt", [MAT_CONCRETE]="concrete", [MAT_GLASS]="glass", [MAT_METAL]="metal", [MAT_GRATE]="chainlink", [MAT_TILE]="tile", [MAT_VENT]="metalvent", [MAT_PLASTIC]="plastic"}
 	--JMod.CityMats = {[MAT_CONCRETE]="concrete", [MAT_GLASS]="glass", [MAT_METAL]="metal", [MAT_GRATE]="chainlink", [MAT_TILE]="tile", [MAT_VENT]="metalvent", [MAT_PLASTIC]="plastic"}
 
-	local MaxTries, SurfacePropBlacklist, RockNames = 10000, {"paper", "plaster", "rubber", "carpet"}, {"rock", "boulder"}
+	local MaxTries, SurfacePropBlacklist, RockNames = 100000, {"paper", "plaster", "rubber", "carpet"}, {"rock", "boulder"}
 
 	local function TabContainsSubString(tbl, str)
 		if not str then return false end
@@ -1074,7 +1076,7 @@ if SERVER then
 
 	local function IsSurfaceSuitable(tr, props, mat, tex)
 		if not (tr.Hit and tr.HitWorld and not tr.StartSolid and not tr.HitSky) then return false end
-		if not JMod.NatureMats[tr.MatType] then return false end
+		--if not JMod.NatureMats[tr.MatType] then return false end
 		if TabContainsSubString(SurfacePropBlacklist, mat) then return false end
 		if TabContainsSubString(SurfacePropBlacklist, HitTexture) then return false end
 
@@ -1184,7 +1186,7 @@ if SERVER then
 							end
 						end
 
-						local Resources, MaxResourceDepositCount = {}, 300
+						local Resources, MaxResourceDepositCount = {}, 1000
 
 						for k, PosInfo in pairs(GroundVectors) do
 							if #Resources < MaxResourceDepositCount then

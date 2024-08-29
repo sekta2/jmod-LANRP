@@ -64,11 +64,11 @@ if SERVER then
 			Phys:SetMass(50)
 			Phys:Wake()
 		end)
-		self.MaxElectricity = 100
-		self.MaxGas = 100
+		self.MaxElectricity = 200
+		self.MaxGas = 200
 		if self.SpawnFull then
-			self:SetElectricity(100)
-			self:SetGas(100)
+			self:SetElectricity(self.MaxElectricity)
+			self:SetGas(self.MaxGas)
 		end
 	end
 
@@ -131,8 +131,8 @@ if SERVER then
 
 elseif CLIENT then
 	function ENT:Initialize()
-		self.MaxElectricity = 100
-		self.MaxGas = 100
+		self.MaxElectricity = 200
+		self.MaxGas = 200
 	end
 	function ENT:Draw()
 		self:DrawModel()

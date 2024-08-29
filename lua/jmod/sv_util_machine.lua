@@ -147,7 +147,7 @@ function JMod.MachineSpawnResource(machine, resourceType, amount, relativeSpawnP
 	machine.NextRefillTime = CurTime() + 1
 	local SpawnPos, SpawnAngle, MachineOwner = machine:LocalToWorld(relativeSpawnPos), relativeSpawnAngle and machine:LocalToWorldAngles(relativeSpawnAngle), JMod.GetEZowner(machine)
 	local MachineCenter = machine:LocalToWorld(machine:OBBCenter())
-	if (resourceType == JMod.EZ_RESOURCE_TYPES.POWER) and (machine.GetState and machine:GetState() == JMod.EZ_STATE_ON) and machine.EZconnections then
+	if machine:GetClass() != "ent_jack_gmod_ezpowerbank" and (resourceType == JMod.EZ_RESOURCE_TYPES.POWER) and (machine.GetState and machine:GetState() == JMod.EZ_STATE_ON) and machine.EZconnections then
 		local PowerToGive = amount
 		for entID, cable in pairs(machine.EZconnections) do
 			local Ent, Cable = Entity(entID), cable
@@ -156,10 +156,11 @@ function JMod.MachineSpawnResource(machine, resourceType, amount, relativeSpawnP
 			else
 				local Accepted = Ent:TryLoadResource(resourceType, PowerToGive)
 				Ent.NextRefillTime = 0
-				amount = math.Clamp(amount - Accepted, 0, 100)
+				amount = math.Clamp(amount - Accepted, 0, 200)
 			end
 		end
 	end
+
 	if amount <= 0 then return end
 	for i = 1, math.ceil(amount/100*JMod.Config.ResourceEconomy.MaxResourceMult) do
 		if findCrateRange then
