@@ -38,7 +38,7 @@ ENT.StaticPerfSpecs={
 }
 ENT.DynamicPerfSpecs={
 	Armor=.8,
-	ScanSpeed=5,
+	ScanSpeed=17,
 	ScanRange=20
 }
 function ENT:CustomSetupDataTables()

@@ -851,9 +851,6 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.PAPER] = 1
 				},
 				skin = 0,
-				--subMaterial = {
-				--	[1] = "models/debug/debugwhite"
-				--},
 				bodygroups = {
 					[1] = 1
 				},

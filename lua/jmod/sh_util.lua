@@ -179,7 +179,7 @@ function JMod.VisCheck(pos, target, sourceEnt)
 	end
 
 	return not util.TraceLine({
-		start = pos --+ Vector(0,0,100),
+		start = pos, --+ Vector(0,0,100),
 		endpos = target,
 		filter = filter,
 		mask = MASK_SOLID
