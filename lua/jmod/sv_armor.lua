@@ -105,6 +105,7 @@ end
 local function GetProtectionFromSlot(ply, slot, dmg, dmgAmt, protectionMul, shouldDmgArmor, cumulativeCoverage)
 	local Protection, Busted = 0, false
 
+	if not(ply.EZarmor and ply.EZarmor.items) then return Protection, Busted end
 	for id, armorData in pairs(ply.EZarmor.items) do
 		local ArmorInfo = table.FullCopy(JMod.ArmorTable[armorData.name])
 
@@ -259,8 +260,10 @@ local function LocationalDmgHandling(ply, hitgroup, dmg)
 		Mul = (Mul * (1 - Protection)) / JMod.Config.Armor.ProtectionMult
 
 		-- if there's no armor on the struck bodypart
-		if NoProtection and JMod.Config.QoL.RealisticLocationalDamage then
-			Mul = Mul * JMod.BodyPartDamageMults[hitgroup]
+		if NoProtection then 
+			if JMod.Config.QoL.RealisticLocationalDamage then
+				Mul = Mul * JMod.BodyPartDamageMults[hitgroup]
+			end
 		else
 			sound.Play("snds_jack_gmod/ricochet_"..math.random(1,2)..".ogg", ply:GetShootPos() + VectorRand() * 10, 70, math.random(80,120))
 		end

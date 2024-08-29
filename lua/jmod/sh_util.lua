@@ -164,39 +164,37 @@ function JMod.IsDoor(ent)
 	return (Class == "prop_door") or (Class == "prop_door_rotating") or (Class == "func_door") or (Class == "func_door_rotating")
 end
 
-function JMod.VisCheck(pos, targPos, sourceEnt)
+function JMod.VisCheck(pos, target, sourceEnt)
 	local filter = {}
-	pos = (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter())) or pos
-	
+	pos = pos or (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter()))
+
 	if sourceEnt then
 		table.insert(filter, sourceEnt)
 	end
 
-	if targPos and targPos.GetPos then
-		if targPos:GetNoDraw() then return false end
-		table.insert(filter, targPos)
-		targPos = targPos:LocalToWorld(targPos:OBBCenter())
+	if target and target.GetPos then
+		if target:GetNoDraw() then return false end
+		table.insert(filter, target)
+		target = target:LocalToWorld(target:OBBCenter())
 	end
 
-	local Tr = util.TraceLine({
-		start = pos + Vector(0,0,100),
-		endpos = targPos,
+	return not util.TraceLine({
+		start = pos --+ Vector(0,0,100),
+		endpos = target,
 		filter = filter,
-		mask = MASK_SOLID_BRUSHONLY
-	})
-
-	return not Tr.Hit
+		mask = MASK_SOLID
+	}).Hit
 end
 
 function JMod.CountResourcesInRange(pos, range, sourceEnt, cache)
 	if cache then return cache end
-	pos = (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter())) or pos
+	pos = pos or (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter()))
 	local Results = {}
+	--debugoverlay.Cross(pos, 10, 2, Color(255, 255, 255), true)
 
 	for k, obj in pairs(ents.FindInSphere(pos, range or 150)) do
 		if obj.GetEZsupplies and JMod.VisCheck(pos, obj, sourceEnt) then
 			local Supplies = obj:GetEZsupplies()
-			--if obj.ClassName == "ent_aboot_gmod_ezshippingcontainer" then PrintTable(Supplies) end
 			for k, v in pairs(Supplies) do
 				if k ~= "generic" then 
 					Results[k] = (Results[k] or 0) + v
@@ -418,10 +416,12 @@ function JMod.ClearLoS(ent1, ent2, ignoreWater, up, onlyHitWorld)
 end
 
 function JMod.PlyHasArmorEff(ply, eff)
-	if eff then
-		return ply.EZarmor and ply.EZarmor.effects and ply.EZarmor.effects[eff]
+	if IsValid(ply) and ply.EZarmor and eff then
+		if (ply.EZarmor and istable(ply.EZarmor.effects)) then
+			return ply.EZarmor.effects[eff]
+		end
 	else
-		return ply.EZarmor and ply.EZarmor.effects
+		return false
 	end
 end
 
