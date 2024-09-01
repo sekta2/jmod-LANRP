@@ -1496,7 +1496,7 @@ if SERVER then
 						
 						if JMod.Config.ResourceEconomy.ScroungeDespawnTimeMult > 0 then
 							timer.Simple(3, function()
-								if (IsValid(Loot)) --[[and (Loot:GetPhysicsObject():GetMass() <= 35)]] then
+								if (IsValid(Loot)) and (Loot:GetPhysicsObject():GetMass() <= 40) then
 									-- record natural resting place
 									Loot.SpawnPos = Loot:GetPos()
 									timer.Simple(120 * JMod.Config.ResourceEconomy.ScroungeDespawnTimeMult, function()

@@ -2823,11 +2823,11 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			["EZ Powder Keg"] = {
 				results = "ent_jack_gmod_ezpowderkeg",
 				craftingReqs = {
-					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 10,
-					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 400
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 30,
+					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 170
 				},
 				category = "Munitions",
-				craftingType = "workbench",
+				craftingType = {"workbench", "craftingtable"},
 				description = "Become bugs bunny and kill yosemite sam with a black-powder line!"
 			},
 			["EZ Propellant"] = {
@@ -3003,22 +3003,6 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				category = "Other",
 				craftingType = "toolbox",
 				description = "Фултон, для продажи предметов."
-			},
-
-			
-
-
-
-			["powder keg"] = {
-				results = "ent_jack_gmod_ezpowderkeg",
-				craftingReqs = {
-					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 100,
-					[JMod.EZ_RESOURCE_TYPES.WOOD] = 50
-				},
-				sizeScale = 3,
-				category = "Other",
-				craftingType = {"workbench", "craftingtable"},
-				description = "пороховая бочка."
 			},
 
 			["cratepack"] = {
