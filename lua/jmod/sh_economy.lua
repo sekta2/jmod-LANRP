@@ -72,17 +72,17 @@ JMod.EnergyEconomyParameters = {
 }
 
 JMod.ResourceDepositInfo = {
-	--[[[JMod.EZ_RESOURCE_TYPES.WATER] = {
+	[JMod.EZ_RESOURCE_TYPES.WATER] = {
 		frequency = 10,
 		avgrate = .5,
-		avgsize = 400,
+		avgsize = 270,
 		limits = {
 			nowater = true
 		},
 		boosts = {
 			sand = 2
 		}
-	},]]
+	},
 	--[[[JMod.EZ_RESOURCE_TYPES.SAND] = {
 		frequency = 5,
 		avgamt = 800,
@@ -108,7 +108,7 @@ JMod.ResourceDepositInfo = {
 	[JMod.EZ_RESOURCE_TYPES.OIL] = {
 		frequency = 8,
 		avgamt = 600,
-		avgsize = 300,
+		avgsize = 270,
 		boosts = {
 			water = 2
 		},
@@ -1467,6 +1467,9 @@ if SERVER then
 							Loot = ents.Create("prop_physics")
 							Loot:SetModel(ScroungedItem)
 							JMod.SetEZowner(Loot, ply)
+					
+							Loot:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+
 							local NumBodyGroups = Loot:GetNumBodyGroups()
 							if NumBodyGroups > 0 then
 								for i = 0, NumBodyGroups - 1 do
@@ -1493,7 +1496,7 @@ if SERVER then
 						
 						if JMod.Config.ResourceEconomy.ScroungeDespawnTimeMult > 0 then
 							timer.Simple(3, function()
-								if (IsValid(Loot)) and (Loot:GetPhysicsObject():GetMass() <= 35) then
+								if (IsValid(Loot)) --[[and (Loot:GetPhysicsObject():GetMass() <= 35)]] then
 									-- record natural resting place
 									Loot.SpawnPos = Loot:GetPos()
 									timer.Simple(120 * JMod.Config.ResourceEconomy.ScroungeDespawnTimeMult, function()

@@ -107,7 +107,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			WaterRequirementMult = 1
 		},
 		QoL = {
-			RealisticLocationalDamage = false,
+			RealisticLocationalDamage = true,
 			ExtinguishUnderwater = true,
 			RealisticFallDamage = true,
 			Drowning = true,
@@ -845,25 +845,6 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			-- If you add a second number to that table, if the class is an EZ resource, it will attempt to set the resource to that number
 			
 			-- Example Prop Craftable
-			["EZ Fake Firework"] = {
-				results = "models/jmod/explosives/ez_fireworks.mdl",
-				craftingReqs = {
-					[JMod.EZ_RESOURCE_TYPES.PAPER] = 1
-				},
-				skin = 0,
-				bodygroups = {
-					[1] = 1
-				},
-				color = {
-					r = 255,
-					g = 255,
-					b = 0
-				},
-				sizeScale = .05,
-				category = "Props",
-				craftingType = "none",
-				description = "Fake firework"
-			},
 			["EZ Nail"] = {
 				results = "FUNC EZnail",
 				craftingReqs = {
@@ -2990,7 +2971,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				results = "FUNC SpawnConveyor",
 				craftingReqs = {
 					--[JMod.EZ_RESOURCE_TYPES.STEEL] = 30,
-					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 10
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 15
 				},
 				sizeScale = 1,
 				category = "Tools",
@@ -3093,7 +3074,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 
 
 			["blastdoor big"] = {
-				results = "models/props_lab/blastdoor001c.mdl",
+				results = "FUNC BigBlastDoor",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 70,
 				},
@@ -3331,13 +3312,28 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
         end
 	end
 
-	JMod.LuaConfig.BuildFuncs.SpawnProp = function(ply, position, angles)
+	JMod.LuaConfig.BuildFuncs.BigBlastDoor = function(ply, position, angles)
 		local ent = ents.Create("prop_physics")
+		ent:SetModel("models/props_lab/blastdoor001c.mdl")
 		ent:Spawn()
 		ent:SetPos(position)
 		ent:SetAngles(angles + Angle(90,180,0))
 		JMod.SetEZowner(ent, ply)
 
+        JMod.SetEZowner(ent, ply)
+
+		local trSpawn = util.TraceHull( {
+			start = ply:GetShootPos(),
+			endpos = ply:GetShootPos() + ( ply:GetAimVector() * 150 ),
+			filter = ply,
+			mins = Vector( -10, -10, -10 ),
+			maxs = Vector( 10, 10, 10 ),
+			mask = MASK_SHOT_HULL
+		} )
+
+		ent:SetPos(trSpawn.HitPos)
+		ent:SetAngles(Angle(0, ply:EyeAngles().y , 0) + Angle(90,180,0))
+		
         local tr = util.TraceLine( {
             start = ent:GetPos(),
             endpos = ent:GetPos() - Vector(0, 0, 15),

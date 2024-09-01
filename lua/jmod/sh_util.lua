@@ -178,12 +178,16 @@ function JMod.VisCheck(pos, target, sourceEnt)
 		target = target:LocalToWorld(target:OBBCenter())
 	end
 
-	return not util.TraceLine({
-		start = pos, --+ Vector(0,0,100),
+	Tr = util.TraceLine({
+		start = pos,
 		endpos = target,
 		filter = filter,
 		mask = MASK_SOLID
-	}).Hit
+	})
+
+	debugoverlay.Line(pos, Tr.HitPos, 5, Color(255, 0, 0), true)
+
+	return not Tr.Hit
 end
 
 function JMod.CountResourcesInRange(pos, range, sourceEnt, cache)

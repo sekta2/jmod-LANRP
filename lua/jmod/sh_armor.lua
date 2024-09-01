@@ -89,7 +89,7 @@ JMod.ArmorSlotNiceNames = {
 
 -- only used if JMod.Config.QoL.RealisticLocationalDamage is true
 JMod.BodyPartDamageMults = {
-	[HITGROUP_HEAD] = 10,
+	[HITGROUP_HEAD] = 2,
 	[HITGROUP_CHEST] = 1,
 	[HITGROUP_GENERIC] = 1,
 	[HITGROUP_STOMACH] = .5,

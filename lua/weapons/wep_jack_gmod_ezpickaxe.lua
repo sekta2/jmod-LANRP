@@ -61,7 +61,7 @@ SWEP.PushSoundBody 	= Sound( "Flesh.ImpactSoft" )
 SWEP.IdleHoldType 	= "melee2"
 SWEP.SprintHoldType = "melee2"
 --
-SWEP.BlacklistedResources = {JMod.EZ_RESOURCE_TYPES.WATER, JMod.EZ_RESOURCE_TYPES.OIL, JMod.EZ_RESOURCE_TYPES.SAND, "geothermal"}
+SWEP.BlacklistedResources = {--[[JMod.EZ_RESOURCE_TYPES.WATER, ]]JMod.EZ_RESOURCE_TYPES.OIL, JMod.EZ_RESOURCE_TYPES.SAND, "geothermal"}
 
 function SWEP:CustomSetupDataTables()
 	self:NetworkVar("Float", 1, "TaskProgress")

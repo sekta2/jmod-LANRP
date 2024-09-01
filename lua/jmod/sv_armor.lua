@@ -191,7 +191,7 @@ local function GetProtectionFromSlot(ply, slot, dmg, dmgAmt, protectionMul, shou
 	return Protection, Busted
 end
 
-local function LocationalDmgHandling(ply, hitgroup, dmg)
+function LocationalDmgHandling(ply, hitgroup, dmg)
 	local Mul = 1
 	local AmmoTypeID, AmmoAPmul, AmmoHPmul = dmg:GetAmmoType(), 1, 1
 
@@ -209,6 +209,7 @@ local function LocationalDmgHandling(ply, hitgroup, dmg)
 	end
 
 	if ply.EZarmor and #table.GetKeys(ply.EZarmor.items) > 0 then
+		
 		local RelevantSlots, DmgAmt = {}, dmg:GetDamage()
 
 		if hitgroup == HITGROUP_HEAD then
@@ -277,8 +278,11 @@ local function LocationalDmgHandling(ply, hitgroup, dmg)
 	else
 		Mul = Mul * AmmoHPmul
 	end
-
+	
 	dmg:ScaleDamage(Mul)
+
+	print(Mul)
+	return Mul
 end
 
 local function FullBodyDmgHandling(ply, dmg, biological, isInSewage)
@@ -314,6 +318,8 @@ local function FullBodyDmgHandling(ply, dmg, biological, isInSewage)
 
 	Mul = (Mul * 1 - (Protection * JMod.Config.Armor.ProtectionMult))
 
+	print(dmg:GetDamage(),Mul)
+
 	if Mul < .001 then
 		dmg:ScaleDamage(0)
 	else
@@ -335,6 +341,7 @@ end
 hook.Add("ScalePlayerDamage", "JMod_ScalePlayerDamage", function(ply, hitgroup, dmginfo)
 	if ply.EZarmor then
 		LocationalDmgHandling(ply, hitgroup, dmginfo)
+		--print(dmginfo:GetDamage())
 	end
 end)
 
@@ -343,7 +350,7 @@ hook.Add("ScaleNPCDamage", "JMod_ScaleNPCdamage", function(npc, hitgroup, dmginf
 end)
 
 hook.Add("EntityTakeDamage", "JMod_EntityTakeDamage", function(victim, dmginfo)
-	if victim:IsPlayer() then 
+	if victim:IsPlayer() then
 		victim.JMod_IsSleeping = false
 		if victim.EZarmor then
 			local Helf, IsPiercingDmg, Att = victim:Health(), IsDamageOneOfTypes(dmginfo, JMod.PiercingDmgTypes), dmginfo:GetAttacker()
@@ -357,6 +364,9 @@ hook.Add("EntityTakeDamage", "JMod_EntityTakeDamage", function(victim, dmginfo)
 			elseif IsDamageOneOfTypes(dmginfo, JMod.BiologicalDmgTypes) then
 				FullBodyDmgHandling(victim, dmginfo, true, IsInSewage)
 			end
+
+			print(dmginfo:GetDamage())
+			
 
 			if JMod.Config.QoL.BleedDmgMult > 0 and IsPiercingDmg then
 				timer.Simple(0, function()
