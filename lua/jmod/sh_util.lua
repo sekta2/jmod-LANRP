@@ -167,6 +167,11 @@ end
 function JMod.VisCheck(pos, target, sourceEnt)
 	local filter = {}
 	pos = pos or (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter()))
+	local targetclass = target:GetClass()
+
+	if sourceEnt:IsWeapon() then
+		pos = sourceEnt:GetOwner():EyePos()
+	end
 
 	if sourceEnt then
 		table.insert(filter, sourceEnt)
@@ -174,18 +179,24 @@ function JMod.VisCheck(pos, target, sourceEnt)
 
 	if target and target.GetPos then
 		if target:GetNoDraw() then return false end
-		table.insert(filter, target)
+		--table.insert(filter, target)
 		target = target:LocalToWorld(target:OBBCenter())
 	end
 
 	Tr = util.TraceLine({
 		start = pos,
 		endpos = target,
-		filter = filter,
+		filter = function()
+			if target and target.GetPos then return target end
+			if scripted_ents.IsBasedOn( targetclass, "ent_jack_gmod_ezresource" ) then return target end
+			if sourceEnt then return sourceEnt end
+		end,
 		mask = MASK_SOLID
 	})
 
-	debugoverlay.Line(pos, Tr.HitPos, 5, Color(255, 0, 0), true)
+	if Tr.Hit then
+		debugoverlay.Line(pos, Tr.HitPos, 5, Color(255, 0, 0), true)
+	end
 
 	return not Tr.Hit
 end
@@ -193,6 +204,7 @@ end
 function JMod.CountResourcesInRange(pos, range, sourceEnt, cache)
 	if cache then return cache end
 	pos = pos or (sourceEnt and sourceEnt:LocalToWorld(sourceEnt:OBBCenter()))
+
 	local Results = {}
 	--debugoverlay.Cross(pos, 10, 2, Color(255, 255, 255), true)
 

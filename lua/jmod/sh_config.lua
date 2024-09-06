@@ -64,7 +64,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			},
 			SpawnMachinesFull = true,
 			SupplyEffectMult = 1,
-			DurabilityMult = 2
+			DurabilityMult = 0.3
 		},
 		Explosives = {
 			Mine = {
@@ -892,7 +892,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingType = "toolbox",
 				description = "Attaches a rope between two points"
 			},
-			["EZ Cable"] = {
+			--[[["EZ Cable"] = {
 				results = "FUNC EZcable",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2
@@ -903,7 +903,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				category = "Tools",
 				craftingType = "toolbox",
 				description = "Attaches a strong cable between two points, and creates an electrical connection"
-			},
+			},]]
 			["EZ Chain"] = {
 				results = "FUNC EZchain",
 				craftingReqs = {
@@ -1563,7 +1563,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = 20,
 					[JMod.EZ_RESOURCE_TYPES.PLASTIC] = 20,
 					--[JMod.EZ_RESOURCE_TYPES.GLASS] = 10,
-					[JMod.EZ_RESOURCE_TYPES.COPPER] = 20,
+					--[JMod.EZ_RESOURCE_TYPES.COPPER] = 20,
 					[JMod.EZ_RESOURCE_TYPES.RUBBER] = 10
 				},
 				category = "Resources",
@@ -1577,7 +1577,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					--[JMod.EZ_RESOURCE_TYPES.ALUMINUM] = 60,
 					[JMod.EZ_RESOURCE_TYPES.PLASTIC] = 60,
 					--[JMod.EZ_RESOURCE_TYPES.GLASS] = 30,
-					[JMod.EZ_RESOURCE_TYPES.COPPER] = 60,
+					--[JMod.EZ_RESOURCE_TYPES.COPPER] = 60,
 					[JMod.EZ_RESOURCE_TYPES.RUBBER] = 30
 				},
 				category = "Resources",

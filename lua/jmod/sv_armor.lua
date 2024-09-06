@@ -281,7 +281,6 @@ function LocationalDmgHandling(ply, hitgroup, dmg)
 	
 	dmg:ScaleDamage(Mul)
 
-	print(Mul)
 	return Mul
 end
 
@@ -341,7 +340,7 @@ end
 hook.Add("ScalePlayerDamage", "JMod_ScalePlayerDamage", function(ply, hitgroup, dmginfo)
 	if ply.EZarmor then
 		LocationalDmgHandling(ply, hitgroup, dmginfo)
-		--print(dmginfo:GetDamage())
+		print(dmginfo:GetDamage())
 	end
 end)
 
