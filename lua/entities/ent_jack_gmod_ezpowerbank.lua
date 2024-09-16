@@ -162,6 +162,18 @@ if SERVER then
 		self:SetState(JMod.EZ_STATE_OFF) -- Hacky
 		JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.POWER, Amt, SpawnPos, Angle(0, 0, 0), Forward * 10, false)
 		self:SetState(OldState)
+
+		PrintTable(self.EZconnections)
+
+		for entID, cable in pairs(self.EZconnections) do
+			local Ent, Cable = Entity(entID), cable
+				
+
+			if Ent.EZpowerLine then
+				Ent.Produced = true
+				Ent:SetElectricity(math.Clamp(math.floor(Ent:GetElectricity() - Amt), 0, 200))
+			end
+		end
 	end
 
 	function ENT:OnRemove()

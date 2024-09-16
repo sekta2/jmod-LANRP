@@ -222,10 +222,10 @@ if(SERVER)then
 					if (Time - self.LastOreTime) >= 5 then self:TurnOff() return end
 				else
 					self.LastOreTime = Time
-					local OreConsumeAmt = GradeBuff ^ 2
-					local MetalProduceAmt = (GradeBuff ^ 2 * JMod.SmeltingTable[OreTyp][2]) * 1.7
-					self:SetOre(self:GetOre() - OreConsumeAmt)
-					self:SetProgress(self:GetProgress() + MetalProduceAmt)
+					local OreConsumeAmt = (GradeBuff ^ 2 * JMod.SmeltingTable[OreTyp][2] / 2) * 1.5
+					local MetalProduceAmt = (GradeBuff ^ 2 * JMod.SmeltingTable[OreTyp][2]) * 1.5
+					self:SetOre(self:GetOre() - OreConsumeAmt - 5)
+					self:SetProgress(self:GetProgress() + MetalProduceAmt + 5)
 					if self:GetProgress() >= 100 then
 						self:ProduceResource()
 					end

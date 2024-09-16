@@ -300,8 +300,10 @@ if(SERVER)then
 		local SelfPos, EntPos = self:GetPos(), ent:GetPos()
 		if not (ent:GetPos().z <= SelfPos.z + 64) then return false end
 		local TargetAngle = self:WorldToLocal(EntPos):Angle().y
-		if (TargetAngle > (360 - self.Rotation.Max)) then return false end
+		--print(self:WorldToLocal(EntPos):Angle().y)
+		if (TargetAngle < (360 - self.Rotation.Max)) then return false end
 		if JMod.ClearLoS(self, v, false, 34) then return true end
+		return true
 	end
 
 	local ThinkRate = 60/12 --Hz

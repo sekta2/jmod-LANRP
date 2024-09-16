@@ -14,7 +14,7 @@ SWEP.BodyHolsterScale = .8
 JMod.ApplyAmmoSpecs(SWEP, "Mini Rocket", .9)
 SWEP.DamageRand = .1
 SWEP.ShootEntity = "ent_jack_gmod_ezminirocket"
-SWEP.MuzzleVelocity = 9000
+SWEP.MuzzleVelocity = 4500
 SWEP.ShootEntityAngle = Angle(0, -90, 0)
 SWEP.ShootEntityOffset = Vector(10, 0, 0)
 SWEP.BackBlast = 1

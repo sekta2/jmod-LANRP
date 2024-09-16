@@ -200,25 +200,30 @@ if(SERVER)then
 				if not self.EZinstalled then self:TurnOff() return end
 
 				if self:GetWater() <= 0 then
-					self:TurnOff()
-
-					return 
-				end
-
-				local DepositInfo = JMod.NaturalResourceTable[self.DepositKey]
-				if not(DepositInfo and DepositInfo.rate and (DepositInfo.rate > 0)) then 
-					self:TurnOff()
-
-					return
-				end
-
-				local FlowRate = DepositInfo.rate --* JMod.Config.ResourceEconomy.ExtractionSpeed
-				self:SetProgress(self:GetProgress() + FlowRate / (self.ChargeRate))
-
-				if self.NextWaterLoseTime < Time then
-					self.NextWaterLoseTime = Time + FlowRate * self.ChargeRate * 20
-
-					self:SetWater(self:GetWater() - 1 * FlowRate)
+					if self:GetState() > 0 then
+						local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.OIL, OilConsumeAmt * 5)
+						if Loaded < OilConsumeAmt and (Time - self.LastOilTime) >= 5 then
+							self:TurnOff()
+							return 
+						end
+					end
+				else
+					
+					local DepositInfo = JMod.NaturalResourceTable[self.DepositKey]
+					if not(DepositInfo and DepositInfo.rate and (DepositInfo.rate > 0)) then 
+						self:TurnOff()
+					
+						return
+					end
+				
+					local FlowRate = DepositInfo.rate --* JMod.Config.ResourceEconomy.ExtractionSpeed
+					self:SetProgress(self:GetProgress() + FlowRate / (self.ChargeRate))
+				
+					if self.NextWaterLoseTime < Time then
+						self.NextWaterLoseTime = Time + FlowRate * self.ChargeRate * 20
+					
+						self:SetWater(self:GetWater() - 1 * FlowRate)
+					end
 				end
 				
 

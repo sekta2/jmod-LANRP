@@ -171,12 +171,20 @@ if(SERVER)then
 
 				self:ConsumeElectricity(1.5 * JMod.EZ_GRADE_BUFFS[Grade] ^ 1.5)
 
+				local OilConsumeAmt = GradeBuff ^ 1.75
+				local ProductProduceAmt = GradeBuff ^ 2
+
 				if self:GetOil() <= 0 then
-					if (Time - self.LastOilTime) >=5 then self:TurnOff() return end
+					if self:GetState() > 0 then
+						local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.OIL, OilConsumeAmt * 5)
+						if Loaded < OilConsumeAmt and (Time - self.LastOilTime) >= 5 then
+							self:TurnOff()
+						end
+					end
+					--if (Time - self.LastOilTime) >=5 then self:TurnOff() return end
 				else
 					self.LastOilTime = Time
-					local OilConsumeAmt = GradeBuff ^ 1.75
-					local ProductProduceAmt = GradeBuff ^ 2
+
 					self:SetOil(self:GetOil() - OilConsumeAmt)
 					self:SetProgress(self:GetProgress() + ProductProduceAmt)
 					if self:GetProgress() >= 100 then

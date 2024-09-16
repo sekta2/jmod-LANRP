@@ -31,6 +31,7 @@ ENT.EZconsumes = {
 	JMod.EZ_RESOURCE_TYPES.WOOD,
 	JMod.EZ_RESOURCE_TYPES.WATER
 }
+
 ENT.FlexFuels = { JMod.EZ_RESOURCE_TYPES.COAL, JMod.EZ_RESOURCE_TYPES.WOOD }
 ENT.EZpowerProducer = true
 ENT.EZpowerSocket = Vector(65, 18, 18)
@@ -82,7 +83,7 @@ if(SERVER)then
 		end
 	end
 
-	function ENT:TurnOn(activator, auto)
+	function ENT:TurnOn(activator)
 		if self:GetState() > STATE_OFF then return end
 		if (self:WaterLevel() > 1) then return end
 		if (self:GetElectricity() > 0) and (self:GetWater() > 0) then
@@ -103,7 +104,7 @@ if(SERVER)then
 
 			return
 		end
-		if IsValid(activator) and not(auto) then
+		if IsValid(activator) then
 			self.EZstayOn = true
 			self:EmitSound("snd_jack_littleignite.ogg")
 		end
@@ -112,6 +113,7 @@ if(SERVER)then
 
 	function ENT:TurnOff(activator)
 		if (self:GetState() <= 0) then return end
+
 		self.NextUseTime = CurTime() + 1
 		if IsValid(activator) then self.EZstayOn = true end
 		if self.SoundLoop then self.SoundLoop:Stop() end
@@ -180,6 +182,31 @@ if(SERVER)then
 		amt = (amt or .2)
 		local NewAmt = math.Clamp(self:GetWater() - amt, 0.0, self.MaxWater)
 		self:SetWater(NewAmt)
+		if(NewAmt <= 0) and (self:GetState() > 0) then
+			local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.WATER, amt * 5)
+			if Loaded < amt then
+				self:TurnOff()
+			end
+		end
+	end
+
+	function ENT:ConsumeElectricity(amt)
+		if not(self.GetElectricity)then return end
+		amt = (amt or .2)/(self.ElectricalEfficiency or 1)
+		local NewAmt = math.Clamp(self:GetElectricity() - amt, 0.0, self.MaxElectricity)
+		self:SetElectricity(NewAmt)
+		if(NewAmt <= 0) and (self:GetState() > 0) then
+			local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.COAL, amt * 5)
+
+			if Loaded == 0 then
+				Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.WOOD, amt * 5)
+
+				if Loaded < amt then
+					self:TurnOff()
+				end
+			end
+		end
+		--if(NewAmt <= 0 and self:GetState() > 0)then self:TurnOff() end
 	end
 
 	function ENT:Think()
@@ -191,7 +218,7 @@ if(SERVER)then
 		if self.NextResourceThink < Time then
 			self.NextResourceThink = Time + 1
 			if State == STATE_ON then
-				if (self:WaterLevel() > 0) then 
+				if (self:WaterLevel() > 0) then
 					self:TurnOff() 
 					local Foof = EffectData()
 					Foof:SetOrigin(self:GetPos())
@@ -200,7 +227,7 @@ if(SERVER)then
 					Foof:SetStart(self:GetPhysicsObject():GetVelocity())
 					util.Effect("eff_jack_gmod_ezsteam", Foof, true, true)
 					self:EmitSound("snds_jack_gmod/hiss.ogg", 100, 100)
-					return 
+					return
 				end
 				local NRGperFuel = 1 * JMod.EnergyEconomyParameters.SteamGennyEfficiencies[Grade]
 				local FuelToConsume = JMod.EZ_GRADE_BUFFS[Grade]
@@ -208,14 +235,43 @@ if(SERVER)then
 				local SpeedModifier = 4
 
 				if self:GetWater() <= 0 or self:GetElectricity() <= 0 then
-					self:TurnOff()
+					--[[local ResourcesFromRange = JMod.CountResourcesInRange(nil, 150, self)
+					local NeedRecourceNear = {}
+					PrintTable(ResourcesFromRange)
+
+					for k,v in pairs(ResourcesFromRange) do
+						local value = self:TryLoadResource(k, v)
+						self:TryLoadResource(k, v)
+
+						if value >= 1 then
+							NeedRecourceNear[k] = self.EZautoload[k] - value
+						end
+					end
+
+					PrintTable(NeedRecourceNear)
+					--local Alldone, Left = JMod.ConsumeResourcesInRange(self.EZautoload,nil,150,self,true)
+
+
+					if JMod.HaveResourcesToPerformTask(nil, 150, self.EZautoload, self) then
+
+						local Consume, Left = JMod.ConsumeResourcesInRange(self.EZautoload,nil,150,self,true)
+
+						JMod.ConsumeResourcesInRange(Left,nil,150,self,true)
+
+						for k,v in pairs(Left) do
+							self:TryLoadResource(k, v)
+							return
+						end	
+					else]]
+
+						self:TurnOff()
+				else
+					self:ConsumeElectricity(FuelToConsume * SpeedModifier)
+
+					self:ConsumeWater(FuelToConsume * 0.4 * JMod.EnergyEconomyParameters.SteamGennyEfficiencies[Grade] * SpeedModifier)
+
+					self:SetProgress(self:GetProgress() + PowerToProduce * SpeedModifier)
 				end
-
-				self:ConsumeElectricity(FuelToConsume * SpeedModifier)
-
-				self:ConsumeWater(FuelToConsume * 0.4 * JMod.EnergyEconomyParameters.SteamGennyEfficiencies[Grade] * SpeedModifier)
-
-				self:SetProgress(self:GetProgress() + PowerToProduce * SpeedModifier)
 
 				if self:GetProgress() >= 100 then self:ProduceResource() end
 			end

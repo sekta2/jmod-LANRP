@@ -124,6 +124,16 @@ if(SERVER)then
 				if self:GetProgress() >= 100 then self:ProduceResource() end
 			end
 		end
+
+		if math.random(1, 200) <= 15 and (State == STATE_ON) then
+			local Ent = ents.Create("ent_jack_gmod_ezfalloutparticle")
+			Ent:SetPos(self:GetPos() + Vector(0, 0, 100))
+			Ent.MaxLife = 15
+			Ent.AffectRange = 250
+			Ent:Spawn()
+			Ent:Activate()
+			Ent.CurVel = self:GetVelocity()
+		end
 	end
 
 	function ENT:OnDestroy()

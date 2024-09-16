@@ -131,7 +131,7 @@ if(SERVER)then
 		if(self:GetVelocity():Length()<10)then
 			local Tr=util.TraceLine({
 				start=self:GetPos(),
-				endpos=self:GetPos()-Vector(0,0,25),
+				endpos=self:GetPos()-Vector(0,0,60),
 				filter={self}
 			})
 			if((Tr.Hit)and(Tr.HitWorld))then return true end

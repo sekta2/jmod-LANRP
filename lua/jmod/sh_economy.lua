@@ -95,7 +95,7 @@ JMod.ResourceDepositInfo = {
 		}
 	},--]]
 	[JMod.EZ_RESOURCE_TYPES.CERAMIC] = {
-		frequency = 6,
+		frequency = 12,
 		avgamt = 700,
 		avgsize = 100,
 		limits = {
@@ -870,7 +870,7 @@ function JMod.GetSalvageYield(ent)
 			end
 		end
 
-		if ent.EZupgradable then
+		if ent.EZupgradable and not ent:GetClass() == "ent_jack_gmod_ezgroundscanner" then
 			local Grade = ent:GetGrade()
 			if Grade > 1 then
 				for k, v in pairs(ent.UpgradeCosts[Grade]) do

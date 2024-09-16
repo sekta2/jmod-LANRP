@@ -136,7 +136,13 @@ if(SERVER)then
 		amt = (amt or .2)/(self.FuelEffeciancy or 1)
 		local NewAmt = math.Clamp(self:GetFuel() - amt, 0.0, self.MaxFuel)
 		self:SetFuel(NewAmt)
-		if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
+		if(NewAmt <= 0) and (self:GetState() > 0) then
+			local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.FUEL, amt * 5)
+			if Loaded < amt then
+				self:TurnOff()
+			end
+		end
+		--if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
 	end
 
 	function ENT:OnBreak()

@@ -37,11 +37,13 @@ if SERVER then
 		self:DrawShadow(true)
 		self:SetUseType(SIMPLE_USE)
 
+		self:SetModelScale(0.8)
+
 		---
 		local phys = self:GetPhysicsObject()
 		timer.Simple(.01, function()
 			if IsValid(phys) then
-				phys:SetMass(300)
+				phys:SetMass(50)
 				phys:Wake()
 				phys:EnableDrag(false)
 				phys:SetBuoyancyRatio(self.EZbuoyancy)

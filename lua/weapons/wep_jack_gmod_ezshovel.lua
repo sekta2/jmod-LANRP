@@ -145,21 +145,15 @@ function SWEP:OnHit(swingProgress, tr)
 			SafeRemoveEntityDelayed(tr.Entity, 0.1)
 		end
 	elseif tr.Entity:IsWorld() and (table.HasValue(DirtTypes, util.GetSurfaceData(tr.SurfaceProps).material)) then
-		local Message = JMod.EZprogressTask(self, tr.HitPos, self.Owner, "mining", JMod.GetPlayerStrength(self.Owner) ^ .25)
 
-		if Message then
-			if (tr.MatType == MAT_SAND) or (tr.MatType == MAT_DIRT) then
-				self:SetResourceType(JMod.EZ_RESOURCE_TYPES.SAND)
-				self:SetTaskProgress(100)
-				JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.SAND, math.random(5, 10), self:WorldToLocal(tr.HitPos + Vector(0, 0, 8)), Angle(0, 0, 0), nil, 200)
-			else
-				self:Msg(Message)
-				self:SetTaskProgress(0)
-				self:SetResourceType("")
-			end
+		if (tr.MatType == MAT_SAND) or (tr.MatType == MAT_DIRT) then
+			self:SetResourceType(JMod.EZ_RESOURCE_TYPES.SAND)
+			self:SetTaskProgress(100)
+			JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.SAND, 200, self:WorldToLocal(tr.HitPos + Vector(0, 0, 8)), Angle(0, 0, 0), nil, 200)
 		else
-			sound.Play("Dirt.Impact", tr.HitPos + VectorRand(), 75, math.random(50, 70))
-			self:SetTaskProgress(self:GetNW2Float("EZminingProgress", 0))
+			self:Msg(Message)
+			self:SetTaskProgress(0)
+			self:SetResourceType("")
 		end
 
 		if (math.random(1, 1000) == 1) then 

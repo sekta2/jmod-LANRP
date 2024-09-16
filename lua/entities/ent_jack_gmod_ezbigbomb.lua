@@ -51,6 +51,10 @@ if SERVER then
 			end
 		end
 
+		timer.Simple(.1, function()
+			JMod.BlastDamageIgnoreWorld(SelfPos, Att, nil, 150, 1600)
+		end)
+
 		---
 		util.BlastDamage(game.GetWorld(), Att, SelfPos + Vector(0, 0, 300), 1600, 150)
 

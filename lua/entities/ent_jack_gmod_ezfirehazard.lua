@@ -10,7 +10,7 @@ ENT.Burnin = true
 ENT.FireSounds = {Sound("snds_jack_gmod/fire1.ogg"), Sound("snds_jack_gmod/fire2.ogg")}
 ENT.FireEffect = "eff_jack_gmod_heavyfire"
 ENT.MaxIntensity = 20
-ENT.FireRange = 150
+ENT.FireRange = 260
 
 local ThinkRate = 6 --Hz
 
@@ -200,18 +200,17 @@ if SERVER then
 								break
 							end
 						end
-					elseif v.JModHighlyFlammableFunc and JMod.VisCheck(self, v, self) then
+					elseif v.JModHighlyFlammableFunc and JMod.VisCheck(self:GetPos(), v, self) then
 						JMod.SetEZowner(v, self.EZowner)
 						local Func = v[v.JModHighlyFlammableFunc]
 						Func(v)
-					elseif not DamageBlacklist[v:GetClass()] and IsValid(v:GetPhysicsObject()) and JMod.VisCheck(self, v, self) then
+					elseif not DamageBlacklist[v:GetClass()] --[[and IsValid(v:GetPhysicsObject())]] and JMod.VisCheck(self:GetPos(), v, self) then
 						local DistanceFactor = math.max( 1 - ( Pos:Distance( TheirPos ) / self.Range ), 0 ) ^ 1.5
+						
 						FireDam:SetDamage(self.Power * DistanceFactor)
 						v:TakeDamageInfo(FireDam)
 
-						if vFireInstalled then
-							CreateVFireEntFires(v, math.random(1, 3))
-						elseif (ShouldIgnite(v)) and (math.random(1, 30) == 1) then
+						if (ShouldIgnite(v)) and (math.random(1, 30) == 1) then
 							v:Ignite(math.random(8, 12) * Fraction, 0)
 						end
 					end

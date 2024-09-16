@@ -38,7 +38,7 @@ if SERVER then
 
 		--JMod.Sploom(Att,SelfPos,500)
 		timer.Simple(.1, function()
-			JMod.BlastDamageIgnoreWorld(SelfPos, Att, nil, 600, 600)
+			JMod.BlastDamageIgnoreWorld(SelfPos, Att, nil, 600, 3000)
 		end)
 
 		---

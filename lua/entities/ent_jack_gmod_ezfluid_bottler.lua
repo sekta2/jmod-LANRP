@@ -142,8 +142,8 @@ if SERVER then
 				if LinCh then
 					if particleTable[1] == JMod.EZ_RESOURCE_TYPES.CHEMICALS then
 						self:SetChemicals(self:GetChemicals() + particleTable[2])
-					elseif particleTable[1] == JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL then
-						self:SetFissile(self:GetFissile() + particleTable[2])
+					--elseif particleTable[1] == JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL then
+					--	self:SetFissile(self:GetFissile() + particleTable[2])
 					end
 
 					SafeRemoveEntity(v)

@@ -24,7 +24,7 @@ ENT.Splitterring = false
 local BaseClass = baseclass.Get(ENT.Base)
 
 if SERVER then
-	function ENT:ShiftAltUse(activator, onOff)
+	--[[function ENT:ShiftAltUse(activator, onOff)
 		if not onOff then return end
 		self.Splitterring = not self.Splitterring
 
@@ -35,7 +35,7 @@ if SERVER then
 			self:SetMaterial("models/mats_jack_nades/stick_grenade")
 			self:EmitSound("snds_jack_gmod/metal_shf.ogg", 60, 80)
 		end
-	end
+	end]]
 
 	function ENT:Detonate()
 		if self.Exploded then return end
@@ -43,7 +43,7 @@ if SERVER then
 		local SelfPos = self:GetPos()
 		self:EmitSound("snd_jack_fragsplodeclose.ogg", 90, 100)
 
-		if self.Splitterring then
+		--[[if self.Splitterring then
 			local plooie = EffectData()
 			plooie:SetOrigin(SelfPos)
 			plooie:SetScale(.5)
@@ -53,15 +53,18 @@ if SERVER then
 			util.ScreenShake(SelfPos, 20, 20, 1, 1000)
 			JMod.FragSplosion(self, SelfPos + Vector(0, 0, 20), 3000, 70, 5000, JMod.GetEZowner(self))
 			self:Remove()
-		else
+		else]]
 			JMod.Sploom(JMod.GetEZowner(self), SelfPos, 150)
-			local Blam = EffectData()
-			Blam:SetOrigin(SelfPos)
-			Blam:SetScale(.8)
-			util.Effect("eff_jack_plastisplosion", Blam, true, true)
+			local plooie = EffectData()
+			plooie:SetOrigin(SelfPos)
+			plooie:SetScale(.5)
+			plooie:SetRadius(1)
+			plooie:SetNormal(vector_up)
+			util.Effect("eff_jack_minesplode", plooie, true, true)
 			util.ScreenShake(SelfPos, 20, 20, 1, 1000)
+			JMod.FragSplosion(self, SelfPos + Vector(0, 0, 20), 3000, 70, 5000, JMod.GetEZowner(self))
 			self:Remove()
-		end
+		--end
 	end
 elseif CLIENT then
 	language.Add("ent_jack_gmod_ezsticknade", "EZ Stick Grenade")

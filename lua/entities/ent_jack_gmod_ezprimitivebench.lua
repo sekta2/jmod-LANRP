@@ -26,7 +26,7 @@ ENT.EZconsumes = {
 	JMod.EZ_RESOURCE_TYPES.GOLDORE,
 	JMod.EZ_RESOURCE_TYPES.URANIUMORE,
 	JMod.EZ_RESOURCE_TYPES.PLATINUMORE,
-	JMod.EZ_RESOURCE_TYPES.SAND
+	--JMod.EZ_RESOURCE_TYPES.SAND
 }
 ENT.FlexFuels = {JMod.EZ_RESOURCE_TYPES.WOOD, JMod.EZ_RESOURCE_TYPES.COAL}
 ENT.EZcolorable = false
@@ -238,7 +238,7 @@ if(SERVER)then
 				if Held and (Ent:GetPhysicsObject():GetMass() <= 35) and ((Ent:GetClass() == "prop_physics") or (table.HasValue(SalvageableMats, Ent:GetMaterialType()))) then
 					timer.Simple(0, function()
 						if not IsValid(Ent) then return end
-						DropEntityIfHeld(Ent)
+						Ent:ForcePlayerDrop()
 					end)
 					timer.Simple(0.1, function()
 						if not IsValid(Ent) then return end

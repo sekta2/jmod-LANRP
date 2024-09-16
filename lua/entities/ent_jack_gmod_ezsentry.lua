@@ -46,7 +46,7 @@ ENT.AmmoTypes = {
 		Accuracy = .8,
 		BarrelLength = .75
 	}, -- explosive projectile
-	["Rocket Launcher"] = {
+	--[[["Rocket Launcher"] = {
 		MaxAmmo = .20,
 		FireRate = .05,
 		Damage = 3,
@@ -54,7 +54,7 @@ ENT.AmmoTypes = {
 		BarrelLength = 2,
 		TargetingRadius = 1.5,
 		SearchSpeed = 0.75
-	}, -- explosive projectile
+	}, -- explosive projectile]]
 	["Pulse Laser"] = {
 		Accuracy = 3,
 		Damage = .25,
@@ -84,7 +84,7 @@ ENT.StaticPerfSpecs = {
 		["npc_rollermine"] = 15,
 		["npc_apcdriver"] = 30
 	},
-	MaxDurability = 5,
+	MaxDurability = 80,
 	ThinkSpeed = 1,
 	Efficiency = .8,
 	ShotCount = 1,
@@ -506,6 +506,7 @@ if(SERVER)then
 
 	function ENT:TurnOff(activator)
 		if (self:GetState() <= 0) then return end
+		if activator:GetSquadID() != self.EZowner:GetSquadID() then return end
 		if IsValid(activator) and IsValid(self.Target) and (self.Target == activator) and not(activator == self.EZowner) then return end
 		if IsValid(activator) then self.EZstayOn = nil end
 		self:SetState(STATE_OFF)

@@ -120,7 +120,7 @@ if(SERVER)then
 						self:Connect(activator, true)
 					end
 				else
-					if activator:GetSquadID() != self.EZowner:GetSquadID() then return end
+					if activator:GetSquadID() != (self.EZowner:GetSquadID() or SquadMenu:GetSquad(self.EZowner:GetSquadID()).Alliance[activator:GetSquadID()]) then return end
 					
 					self:TurnOff()
 					JMod.Hint(activator, "toggle")

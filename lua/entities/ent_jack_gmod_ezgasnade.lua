@@ -24,14 +24,14 @@ if SERVER then
 		Boom:Spawn()
 		Boom:Fire("explode", 0)
 
-		for i = 1, 30 do
+		for i = 1, 20 do
 			timer.Simple(i / 120, function()
-				local Gas = ents.Create("ent_jack_gmod_ezgasparticle")
+				local Gas = ents.Create("ent_jack_gmod_ezchlorineparticle")
 				Gas:SetPos(SelfPos)
 				JMod.SetEZowner(Gas, Owner)
 				Gas:Spawn()
 				Gas:Activate()
-				Gas.CurVel = (SelfVel + VectorRand(-200, 200))
+				Gas.CurVel = SelfVel + VectorRand() * math.random(-100, 100)
 				Gas.MaxLife = 60
 			end)
 		end

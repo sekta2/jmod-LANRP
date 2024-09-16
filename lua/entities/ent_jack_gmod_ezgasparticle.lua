@@ -182,7 +182,7 @@ elseif CLIENT then
 	local DebugMat = Material("sprites/mat_jack_jackconfetti")
 
 	function ENT:Initialize()
-		self.Col = Color(math.random(100, 120), math.random(100, 150), 100)
+		self.Col = Color(math.random(100, 255), math.random(100, 255), math.random(100, 255))
 		self.Visible = true
 		self.Show = true
 		self.siz = math.random(50, 150)

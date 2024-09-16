@@ -126,14 +126,26 @@ if(SERVER)then
 		if not(self.GetGas)then return end
 		local NewAmt = math.Clamp(self:GetGas() - amt, 0.0, self.MaxGas)
 		self:SetGas(NewAmt)
-		if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
+		if(NewAmt <= 0) and (self:GetState() > 0) then
+			local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.GAS, amt * 5)
+			if Loaded < amt then
+				self:TurnOff()
+			end
+		end
+		--if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
 	end
 
 	function ENT:ConsumeUranium(amt)
 		if not(self.GetUranium)then return end
 		local NewAmt = math.Clamp(self:GetUranium() - amt, 0.0, self.MaxUranium)
 		self:SetUranium(NewAmt)
-		if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
+		if(NewAmt <= 0) and (self:GetState() > 0) then
+			local Loaded = self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.URANIUM, amt * 5)
+			if Loaded < amt then
+				self:TurnOff()
+			end
+		end
+		--if(NewAmt <= 0) and (self:GetState() > 0)then self:TurnOff() end
 	end
 
 	function ENT:OnBreak()

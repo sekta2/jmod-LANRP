@@ -59,7 +59,7 @@ if SERVER then
 
 		---
 		self:SetState(STATE_OFF)
-		self.FuelLeft = 100
+		self.FuelLeft = 28
 		self.NextStick = 0
 
 		if istable(WireLib) then

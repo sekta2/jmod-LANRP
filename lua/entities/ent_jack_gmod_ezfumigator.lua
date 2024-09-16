@@ -160,13 +160,13 @@ if SERVER then
 
 			return true
 		elseif State == STATE_VENTING then
-			local Gas = ents.Create("ent_jack_gmod_ezgasparticle")
+			local Gas = ents.Create("ent_jack_gmod_ezchlorineparticle")
 			Gas:SetPos(self:LocalToWorld(self:OBBCenter()) + self:GetUp() * 20)
 			JMod.SetEZowner(Gas, self.EZowner or self)
 			Gas:Spawn()
 			Gas:Activate()
 			Gas.Canister = self
-			Gas.CurVel = self:GetPhysicsObject():GetVelocity() + self:GetUp() * math.random(10, 100)
+			Gas.CurVel = self:GetPhysicsObject():GetVelocity() + self:GetUp() * math.random(10, 250) + VectorRand() * math.random(-100, 100)
 			self.ContainedGas = self.ContainedGas - 1
 			self:NextThink(Time + .2)
 			self:EmitSound("snds_jack_gmod/hiss.ogg", 65, math.random(90, 110))

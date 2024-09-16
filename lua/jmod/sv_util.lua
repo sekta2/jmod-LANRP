@@ -219,98 +219,6 @@ function JMod.EmitAIsound(pos, vol, dur, typ)
 	SafeRemoveEntityDelayed(snd, dur + .5)
 end
 
-function JMod.FragSplosion(shooter, origin, fragNum, fragDmg, fragMaxDist, attacker, direction, spread, zReduction)
-	-- fragmentation/shrapnel simulation
-	local Eff = EffectData()
-	Eff:SetOrigin(origin)
-	Eff:SetScale(fragNum)
-	Eff:SetNormal(direction or Vector(0, 0, 0))
-	Eff:SetMagnitude(spread or 0)
-	util.Effect("eff_jack_gmod_fragsplosion", Eff, true, true)
-	---
-	shooter = shooter or game.GetWorld()
-	zReduction = zReduction or 2
-
-	if not JMod.Config.Explosives.FragExplosions then
-		util.BlastDamage(shooter, attacker, origin, fragMaxDist * .25, fragDmg)
-
-		return
-	end
-
-	local WaterDivider = 1
-	for i = 1, 4 do
-		if bit.band(util.PointContents(origin + Vector(0, 0, i * 50)), CONTENTS_WATER) == CONTENTS_WATER then
-			WaterDivider = i
-		else
-			break
-		end
-	end
-
-	local Spred = Vector(0, 0, 0)
-	local BulletsFired, MaxBullets, disperseTime = 0, 300, .5
-
-	if fragNum >= 12000 then
-		disperseTime = 2
-	elseif fragNum >= 6000 then
-		disperseTime = 1
-	end
-
-	for i = 1, fragNum do
-		timer.Simple((i / fragNum) * disperseTime, function()
-			local Dir
-
-			if direction and spread then
-				Dir = Vector(direction.x, direction.y, direction.z)
-				Dir = Dir + VectorRand() * math.Rand(0, spread)
-				Dir:Normalize()
-			else
-				Dir = VectorRand()
-			end
-
-			if zReduction then
-				Dir.z = Dir.z / zReduction
-				Dir:Normalize()
-			end
-
-			local Tr = util.QuickTrace(origin, Dir * fragMaxDist / WaterDivider, shooter)
-
-			if Tr.Hit and not Tr.HitSky and not Tr.HitWorld and (BulletsFired < MaxBullets) then
-				debugoverlay.Line(origin, Tr.HitPos, 5, Color(255, 0, 0), true)
-				local DmgMul = 1 / WaterDivider
-
-				if ((Tr.Entity.IsVehicle and Tr.Entity:IsVehicle()) or Tr.Entity.LFS or Tr.Entity.LVS or Tr.Entity.EZlowFragPlease) then
-					DmgMul = DmgMul * .25 -- This is basically the same as lowering the amount of frags by 25%
-				end
-
-				if IsValid(Tr.Entity:GetPhysicsObject()) and (Tr.Entity:GetPhysicsObject():GetMass() > 300) then
-					DmgMul = 1 / fragDmg
-				end
-
-				local firer = (IsValid(shooter) and shooter) or game.GetWorld()
-
-				local DistFactor = (-Tr.Fraction + 1.2)^2
-				local DamageToDeal = fragDmg * DmgMul * DistFactor
-				if DamageToDeal >= 1 then
-					firer:FireBullets({
-						Attacker = attacker,
-						Damage = DamageToDeal,
-						Force = DamageToDeal * .02,
-						Num = 1,
-						Src = origin,
-						Tracer = 0,
-						Dir = Dir,
-						Spread = Spred,
-						AmmoType = "Buckshot" -- for identification as "fragments"
-					})
-				end
-
-				BulletsFired = BulletsFired + 1
-			else
-				debugoverlay.Line(origin, Tr.HitPos, 2, Color(217, 255, 0), true)
-			end
-		end)
-	end
-end
 
 function JMod.PackageObject(ent, pos, ang, ply)
 	if pos then
@@ -338,68 +246,6 @@ function JMod.PackageObject(ent, pos, ang, ply)
 	Bocks:Spawn()
 	Bocks:Activate()
 	return Bocks
-end
-
-function JMod.SimpleForceExplosion(pos, power, range, sourceEnt)
-	for k, v in pairs(ents.FindInSphere(pos, range)) do
-		if not IsValid(sourceEnt) or (v ~= sourceEnt) then
-			local Phys = v:GetPhysicsObject()
-
-			if IsValid(Phys) then
-				local EntPos = v:LocalToWorld(v:OBBCenter())
-
-				local Tr = util.TraceLine({
-					start = pos,
-					endpos = EntPos,
-					filter = {sourceEnt, v}
-				})
-
-				if not Tr.Hit then
-					local DistFrac = (1 - (EntPos:Distance(pos) / range)) ^ 2
-					local Force = power * DistFrac
-
-					if v:IsNPC() or v:IsPlayer() then
-						v:SetVelocity((EntPos - pos):GetNormalized() * Force / 500)
-					else
-						Phys:ApplyForceCenter((EntPos - pos):GetNormalized() * Force * Phys:GetMass() ^ .25 / 2)
-					end
-				end
-			end
-		end
-	end
-end
-
-function JMod.DecalSplosion(pos, decalName, range, num, sourceEnt)
-	for i = 1, num / 5 do
-		timer.Simple(i / 2, function()
-			for j = 1, num / 5 do
-				local Dir = VectorRand() * math.random(1, range)
-				Dir.z = Dir.z / 4
-				local Tr = util.QuickTrace(pos, Dir, sourceEnt)
-
-				if Tr.Hit then
-					util.Decal(decalName, Tr.HitPos + Tr.HitNormal, Tr.HitPos - Tr.HitNormal)
-				end
-			end
-		end)
-	end
-end
-
-function JMod.BlastDamageIgnoreWorld(pos, att, infl, dmg, range)
-	for k, v in pairs(ents.FindInSphere(pos, range)) do
-		local EntPos = v:GetPos()
-		local Vec = EntPos - pos
-		local Dir = Vec:GetNormalized()
-		local DistFrac = 1 - (Vec:Length() / range)
-		local Dmg = DamageInfo()
-		Dmg:SetDamage(dmg * DistFrac)
-		Dmg:SetDamageForce(Dir * 1e5 * DistFrac)
-		Dmg:SetDamagePosition(EntPos)
-		Dmg:SetAttacker(att or game.GetWorld())
-		Dmg:SetInflictor(infl or att or game.GetWorld())
-		Dmg:SetDamageType(DMG_BLAST)
-		v:TakeDamageInfo(Dmg)
-	end
 end
 
 local WreckBlacklist = {"gmod_lamp", "gmod_cameraprop", "gmod_light", "ent_jack_gmod_nukeflash", "ent_jack_gmod_ezoilfire"}
@@ -720,7 +566,7 @@ function JMod.ShouldAllowControl(self, ply, neutral)
 	local Allies = EZowner.JModFriends or {}
 	if table.HasValue(Allies, ply) then return true end
 
-	return ply:GetSquadID() ~= -1 and ply:GetSquadID() == EZowner:GetSquadID()
+	return ply:GetSquadID() != -1 and ply:GetSquadID() == EZowner:GetSquadID()
 end
 
 function JMod.ShouldAttack(self, ent, vehiclesOnly, peaceWasNeverAnOption)
@@ -788,7 +634,7 @@ function JMod.ShouldAttack(self, ent, vehiclesOnly, peaceWasNeverAnOption)
 		if vehiclesOnly and not InVehicle then return false end
 		if PlayerToCheck.EZkillme then return true end -- for testing
 		if PlayerToCheck:GetObserverMode() ~= 0 then return false end
-		if (SelfOwner) and (PlayerToCheck == SelfOwner) then return false end
+		--if (SelfOwner) and (PlayerToCheck == SelfOwner) then return false end
 		local Allies = (SelfOwner and SelfOwner.JModFriends) or {}
 		if table.HasValue(Allies, PlayerToCheck) then return false end
 		local OurTeam = nil
@@ -798,8 +644,10 @@ function JMod.ShouldAttack(self, ent, vehiclesOnly, peaceWasNeverAnOption)
 			--if Gaymode == "basewars" and SelfOwner.IsAlly then return not SelfOwner:IsAlly(PlayerToCheck) end
 		end
 
+		local squad = SquadMenu:GetSquad(SelfOwner:GetSquadID())
+
 		if OurTeam == -1 then return PlayerToCheck:Alive() end
-		if OurTeam then return PlayerToCheck:Alive() and PlayerToCheck:GetSquadID() ~= OurTeam end
+		if OurTeam then return PlayerToCheck:Alive() and ((PlayerToCheck:GetSquadID() ~= OurTeam) and not squad.Alliance[PlayerToCheck:GetSquadID()]) end 
 
 		return PlayerToCheck:Alive()
 	end
@@ -1275,7 +1123,7 @@ function JMod.EZprogressTask(ent, pos, deconstructor, task, mult)
 				return "object is constrained"
 			else
 				local Mass = (Phys:GetMass() * ent:GetPhysicsObjectCount()) ^ .8
-				DropEntityIfHeld(ent)
+				ent:ForcePlayerDrop()
 				local Yield, Message = JMod.GetSalvageYield(ent)
 
 				if #table.GetKeys(Yield) <= 0 then
@@ -1531,6 +1379,7 @@ function JMod.CreateConnection(machine, ent, resType, plugPos, dist, cable)
 	if not IsValid(cable) then
 		cable = constraint.Rope(machine, ent, 0, 0, machine.EZpowerSocket or Vector(0, 0, 0), PluginPos, dist + 20, 10, 100, 2, "cable/cable2")
 	end
+	
 	ent.EZconnections[MachineIndex] = cable
 	machine.EZconnections[EntID] = cable
 

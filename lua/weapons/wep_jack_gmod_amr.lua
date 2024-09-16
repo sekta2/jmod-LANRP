@@ -18,6 +18,7 @@ SWEP.BodyHolsterPosL = Vector(0, -10, 11)
 SWEP.BodyHolsterScale = .9
 SWEP.DefaultBodygroups = "01000"
 JMod.ApplyAmmoSpecs(SWEP, "Heavy Rifle Round")
+SWEP.Force = 8
 SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
 SWEP.Recoil = 2
 SWEP.VisualRecoilMult = 2
