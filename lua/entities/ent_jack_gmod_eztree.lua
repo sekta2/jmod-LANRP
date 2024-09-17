@@ -277,6 +277,8 @@ if(SERVER)then
 		JMod.SetEZowner(self, ply, true)
 		self.NextRefillTime = Time
 		self.NextGrowThink = Time + math.random(10, 11)
+		self.LastModel = ""
+		self:UpdateAppearance()
 	end
 elseif CLIENT then
 	local Roots = Material("decals/ez_tree_roots")

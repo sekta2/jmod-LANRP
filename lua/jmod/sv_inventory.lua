@@ -160,7 +160,7 @@ function JMod.AddToInventory(invEnt, target, noUpdate)
 		else
 			jmodinv.EZresources[res] = (jmodinv.EZresources[res] or 0) + amt
 		end
-	else
+	elseif IsValid(target) then
 		target:ForcePlayerDrop()
 		constraint.RemoveAll(target)
 		target.EZInvOwner = invEnt

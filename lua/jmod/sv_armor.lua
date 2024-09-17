@@ -400,18 +400,20 @@ function JMod.CalcSpeed(ply)
 		TotalWeight = TotalWeight + ArmorInfo.wgt
 	end
 
-	if ply.JModInv then
+	if ply.JModInv and ply.JModInv.weight then
 		TotalWeight = TotalWeight + ply.JModInv.weight
 	end
 	
 	ply.EZarmor.totalWeight = TotalWeight
 
+	local WeighedFrac = TotalWeight / 250
+	ply.EZarmor.speedfrac = math.Clamp(1 - (.8 * WeighedFrac * JMod.Config.Armor.WeightMult), .05, 1)
+
+	hook.Run("JMod_CalcArmorSpeed", ply)
+
 	if ply.EZarmor.totalWeight >= 150 then
 		JMod.Hint(ply, "chonky boi")
 	end
-
-	local WeighedFrac = TotalWeight / 250
-	ply.EZarmor.speedfrac = math.Clamp(1 - (.8 * WeighedFrac * JMod.Config.Armor.WeightMult), .05, 1)
 end
 
 hook.Add("PlayerFootstep", "JMOD_PlayerFootstep", function(ply, pos, foot, snd, vol, filter)
@@ -420,6 +422,7 @@ hook.Add("PlayerFootstep", "JMOD_PlayerFootstep", function(ply, pos, foot, snd, 
 		if ply.EZarmor.totalWeight >= 150 then
 			ply:EmitSound("snd_jack_gear" .. tostring(math.random(1, 6)) .. ".ogg", 58, math.random(70, 130))
 		end
+		--local InventoryItems = ply.JModInv and ply.JModInv.items
 	end
 end)
 
