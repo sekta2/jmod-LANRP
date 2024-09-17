@@ -155,7 +155,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					category = "Apparel",
 					JBuxPrice = 300,
 					results = {
-						{"RAND", JMod.ArmorTable["GasMask"].ent, JMod.ArmorTable["BallisticMask"].ent, JMod.ArmorTable["NightVisionGoggles"].ent, JMod.ArmorTable["ThermalGoggles"].ent, --[[JMod.ArmorTable["Respirator"].ent,]] JMod.ArmorTable["Light-Helmet"].ent, JMod.ArmorTable["Medium-Helmet"].ent, JMod.ArmorTable["Heavy-Helmet"].ent, JMod.ArmorTable["Riot-Helmet"].ent, JMod.ArmorTable["Heavy-Riot-Helmet"].ent, JMod.ArmorTable["Ultra-Heavy-Helmet"].ent, JMod.ArmorTable["Metal Bucket"].ent, JMod.ArmorTable["Metal Pot"].ent, JMod.ArmorTable["Ceramic Pot"].ent, JMod.ArmorTable["Traffic Cone"].ent, JMod.ArmorTable["Light-Vest"].ent, JMod.ArmorTable["Medium-Light-Vest"].ent, JMod.ArmorTable["Medium-Vest"].ent, JMod.ArmorTable["Medium-Heavy-Vest"].ent, JMod.ArmorTable["Heavy-Vest"].ent, JMod.ArmorTable["Pelvis-Panel"].ent, JMod.ArmorTable["Light-Left-Shoulder"].ent, JMod.ArmorTable["Heavy-Left-Shoulder"].ent, JMod.ArmorTable["Light-Right-Shoulder"].ent, JMod.ArmorTable["Heavy-Right-Shoulder"].ent, JMod.ArmorTable["Left-Forearm"].ent, JMod.ArmorTable["Right-Forearm"].ent, JMod.ArmorTable["Light-Left-Thigh"].ent, JMod.ArmorTable["Heavy-Left-Thigh"].ent, JMod.ArmorTable["Light-Right-Thigh"].ent, JMod.ArmorTable["Heavy-Right-Thigh"].ent, JMod.ArmorTable["Left-Calf"].ent, JMod.ArmorTable["Right-Calf"].ent, JMod.ArmorTable["Hazmat Suit"].ent, 6}
+						{"RAND", JMod.ArmorTable["GasMask"].ent, --[[JMod.ArmorTable["BallisticMask"].ent, JMod.ArmorTable["NightVisionGoggles"].ent, JMod.ArmorTable["ThermalGoggles"].ent, --[[JMod.ArmorTable["Respirator"].ent,]] JMod.ArmorTable["Light-Helmet"].ent, --[[JMod.ArmorTable["Medium-Helmet"].ent, JMod.ArmorTable["Heavy-Helmet"].ent, JMod.ArmorTable["Riot-Helmet"].ent, JMod.ArmorTable["Heavy-Riot-Helmet"].ent, JMod.ArmorTable["Ultra-Heavy-Helmet"].ent,]] JMod.ArmorTable["Metal Bucket"].ent, JMod.ArmorTable["Metal Pot"].ent, JMod.ArmorTable["Ceramic Pot"].ent, JMod.ArmorTable["Traffic Cone"].ent, JMod.ArmorTable["Light-Vest"].ent, --[[JMod.ArmorTable["Medium-Light-Vest"].ent, JMod.ArmorTable["Medium-Vest"].ent, JMod.ArmorTable["Medium-Heavy-Vest"].ent, JMod.ArmorTable["Heavy-Vest"].ent,]] JMod.ArmorTable["Pelvis-Panel"].ent, JMod.ArmorTable["Light-Left-Shoulder"].ent, JMod.ArmorTable["Heavy-Left-Shoulder"].ent, JMod.ArmorTable["Light-Right-Shoulder"].ent, JMod.ArmorTable["Heavy-Right-Shoulder"].ent, JMod.ArmorTable["Left-Forearm"].ent, JMod.ArmorTable["Right-Forearm"].ent, JMod.ArmorTable["Light-Left-Thigh"].ent, --[[JMod.ArmorTable["Heavy-Left-Thigh"].ent,]] JMod.ArmorTable["Light-Right-Thigh"].ent, --[[JMod.ArmorTable["Heavy-Right-Thigh"].ent,]] JMod.ArmorTable["Left-Calf"].ent, JMod.ArmorTable["Right-Calf"].ent, --[[JMod.ArmorTable["Hazmat Suit"].ent,]] 6}
 					}
 				},
 				--[[["crossbow"] = {
@@ -465,7 +465,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				["fumigators"] = {
 					description = "2 fumigators that emit poison gas.",
 					category = "Other",
-					JBuxPrice = 800,
+					JBuxPrice = 4000,
 					results = {
 						{"ent_jack_gmod_ezfumigator", 2}
 					}
@@ -577,27 +577,27 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				["thermal goggles"] = {
 					description = "2 thermal goggles that highlight heat-sources for the user. Consumes battery.",
 					category = "Apparel",
-					JBuxPrice = 1300,
+					JBuxPrice = 4000,
 					results = {
 						{"ent_jack_gmod_ezarmor_thermals", 2}
 					}
 				},
-				["night vision goggles"] = {
+				--[[["night vision goggles"] = {
 					description = "4 night-vision goggles to help players see in the dark. Consumes battery.",
 					category = "Apparel",
 					JBuxPrice = 600,
 					results = {
 						{"ent_jack_gmod_ezarmor_nvgs", 4}
 					}
-				},
-				["headsets"] = {
+				},]]
+				--[[["headsets"] = {
 					description = "8 headsets for players to communicate and make orders from linked radios. Consumes battery.",
 					category = "Apparel",
 					JBuxPrice = 450,
 					results = {
 						{"ent_jack_gmod_ezarmor_headset", 8}
 					}
-				},
+				},]]
 				["steel"] = {
 					description = "500 units of Steel, used in basic parts and some weapons.",
 					category = "Resources",
@@ -2234,8 +2234,8 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				results = "ent_jack_gmod_ezfumigator",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 25,
-					[JMod.EZ_RESOURCE_TYPES.GAS] = 100,
-					[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = 50
+					[JMod.EZ_RESOURCE_TYPES.GAS] = 200,
+					[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = 500
 				},
 				category = "Other",
 				craftingType = "workbench",
@@ -2246,7 +2246,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 5,
 					[JMod.EZ_RESOURCE_TYPES.GAS] = 20,
-					[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = 15
+					[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = 20
 				},
 				category = "Munitions",
 				craftingType = "workbench",
@@ -2331,7 +2331,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Face protection for the narcissists."
 			},
 			["EZ Gas Mask"] = {
@@ -2352,7 +2352,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.COPPER] = 5
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Headset that allows you to remotely communicate with radios and your friends."
 			},
 			["EZ Heavy Left Shoulder Armor"] = {
@@ -2364,7 +2364,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "You must care about your shoulders if you wear this."
 			},
 			["EZ Heavy Right Shoulder Armor"] = {
@@ -2376,7 +2376,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CLOTH] = 20
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "You must care about your shoulders if you wear this."
 			},
 			["EZ Heavy Torso Armor"] = {
@@ -2388,7 +2388,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 50
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Turtle shell. Heavy defense."
 			},
 			["BUCKET"] = {
@@ -2428,8 +2428,8 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingType = "workbench",
 				description = "congrats you are now 5"
 			},
-			["EZ Light Helmet"] = {
-				results = JMod.ArmorTable["Light-Helmet"].ent,
+			["Nazi helmet"] = {
+				results = JMod.ArmorTable["Nazi-helmet"].ent,
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2,
 					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5,
@@ -2439,6 +2439,48 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingType = "workbench",
 				description = "Simple lightweight helmet that doesn't block much damage."
 			},
+			["Brodie helmet"] = {
+				results = JMod.ArmorTable["Brodie-helmet"].ent,
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5,
+					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
+				},
+				category = "Apparel",
+				craftingType = "workbench",
+				description = "Simple lightweight helmet that doesn't block much damage."
+			},
+			["schirmmuetze"] = {
+				results = JMod.ArmorTable["schirmmuetze"].ent,
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5,
+				},
+				category = "Apparel",
+				craftingType = "workbench",
+				description = "Simple lightweight helmet that doesn't block much damage."
+			},
+			["Steel helmet"] = {
+				results = JMod.ArmorTable["ST-Helmet"].ent,
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5,
+				},
+				category = "Apparel",
+				craftingType = "workbench",
+				description = "Simple lightweight helmet that doesn't block much damage."
+			},
+			--[[["EZ Light Helmet"] = {
+				results = JMod.ArmorTable["Light-Helmet"].ent,
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 2,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 5,
+					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
+				},
+				category = "Apparel",
+				craftingType = "workbench",
+				description = "Simple lightweight helmet that doesn't block much damage."
+			},]]
 			--[[["EZ Respirator"] = {
 				results = JMod.ArmorTable["Respirator"].ent,
 				craftingReqs = {
@@ -2457,7 +2499,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				"The light helmet, but with cheap glass attached to the front. Light face defense."
 			},
 			["EZ Heavy Riot Helmet"] = {
@@ -2467,7 +2509,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = 15,
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Heavy riot helmet with proper ballistic protection."
 			},
 			["EZ Heavy Helmet"] = {
@@ -2479,7 +2521,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = 5
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "A heavy helmet that provides good defense without taking up your face slots."
 			},
 			["EZ Ultra Heavy Helmet"] = {
@@ -2491,7 +2533,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.TUNGSTEN] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Strongest helmet avaliable, at the cost of weight and vision."
 			},
 			["EZ Light Left Shoulder Armor"] = {
@@ -2533,7 +2575,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Well-rounded helmet with balanced protection and weight."
 			},
 			["EZ Medium Torso Armor"] = {
@@ -2544,7 +2586,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CLOTH] = 25
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "A vest, that while somewhat heavy, will provide appreciable over-all protection to your torso."
 			},
 			["EZ Medium-Heavy Torso Armor"] = {
@@ -2556,7 +2598,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 25
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "It's in the name, for when you need a bit more protection than the medium provides."
 			},
 			["EZ Medium-Light Torso Armor"] = {
@@ -2567,7 +2609,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CLOTH] = 20
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "A lightweight balance between the Light and Medium vests."
 			},
 			["EZ Thermal Goggles"] = {
@@ -2578,7 +2620,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.POWER] = 25
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Allows you to visualize most heat signatures."
 			},
 			["EZ Night Vision Goggles"] = {
@@ -2589,7 +2631,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.POWER] = 25
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "See at night, be blinded by bright light."
 			},
 			["EZ Left Calf Armor"] = {
@@ -2631,7 +2673,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "i'm not making that joke."
 			},
 			["EZ Pelvis Armor"] = {
@@ -2642,7 +2684,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CLOTH] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Prevent annihilation of your family jewels."
 			},
 			["EZ Right Calf Armor"] = {
@@ -2684,7 +2726,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "I'm not making that joke."
 			},
 			["EZ Hazmat Suit"] = {
@@ -2695,7 +2737,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.RUBBER] = 40
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = "fabricator",
 				description = "Full-body protection against environmental hazards, though fragile."
 			},
 			["EZ Parachute"] = {
@@ -3038,7 +3080,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				description = "коробка на спину."
 			},
 			
-			["armorstand"] = {
+			--[[["armorstand"] = {
 				results = "armorstand",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.WOOD] = 30
@@ -3047,7 +3089,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				category = "Apparel",
 				craftingType = "workbench",
 				description = "стэнд для брони."
-			},
+			},]]
 
 			["sky lantern"] = {
 				results = "ent_fumo_gmod_ezskylantern",

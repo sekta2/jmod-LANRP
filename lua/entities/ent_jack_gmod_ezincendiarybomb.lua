@@ -16,7 +16,7 @@ ENT.EZbombBaySize = 5
 ENT.EZguidable = false
 ENT.Model = "models/props_phx/ww2bomb.mdl"
 ENT.Material = "models/entities/mat_jack_firebomb"
-ENT.Mass = 100
+ENT.Mass = 200
 ENT.DetSpeed = 1000
 ENT.DetType = "airburst"
 
