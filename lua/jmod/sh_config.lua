@@ -91,10 +91,10 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			FumigatorGasAmount = 1,
 			PoisonGasDamage = 1,
 			PoisonGasLingerTime = 1,
-			NuclearRadiationMult = 0.6
+			NuclearRadiationMult = 1
 		},
 		ResourceEconomy = {
-			ResourceRichness = 1.5,
+			ResourceRichness = 2.5,
 			ExtractionSpeed = 5,
 			MaxResourceMult = 2,
 			SalvageYield = 5,
@@ -646,10 +646,10 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				-- 	}
 				-- },
 				["tungsten"] = {
-					description = "50 units of Tungsten, used in high-tier weaponry.",
+					description = "100 units of Tungsten, used in high-tier weaponry.",
 					category = "Resources",
 					results = {
-						{"ent_jack_gmod_eztungsten", 1, 50}
+						{"ent_jack_gmod_eztungsten", 1, 100}
 					}
 				},
 				-- ["platinum"] = {
@@ -1222,6 +1222,18 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				category = "Explosives",
 				craftingType = "toolbox",
 				description = "Fire bomb. Detonates in the air to ensure max spread of napalm."
+			},
+			["EZ Gas Bomb"] = {
+				results = "ent_jack_gmod_ezchlorinebomb",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 50,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 10,
+					[JMod.EZ_RESOURCE_TYPES.CHEMICALS] = 700,
+				},
+				sizeScale = 1,
+				category = "Explosives",
+				craftingType = "toolbox",
+				description = "Gas bomb."
 			},
 			["EZ Mega Bomb"] = {
 				results = "ent_jack_gmod_ezmoab",
@@ -3277,7 +3289,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 		forceNew = true
 	end
 
-	if not(JMod.Config) or forceNew then
+	if not JMod.Config or forceNew then
 		JMod.Config = NewConfig
 		if forceNew then
 			if FileContents then
@@ -3588,14 +3600,14 @@ hook.Add("JMod_CanKitBuild", "JMOD_KitBuildReqs", function(playa, toolbox, build
 		return false, Message 
 	end
 	if (RopeCostList[buildInfo.results]) then
-		local RopeTr = util.QuickTrace(playa:GetShootPos(), (playa:GetAimVector() * 80), {playa})
-		if not(RopeTr.Hit) then 
+		local RopeTr = util.QuickTrace(playa:GetShootPos(), playa:GetAimVector() * 80, {playa})
+		if not RopeTr.Hit then 
 			playa.EZropeData = nil
 
 			return false, "No applicible cable pos" 
 		end
 
-		if not(playa.EZropeData) or not IsValid(playa.EZropeData.Ent) then
+		if not playa.EZropeData  or not IsValid(playa.EZropeData.Ent) then
 			playa.EZropeData = {Pos = RopeTr.Entity:WorldToLocal(RopeTr.HitPos), Ent = RopeTr.Entity}
 			return false, "Cable started"
 		end

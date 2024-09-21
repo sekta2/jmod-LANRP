@@ -109,7 +109,7 @@ function SWEP:OnHit(swingProgress, tr)
 
 	if IsValid(tr.Entity) then
 		local PickDam = DamageInfo()
-		PickDam:SetAttacker(self.Owner)
+		PickDam:SetAttacker(self:GetOwner())
 		PickDam:SetInflictor(self)
 		PickDam:SetDamagePosition(StrikePos)
 		PickDam:SetDamageType(DMG_CLUB)
@@ -119,9 +119,12 @@ function SWEP:OnHit(swingProgress, tr)
 	end
 
 	if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or string.find(tr.Entity:GetClass(),"prop_ragdoll") then
-		tr.Entity:SetVelocity( self.Owner:GetAimVector() * Vector( 1, 1, 0 ) * self.HitPushback )
-		self:SetTaskProgress(0)
-		if tr.Entity.IsEZcorpse then
+		tr.Entity:SetVelocity( self:GetOwner():GetAimVector() * Vector( 1, 1, 0 ) * self.HitPushback )
+		
+		self:SetTaskProgress(self:GetTaskProgress() + 3)
+		self:SetResourceType("могилу")
+
+		if tr.Entity.IsEZcorpse and self:GetTaskProgress() >= 100 then
 			local GravePos = util.QuickTrace(tr.HitPos, Vector(0, 0, -9e9), {tr.Entity}).HitPos
 			timer.Simple(0.2, function()
 				--if IsValid(tr.Entity) then
@@ -131,7 +134,7 @@ function SWEP:OnHit(swingProgress, tr)
 					GraveStone:SetAngles(Angle(0, 0, 0))
 					GraveStone:Spawn()
 					GraveStone:Activate()
-					local WeldTr = util.QuickTrace(GravePos + Vector(0, 0, 20), Vector(0, 0, -40), {GraveStone, tr.Entity, self.Owner})
+					local WeldTr = util.QuickTrace(GravePos + Vector(0, 0, 20), Vector(0, 0, -40), {GraveStone, tr.Entity, self:GetOwner()})
 					if WeldTr.Hit then
 						GraveStone:SetPos(WeldTr.HitPos)
 						local StoneAng = WeldTr.HitNormal:Angle()
@@ -143,17 +146,15 @@ function SWEP:OnHit(swingProgress, tr)
 				--end
 			end)
 			SafeRemoveEntityDelayed(tr.Entity, 0.1)
+
+			self:SetTaskProgress(0)
 		end
 	elseif tr.Entity:IsWorld() and (table.HasValue(DirtTypes, util.GetSurfaceData(tr.SurfaceProps).material)) then
 
 		if (tr.MatType == MAT_SAND) or (tr.MatType == MAT_DIRT) then
 			self:SetResourceType(JMod.EZ_RESOURCE_TYPES.SAND)
-			self:SetTaskProgress(100)
+			--self:SetTaskProgress(100)
 			JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.SAND, 200, self:WorldToLocal(tr.HitPos + Vector(0, 0, 8)), Angle(0, 0, 0), nil, 200)
-		else
-			self:Msg(Message)
-			self:SetTaskProgress(0)
-			self:SetResourceType("")
 		end
 
 		if (math.random(1, 1000) == 1) then 
@@ -189,14 +190,14 @@ if CLIENT then
 
 	function SWEP:DrawHUD()
 		if GetConVar("cl_drawhud"):GetBool() == false then return end
-		local Ply = self.Owner
+		local Ply = self:GetOwner()
 		if Ply:ShouldDrawLocalPlayer() then return end
 		local W, H = ScrW(), ScrH()
 
 		local Prog = self:GetTaskProgress()
 
 		if Prog > 0 then
-			draw.SimpleTextOutlined("Digging... "..self:GetResourceType(), "Trebuchet24", W * .5, H * .45, Color(255, 255, 255, 100), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 50))
+			draw.SimpleTextOutlined("Копаем " .. self:GetResourceType(), "Trebuchet24", W * .5, H * .45, Color(255, 255, 255, 100), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 50))
 			draw.RoundedBox(10, W * .3, H * .5, W * .4, H * .05, Color(0, 0, 0, 100))
 			draw.RoundedBox(10, W * .3 + 5, H * .5 + 5, W * .4 * LastProg / 100 - 10, H * .05 - 10, Color(255, 255, 255, 100))
 		end

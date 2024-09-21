@@ -16,7 +16,7 @@ ENT.EZguidable = false
 ---
 ENT.Model = "models/props_phx/ww2bomb.mdl"
 ENT.Material = "models/entities/chlorine_bomb"
-ENT.Mass = 200
+ENT.Mass = 160
 ENT.DetSpeed = 1000
 ---
 local STATE_BROKEN, STATE_OFF, STATE_ARMED = -1, 0, 1
@@ -42,7 +42,7 @@ if SERVER then
 				JMod.SetEZowner(Gas, Owner)
 				Gas:Spawn()
 				Gas:Activate()
-				Gas.CurVel = SelfVel * 5 + VectorRand() * math.random(-100, 50)
+				Gas.CurVel = VectorRand() * math.random(-100, 50)
 				Gas.MaxLife = 60
 			end)
 		end

@@ -37,9 +37,11 @@ if SERVER then
 			Dmg:SetDamagePosition(obj:GetPos())
 			obj:TakeDamageInfo(Dmg)
 
-			JMod.DepleteArmorChemicalCharge(obj, (faceProt + skinProt) * 4 * .02)
+			JMod.DepleteArmorChemicalCharge(obj, (faceProt + skinProt) * 4 * .07)
 
 			if faceProt < 1 then
+				obj.EZpoison = (obj.EZpoison or 0) + 2
+				
 				net.Start("JMod_VisionBlur")
 				net.WriteFloat(5 * math.Clamp(1 - faceProt, 0, 1))
 				net.WriteFloat(2)

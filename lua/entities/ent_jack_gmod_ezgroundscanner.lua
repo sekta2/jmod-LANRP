@@ -50,7 +50,6 @@ if(SERVER)then
 		self:SetAngles(Angle(-90,0,0))
 		---
 		self.EZupgradable=true
-		self:SetGrade(5)
 		---
 		self:SetProgress(0)
 		self.Snd1=CreateSound(self,"snds_jack_gmod/40hz_sine1.wav")
@@ -60,6 +59,14 @@ if(SERVER)then
 		self.Snd2:SetSoundLevel(100)
 		self.Snd3:SetSoundLevel(100)
 		--self:InitPerfSpecs()
+
+		self:Upgrade(5)
+		--[[timer.Simple(1, function()
+			if IsValid(self) then
+				self:SetGrade(5)
+			end
+		 		
+		end)]]
 	end
 
 	function ENT:TurnOn(activator)
@@ -134,7 +141,7 @@ if(SERVER)then
 				endpos=self:GetPos()-Vector(0,0,60),
 				filter={self}
 			})
-			if((Tr.Hit)and(Tr.HitWorld))then return true end
+			if Tr.Hit and Tr.HitWorld then return true end
 		end
 		return false
 	end
@@ -157,7 +164,7 @@ if(SERVER)then
 			if(self:GetElectricity()<=0)then self:TurnOff() return end
 			self:ConsumeElectricity(.3)
 			if(self:CanScan())then
-				self:SetProgress(math.Clamp(self:GetProgress()+self.ScanSpeed^1.5/3,0,100))
+				self:SetProgress(math.Clamp(self:GetProgress()+self.ScanSpeed^1.3/3,0,100))
 				JMod.EmitAIsound(self:GetPos(),300,.5,256)
 				if(self:GetProgress()>=100)then
 					self:FinishScan()
@@ -221,7 +228,7 @@ if(SERVER)then
 									end
 								end
 							elseif v:IsPlayer() then
-								if ((v.EZarmor) and (v.EZarmor.totalWeight >= 100 / Grade)) then
+								if v.EZarmor and v.EZarmor.totalWeight >= 100 / Grade then
 									table.insert(Results, {
 										typ = "ANOMALY",
 										pos = AnomalyPos,
@@ -237,11 +244,11 @@ if(SERVER)then
 		if(#Results>0)then
 			self:SFX("snds_jack_gmod/tone_good.ogg")
 			-- need to convert all the positions to local coordinates
-			local Pos,Ang=self:GetPos(),self:GetAngles()
+			local Pos, Ang = self:GetPos(), self:GetAngles()
 			Ang:RotateAroundAxis(Ang:Right(),-90)
 			Ang:RotateAroundAxis(Ang:Up(),90)
 			for k,v in pairs(Results)do
-				local NewPos,NewAng=WorldToLocal(v.pos,Angle(0,0,0),Pos,Ang)
+				local NewPos, NewAng = WorldToLocal(v.pos,Angle(0,0,0),Pos,Ang)
 				v.pos=NewPos
 			end
 			table.sort(Results,function(a,b)
@@ -298,7 +305,7 @@ elseif(CLIENT)then
 		local Obscured=util.TraceLine({start=EyePos(),endpos=BasePos,filter={LocalPlayer(),self},mask=MASK_OPAQUE}).Hit
 		local Closeness=LocalPlayer():GetFOV()*(EyePos():Distance(SelfPos))
 		local DetailDraw=Closeness<36000 -- cutoff point is 400 units when the fov is 90 degrees
-		if((not(DetailDraw))and(Obscured))then return end -- if player is far and sentry is obscured, draw nothing
+		if not DetailDraw and Obscured then return end -- if player is far and sentry is obscured, draw nothing
 		if(Obscured)then DetailDraw=false end -- if obscured, at least disable details
 		if(State==JMod.EZ_STATE_BROKEN)then DetailDraw=false end -- look incomplete to indicate damage, save on gpu comp too
 		if(DetailDraw)then
@@ -342,7 +349,7 @@ elseif(CLIENT)then
 				for k,v in pairs(self.ScanResults)do
 					local X,Y,Radius=v.pos.x*SourceUnitsToPixels,v.pos.y*SourceUnitsToPixels,v.siz*SourceUnitsToPixels
 					if(v.typ=="ANOMALY")then
-						if(self.DSU>.9)then draw.SimpleText("?","JMod-Display",X,-Y-45*MetersToPixels-18,Color(255,255,255,(Opacity+150*Vary)),TEXT_ALIGN_CENTER,TEXT_ALIGN_TOP) end
+						if self.DSU > .9 then draw.SimpleText("?","JMod-Display",X,-Y-45*MetersToPixels-18,Color(255,255,255, Opacity + 150 * Vary ),TEXT_ALIGN_CENTER,TEXT_ALIGN_TOP) end
 					elseif(v.typ=="DANGER")then
 						if(self.DSU>.9)then 
 						    surface.SetDrawColor(255,255,255,Opacity+150*Vary)
@@ -356,7 +363,7 @@ elseif(CLIENT)then
 							surface.DrawTexturedRect(X-v.siz/2,(-Y-v.siz/2)-45*MetersToPixels-18,v.siz,v.siz)
 						end
 					else
-						if(self.DSU>.7)then JMod.StandardResourceDisplay(v.typ,(v.amt or v.rate),nil,X,-Y-45*MetersToPixels,Radius*2,true,"JMod-Display-S",200,v.rate) end
+						if self.DSU>.7 then JMod.StandardResourceDisplay(v.typ, v.amt or v.rate ,nil,X,-Y-45*MetersToPixels,Radius*2,true,"JMod-Display-S",200,v.rate) end
 					end
 				end
 				--

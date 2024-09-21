@@ -307,16 +307,8 @@ if(SERVER)then
 
 				self:HealEffect("hl1/ambience/steamburst1.ogg", true)
 				self.Patient:PrintMessage(HUD_PRINTCENTER, "decontaminating")
-			elseif gassed then
-				removeDelayedExposure(self.Patient, 3 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "Mustard")
-				removeDelayedExposure(self.Patient, 140 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "MustardSkin")
-				removeDelayedExposure(self.Patient, 8.58 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "Cyanide")
-				removeDelayedExposure(self.Patient, 390 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "TearGas")
-				removeDelayedExposure(self.Patient, 57 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "Chlorine")
-				removeDelayedExposure(self.Patient, 57 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "PhosgeneImmediate")
-				removeDelayedExposure(self.Patient, 4.5 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "Phosgene")
-				removeDelayedExposure(self.Patient, .105 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "Sarin")
-				removeDelayedExposure(self.Patient, .045 * self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult, "VX")
+			elseif self.Patient.EZpoison then
+				self.Patient.EZpoison = math.Clamp(self.Patient.EZpoison - self.HealEfficiency * JMod.Config.Machines.MedBay.HealMult * 5, 0, 9e9)
 				self:HealEffect("hl1/ambience/steamburst1.ogg", true)
 				self.Patient:PrintMessage(HUD_PRINTCENTER, "curing poisoning")
 			else

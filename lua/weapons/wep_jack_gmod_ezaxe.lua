@@ -159,7 +159,7 @@ local LastProg = 0
 
 function SWEP:DrawHUD()
 	if GetConVar("cl_drawhud"):GetBool() == false then return end
-	local Ply = self.Owner
+	local Ply = self:GetOwner()
 	if Ply:ShouldDrawLocalPlayer() then return end
 	local W, H = ScrW(), ScrH()
 

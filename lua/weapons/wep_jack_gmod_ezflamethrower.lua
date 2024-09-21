@@ -33,8 +33,8 @@ SWEP.Secondary.Ammo = "none"
 --SWEP.ShowWorldModel = true
 
 SWEP.EZconsumes = {JMod.EZ_RESOURCE_TYPES.FUEL, JMod.EZ_RESOURCE_TYPES.GAS}
-SWEP.MaxFuel = 100
-SWEP.MaxGas = 100
+SWEP.MaxFuel = 200
+SWEP.MaxGas = 200
 
 SWEP.VElements = {
 	--

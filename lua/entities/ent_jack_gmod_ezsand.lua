@@ -22,6 +22,7 @@ ENT.BreakNoise = "Dirt.ImpactHard"
 if SERVER then
 	function ENT:CustomInit()
 		self.LastMoved = CurTime()
+		self.GetMoved = 0
 		self.Gefrozen = false
 	end
 
@@ -32,7 +33,6 @@ if SERVER then
 		self:TakePhysicsDamage(dmginfo)
 		--self:SetEZsupplies(self.EZsupplies, math.Clamp(ResourceAmt - DmgAmt / 100, 0, 100))
 
-		print(dmginfo:GetDamage())
 		if dmginfo:GetDamage() >= self.DamageThreshold then
 			self:GetSchmovin()
 		end
@@ -55,23 +55,35 @@ if SERVER then
 	function ENT:CustomThink()
 		local Time = CurTime()
 
-		local Tr = util.TraceHull( {
+		local TrFloor = util.TraceHull( {
 			start = self:GetPos(),
-			endpos = self:GetPos() - Vector(0,0,17),
+			endpos = self:GetPos() - Vector(0,0,15),
+			filter = self,
+			mins = Vector( -5, -5, -5 ),
+			maxs = Vector( 5, 5, 5 ),
+		} )
+
+		local TrSky = util.TraceHull( {
+			start = self:GetPos(),
+			endpos = self:GetPos() + Vector(0,0,15),
 			filter = self,
 			mins = Vector( -5, -5, -5 ),
 			maxs = Vector( 5, 5, 5 ),
 		} )
 
 		local TimeSinceMoved = Time - self.LastMoved
-		local IsMovin = self:IsPlayerHolding() or not Tr.Hit
+		local IsMovin = self:IsPlayerHolding() or (TrFloor.HitWorld and not TrSky.Hit) or (not TrFloor.Hit and not TrSky.Hit)
 
+		debugoverlay.Line( self:GetPos(), TrFloor.HitPos, 1, Color( 255, 0, 0),true)
 		if IsMovin then
 			self.LastMoved = Time
-			debugoverlay.Line( self:GetPos(), Tr.HitPos, 1, Color( 255, 0, 0),false)
 			self:GetSchmovin()
 		elseif TimeSinceMoved > 2 then
 			self:DoTheFreeze()
+		end
+
+		if self.GetMoved == 120 and IsMovin then
+			SafeRemoveEntity(self)
 		end
 
 		self:NextThink(Time + 1)
@@ -79,6 +91,8 @@ if SERVER then
 	end
 
 	function ENT:DoTheFreeze()
+		self.GetMoved = 0
+
 		self:GetPhysicsObject():SetMass(300)
 		self:GetPhysicsObject():EnableMotion(false)
 		self.Gefrozen = true
@@ -87,6 +101,8 @@ if SERVER then
 	end
 
 	function ENT:GetSchmovin()
+		self.GetMoved = self.GetMoved + 1
+
 		if not(self:IsPlayerHolding()) then
 			self:GetPhysicsObject():SetMass(100) --Sorse
 		end
@@ -99,8 +115,7 @@ if SERVER then
 
 	function ENT:PhysicsCollide( data, phys )
 		if (data.Speed>80) and (data.DeltaTime>0.2)then
-			if data.HitEntity:GetPhysicsObject():GetMass() >= 90 then
-				print(data.HitEntity:GetPhysicsObject():GetMass())
+			if data.HitEntity:GetPhysicsObject():GetMass() >= 75 and not data.HitEntity:IsPlayer() then
 				self:GetSchmovin()
 			end
 		end

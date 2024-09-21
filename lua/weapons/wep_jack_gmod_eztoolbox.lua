@@ -260,7 +260,7 @@ local Downness = 0
 function SWEP:GetViewModelPosition(pos, ang)
 	local FT = FrameTime()
 
-	if (self.Owner:KeyDown(IN_SPEED)) or (self.Owner:KeyDown(IN_ZOOM)) then
+	if (self:GetOwner():KeyDown(IN_SPEED)) or (self:GetOwner():KeyDown(IN_ZOOM)) then
 		Downness = Lerp(FT * 2, Downness, 10)
 	else
 		Downness = Lerp(FT * 2, Downness, 0)
@@ -279,7 +279,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:UpdateNextIdle()
-	local vm = self.Owner:GetViewModel()
+	local vm = self:GetOwner():GetViewModel()
 	self.NextIdle = CurTime() + vm:SequenceDuration()
 end
 
@@ -322,7 +322,7 @@ function SWEP:BuildItem(selectedBuild)
 	local Reqs = table.FullCopy(BuildInfo.craftingReqs)
 
 	if JMod.HaveResourcesToPerformTask(nil, nil, Reqs, self) then
-		local override, msg, mult = hook.Run("JMod_CanKitBuild", self.Owner, self, BuildInfo)
+		local override, msg, mult = hook.Run("JMod_CanKitBuild", self:GetOwner(), self, BuildInfo)
 
 		if override ~= nil and override == false then
 			self:Msg(msg or "cannot build")
@@ -365,9 +365,9 @@ function SWEP:BuildItem(selectedBuild)
 								Ent = ents.Create(Class)
 							end
 							Ent:SetPos(Pos + Norm * 20 * (BuildInfo.sizeScale or 1))
-							Ent:SetAngles(Angle(0, self.Owner:EyeAngles().y, 0))
-							JMod.SetEZowner(Ent, self.Owner)
-							Ent:SetCreator(self.Owner)
+							Ent:SetAngles(Angle(0, self:GetOwner():EyeAngles().y, 0))
+							JMod.SetEZowner(Ent, self:GetOwner())
+							Ent:SetCreator(self:GetOwner())
 							Ent:Spawn()
 							Ent:Activate()
 							if BuildInfo.skin then
@@ -393,7 +393,7 @@ function SWEP:BuildItem(selectedBuild)
 									Ent:SetBodygroup(k, v)
 								end
 							end
-							JMod.Hint(self.Owner, Class)
+							JMod.Hint(self:GetOwner(), Class)
 							self:SetElectricity(math.Clamp(self:GetElectricity() - 8 * (BuildInfo.sizeScale or 1), 0, self.MaxElectricity))
 							self:SetGas(math.Clamp(self:GetGas() - 4 * (BuildInfo.sizeScale or 1), 0, self.MaxGas))
 						end

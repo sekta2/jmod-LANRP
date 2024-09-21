@@ -324,7 +324,7 @@ if(SERVER)then
 		local Allies = (self.EZowner and self.EZowner.JModFriends) or {}
 		if table.HasValue(Allies, ply) then return true end
 
-		if not (ply:GetSquadID() == -1) then
+		if ply:GetSquadID() ~= -1 then
 			local OurTeam = nil
 
 			if IsValid(self.EZowner) then

@@ -170,7 +170,7 @@ JMod.ArmorTable = {
 		mskmat = "mats_jack_gmod_sprites/vignette_gray.png",
 		sndlop = "snds_jack_gmod/mask_breathe.ogg",
 		ent = "ent_jack_gmod_ezarmor_gasmask",
-		tgl = {
+		--[[tgl = {
 			pos = Vector(3, 3, 0),
 			ang = Angle(190, 180, 90),
 			eff = {},
@@ -181,7 +181,7 @@ JMod.ArmorTable = {
 				eyes = 0,
 				mouthnose = 0
 			}
-		}
+		}]]
 	},
 	["BallisticMask"] = {
 		PrintName = "Ballistic Mask",
@@ -1031,8 +1031,8 @@ JMod.ArmorTable = {
 			back = 1
 		},
 		chrg = {
-			fuel = 100,
-			gas = 100,
+			fuel = 200,
+			gas = 200,
 		},
 		eff = {
 			weapon = "wep_jack_gmod_ezflamethrower",

@@ -644,6 +644,8 @@ function JMod.ShouldAttack(self, ent, vehiclesOnly, peaceWasNeverAnOption)
 			--if Gaymode == "basewars" and SelfOwner.IsAlly then return not SelfOwner:IsAlly(PlayerToCheck) end
 		end
 
+		if not IsValid(SelfOwner) then return false end
+
 		local squad = SquadMenu:GetSquad(SelfOwner:GetSquadID())
 
 		if OurTeam == -1 then return PlayerToCheck:Alive() end
@@ -651,8 +653,6 @@ function JMod.ShouldAttack(self, ent, vehiclesOnly, peaceWasNeverAnOption)
 
 		return PlayerToCheck:Alive()
 	end
-
-	return (peaceWasNeverAnOption or false)
 end
 
 function JMod.EnemiesNearPoint(ent, pos, range, vehiclesOnly)

@@ -30,6 +30,7 @@ local function JackaSpawnHook(ply, transition)
 	JMod.EZarmorSync(ply)
 	ply.EZhealth = nil
 	ply.EZirradiated = nil
+	ply.EZpoison = nil
 	ply.EZoxygen = 100
 	ply.EZbleeding = 0
 	JMod.SyncBleeding(ply)
@@ -636,6 +637,23 @@ hook.Add("Think", "JMOD_SERVER_THINK", function()
 					Dmg:SetDamageType(DMG_GENERIC)
 					Dmg:SetDamagePosition(playa:GetShootPos())
 					playa:TakeDamageInfo(Dmg)
+				end
+			end
+
+			if playa.EZpoison then
+				local Pois = playa.EZpoison
+				
+				if (Pois > 0) and (math.random(1, 2) == 1) then
+					playa.EZpoison = math.Clamp(Pois - .5, 0, 9e9)
+					local Dmg = DamageInfo()
+					Dmg:SetAttacker(playa)
+					Dmg:SetInflictor(game.GetWorld())
+					Dmg:SetDamage(5)
+					Dmg:SetDamageType(DMG_GENERIC)
+					Dmg:SetDamagePosition(playa:GetShootPos())
+					playa:TakeDamageInfo(Dmg)
+
+					JMod.TryCough(playa)
 				end
 			end
 

@@ -506,7 +506,7 @@ if(SERVER)then
 
 	function ENT:TurnOff(activator)
 		if (self:GetState() <= 0) then return end
-		if activator:GetSquadID() != self.EZowner:GetSquadID() then return end
+		if IsValid(activator) and activator:IsPlayer() and activator:GetSquadID() != self.EZowner:GetSquadID() then return end
 		if IsValid(activator) and IsValid(self.Target) and (self.Target == activator) and not(activator == self.EZowner) then return end
 		if IsValid(activator) then self.EZstayOn = nil end
 		self:SetState(STATE_OFF)
