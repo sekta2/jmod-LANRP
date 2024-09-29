@@ -398,6 +398,12 @@ if(SERVER)then
 				JMod.RemoveConnection(self, entID)
 			end
 		end
+
+		JMod.SetEZowner(ent, nil)
+		self:SetOwner(nil)
+
+		self:SetColor(Color(255, 255, 255))
+		
 		if(self.OnBreak)then self:OnBreak() end
 	end
 

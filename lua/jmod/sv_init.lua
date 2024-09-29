@@ -1088,14 +1088,17 @@ function JMod.EZ_Remote_Trigger(ply)
 	end)
 end
 
-hook.Add("PlayerCanSeePlayersChat", "JMOD_PLAYERSEECHAT", function(txt, teamOnly, listener, talker)
+util.AddNetworkString("JMOD_RUS_RadioChat")
+
+hook.Add("PlayerCanSeePlayersChat", "JMOD_PLAYERSEECHAT", function(text, teamOnly, listener, talker)
 	if not IsValid(talker) then return end
-	if talker.EZarmor and talker.EZarmor.effects.teamComms then return JMod.PlayersCanComm(listener, talker) end
+	if listener == talker then return true end
+	if talker.EZarmor and talker.EZarmor.effects.teamComms then return JMod.PlayersCanComm(listener, talker, text) end
 end)
 
-hook.Add("PlayerCanHearPlayersVoice", "JMOD_PLAYERHEARVOICE", function(listener, talker)
+--[[hook.Add("PlayerCanHearPlayersVoice", "JMOD_PLAYERHEARVOICE", function(listener, talker)
 	if talker.EZarmor and talker.EZarmor.effects.teamComms then return JMod.PlayersCanComm(listener, talker) end
-end)
+end)]]
 
 local function ResetBouyancy(ply, ent)
 	if ent.EZbuoyancy then

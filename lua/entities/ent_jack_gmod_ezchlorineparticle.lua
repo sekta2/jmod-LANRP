@@ -31,7 +31,7 @@ if SERVER then
 
 			local Dmg, Helf = DamageInfo(), obj:Health()
 			Dmg:SetDamageType(DMG_NERVEGAS)
-			Dmg:SetDamage(math.random(3, 10) * JMod.Config.Particles.PoisonGasDamage * 1.2)
+			Dmg:SetDamage(math.random(3, 10) * JMod.Config.Particles.PoisonGasDamage * 1)
 			Dmg:SetInflictor(self)
 			Dmg:SetAttacker(JMod.GetEZowner(self) or self)
 			Dmg:SetDamagePosition(obj:GetPos())
@@ -40,7 +40,7 @@ if SERVER then
 			JMod.DepleteArmorChemicalCharge(obj, (faceProt + skinProt) * 4 * .07)
 
 			if faceProt < 1 then
-				obj.EZpoison = (obj.EZpoison or 0) + 2
+				obj.EZpoison = (obj.EZpoison or 0) + 3
 				
 				net.Start("JMod_VisionBlur")
 				net.WriteFloat(5 * math.Clamp(1 - faceProt, 0, 1))
@@ -128,7 +128,7 @@ elseif CLIENT then
 
 		timer.Simple(2, function()
 			if IsValid(self) then
-				self.Visible = math.random(1, 2) == 2
+				self.Visible = true
 			end
 		end)
 

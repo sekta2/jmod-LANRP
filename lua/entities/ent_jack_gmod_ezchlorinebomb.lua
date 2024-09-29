@@ -16,7 +16,7 @@ ENT.EZguidable = false
 ---
 ENT.Model = "models/props_phx/ww2bomb.mdl"
 ENT.Material = "models/entities/chlorine_bomb"
-ENT.Mass = 160
+ENT.Mass = 100
 ENT.DetSpeed = 1000
 ---
 local STATE_BROKEN, STATE_OFF, STATE_ARMED = -1, 0, 1

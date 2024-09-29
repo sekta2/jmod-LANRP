@@ -64,7 +64,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			},
 			SpawnMachinesFull = false,
 			SupplyEffectMult = 1,
-			DurabilityMult = 0.3
+			DurabilityMult = 1
 		},
 		Explosives = {
 			Mine = {
@@ -116,7 +116,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			JModInvDropOnDeath = true,
 			BleedDmgMult = 0,
 			BleedSpeedMult = 0,
-			NukeFlashLightEnabled = false,
+			NukeFlashLightEnabled = true,
 			NiceFire = false,
 			ChangePitchWithHostTimeScale = true,
 			AllowActiveItemsInInventory = false,
@@ -263,7 +263,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					}
 				},
 				["toolboxes"] = {
-					description = "Two toolboxes for crafting, nailing, salvaging and packaging items. ",
+					description = "Два ящика с инструментами для изготовления, забивания гвоздей, спасения и упаковки предметов. ",
 					category = "Tools",
 					 JBuxPrice = 200,
 					results = {
@@ -490,7 +490,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					category = "Explosives",
 					JBuxPrice = 680,
 					results = {
-						{"ent_jack_gmod_ezwarmine", 4}
+						{"ent_jack_gmod_ezwarmine", 3}
 					}
 				},
 
@@ -738,22 +738,22 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			
 			
 			
+				["airstrike hebombs"] = {
+					description = "Бомбят!!!",
+					category = "Airstrikes",
+					JBuxPrice = 30000,
+				},
+			
 				["airstrike smallbombs"] = {
 					description = "Бомбят!!!",
 					category = "Airstrikes",
-					JBuxPrice = 10000,
-				},
-			
-				["airstrike bombs"] = {
-					description = "Бомбят!!!",
-					category = "Airstrikes",
-					JBuxPrice = 15000,
+					JBuxPrice = 35000,
 				},
 			
 				["airstrike rockets"] = {
 					description = "Бомбят!!!",
 					category = "Airstrikes",
-					JBuxPrice = 10000,
+					JBuxPrice = 35000,
 				},
 			
 			
@@ -1085,7 +1085,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				results = "ent_jack_gmod_ezhebomb",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 10,
-					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 250
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 100
 				},
 				sizescale = 1,
 				category = "Explosives",
@@ -1156,7 +1156,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 50,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 50,
-					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 100
+					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 50
 				},
 				sizescale = 1,
 				category = "Explosives",
@@ -1168,7 +1168,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 50,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 50,
-					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 100
+					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 50
 				},
 				sizeScale = 1,
 				category = "Explosives",
@@ -1706,7 +1706,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 15,
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 10
 				},
-				category = "Resources",
+				category = "Weapons",
 				craftingType = {"workbench", "craftingtable"},
 				description = "Ancient black powder ammo for the similarly ancient guns."
 			},
@@ -2075,7 +2075,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				noRequirementScaling = true,
 				category = "Tools",
 				craftingType = {"craftingtable", "workbench"},
-				description = "Build, Upgrade, Salvage. All you need to build the big machines."
+				description = "Стройте, модернизируйте, спасайте. Все, что нужно для создания больших машин."
 			},
 			["EZ Chemical Power"] = {
 				results = "ent_jack_gmod_ezbattery",
@@ -2116,7 +2116,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Tools",
 				craftingType = {"craftingtable", "workbench"},
-				description = "I must find a little woodsman, in me!"
+				description = "Я должен найти в себе маленького дровосека!"
 			},
 			["EZ Shovel"] = {
 				results = "ent_jack_gmod_ezshovel",
@@ -2126,7 +2126,27 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Tools",
 				craftingType = {"craftingtable", "workbench"},
-				description = "Give me a spade, and I'll give you a hooole"
+				description = "Дай мне лопату, и я дам тебе копыто."
+			},
+			["Binoculars"] = {
+				results = "binocle",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 20,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 20
+				},
+				category = "Tools",
+				craftingType = {"craftingtable", "workbench"},
+				description = "Смотри в даль и не промахнись"
+			},
+			["Trench Whistle"] = {
+				results = "weapon_trenchwhistle",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 20,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 20
+				},
+				category = "Tools",
+				craftingType = {"craftingtable", "workbench"},
+				description = "В АТАААААКУ"
 			},
 			["EZ Bucket"] = {
 				results = "ent_jack_gmod_ezbucket",
@@ -2135,7 +2155,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Tools",
 				craftingType = {"craftingtable", "workbench"},
-				description = "I am wise to collect water with my bucket"
+				description = "Я мудро набираю воду в ведро."
 			},
 			["EZ Detpack"] = {
 				results = "ent_jack_gmod_ezdetpack",
@@ -2145,7 +2165,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "A Versatile breaching tool."
+				description = "Универсальный инструмент для взлома."
 			},
 			["EZ Dynamite"] = {
 				results = "ent_jack_gmod_ezdynamite",
@@ -2155,7 +2175,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Good for blastmining and blasting idiots."
+				description = "Хорошо подходит для взрывных работ и подрыва идиотов."
 			},
 			["EZ Explosives"] = {
 				results = "ent_jack_gmod_ezexplosives",
@@ -2165,7 +2185,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Resources",
 				craftingType = "workbench",
-				description = "No bomb is complete without explosives!"
+				description = "Ни одна бомба не обходится без взрывчатки!"
 			},
 			["EZ Flashbang"] = {
 				results = "ent_jack_gmod_ezflashbang",
@@ -2176,7 +2196,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Look away unless you want to be blinded."
+				description = "Отвернитесь, если не хотите быть ослепленными."
 			},
 			["EZ Fougasse Mine"] = {
 				results = "ent_jack_gmod_ezfougasse",
@@ -2187,7 +2207,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Focus fire on the flammable targets."
+				description = "Направьте огонь на легковоспламеняющиеся цели."
 			},
 			--[[["EZ Fragmentation Grenade"] = {
 				results = "ent_jack_gmod_ezfragnade",
@@ -2210,7 +2230,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				sizeScale = 1,
 				category = "Other",
 				craftingType = "workbench",
-				description = "They say Slotin was often in his trademark blue jeans and cowboy boots..."
+				description = "Говорят, Слотин часто появлялся в своих фирменных синих джинсах и ковбойских сапогах..."
 			},
 			["EZ Road Flare"] = {
 				results = "ent_jack_gmod_ezroadflare",
@@ -2221,7 +2241,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Other",
 				craftingType = "workbench",
-				description = "Colorable road flare, for signalling and illumination."
+				description = "Цветные дорожные ракеты, для сигнализации и освещения."
 			},
 			["EZ Glow Stick"] = {
 				results = "ent_jack_gmod_ezglowstick",
@@ -2231,7 +2251,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Other",
 				craftingType = "workbench",
-				description = "Colorable glowstick, for identification, low-power illumination, and raves."
+				description = "Цветная светящаяся палочка для идентификации, маломощной подсветки и рейвов."
 			},
 			["EZ IFAK Packet"] = {
 				results = "ent_jack_gmod_ezifakpacket",
@@ -2240,7 +2260,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Other",
 				craftingType = "workbench",
-				description = "Individual First Aid Kit for stopping bleeding."
+				description = "Индивидуальная аптечка для остановки кровотечения."
 			},
 			["EZ Fumigator"] = {
 				results = "ent_jack_gmod_ezfumigator",
@@ -2251,7 +2271,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Other",
 				craftingType = "workbench",
-				description = "Go ahead, tell your hitler jokes. We'll wait."
+				description = "Давайте, рассказывайте свои шутки про Гитлера. Мы подождем."
 			},
 			["EZ Gas Grenade"] = {
 				results = "ent_jack_gmod_ezgasnade",
@@ -2262,7 +2282,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Portable way of gassing j- enemies."
+				description = "Портативный способ отравления врагов газом."
 			},
 			["EZ Tear Gas Grenade"] = {
 				results = "ent_jack_gmod_ezcsnade",
@@ -2273,7 +2293,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Effective area denial for those without gasmasks. Might be a warcrime."
+				description = "Эффективное ограничение зоны поражения для тех, у кого нет противогазов. Может стать военным преступлением."
 			},
 			["EZ Gebalte Ladung"] = {
 				results = "ent_jack_gmod_ezsticknadebundle",
@@ -2283,7 +2303,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "A very heavy and very explosive stick grenade."
+				description = "Очень тяжелая и очень взрывоопасная граната-палка."
 			},
 			--[[["EZ Impact Grenade"] = {
 				results = "ent_jack_gmod_ezimpactnade",
@@ -2304,7 +2324,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Portable fire bomb, try cooking it before throwing to spread it more."
+				description = "Портативная огненная бомба, попробуйте приготовить ее перед броском, чтобы она больше распространилась."
 			},
 			["EZ Landmine"] = {
 				results = "ent_jack_gmod_ezlandmine",
@@ -2314,7 +2334,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Munitions",
 				craftingType = "workbench",
-				description = "Anti-personnel land mine. Try your best to match the color with the ground."
+				description = "Противопехотная мина. Постарайтесь, чтобы цвет совпадал с цветом земли."
 			},
 			["EZ Bear Trap"] = {
 				results = "ent_jack_gmod_ezbeartrap",
@@ -2323,7 +2343,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Other",
 				craftingType = "workbench",
-				description = "Basic trap for catching/slowing down enemies.\n Try your best to match the color with the ground."
+				description = "Основная ловушка для ловли/замедления врагов.\n Постарайтесь, чтобы цвет совпадал с цветом земли."
 			},
 			["EZ Sleeping Bag"] = {
 				results = "ent_jack_sleepingbag",
@@ -2334,7 +2354,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				sizeScale = 1,
 				category = "Other",
 				craftingType = {"toolbox", "workbench", "craftingtable"},
-				description = "A sleeping bag you can set your spawn point at."
+				description = "Спальный мешок, в котором можно установить точку спавна."
 			},
 			["EZ Ballistic Mask"] = {
 				results = JMod.ArmorTable["BallisticMask"].ent,
@@ -2344,7 +2364,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "fabricator",
-				description = "Face protection for the narcissists."
+				description = "Защита лица для самовлюбленных."
 			},
 			["EZ Gas Mask"] = {
 				results = JMod.ArmorTable["GasMask"].ent,
@@ -2355,7 +2375,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "workbench",
-				description = "Protect yourself against the enemies' warcrimes."
+				description = "Защитите себя от военных преступлений врагов."
 			},
 			["EZ Headset"] = {
 				results = JMod.ArmorTable["Headset"].ent,
@@ -2365,7 +2385,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "fabricator",
-				description = "Headset that allows you to remotely communicate with radios and your friends."
+				description = "Гарнитура, позволяющая удаленно общаться с рациями и друзьями."
 			},
 			["EZ Heavy Left Shoulder Armor"] = {
 				results = JMod.ArmorTable["Heavy-Left-Shoulder"].ent,
@@ -2377,7 +2397,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "fabricator",
-				description = "You must care about your shoulders if you wear this."
+				description = "Вы должны заботиться о своих плечах, если носите это."
 			},
 			["EZ Heavy Right Shoulder Armor"] = {
 				results = JMod.ArmorTable["Heavy-Right-Shoulder"].ent,
@@ -2389,7 +2409,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "fabricator",
-				description = "You must care about your shoulders if you wear this."
+				description = "Вы должны заботиться о своих плечах, если носите это."
 			},
 			["EZ Heavy Torso Armor"] = {
 				results = JMod.ArmorTable["Heavy-Vest"].ent,
@@ -2401,7 +2421,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				},
 				category = "Apparel",
 				craftingType = "fabricator",
-				description = "Turtle shell. Heavy defense."
+				description = "Черепаший панцирь. Тяжелая защита."
 			},
 			["BUCKET"] = {
 				results = JMod.ArmorTable["Metal Bucket"].ent,
@@ -2409,8 +2429,8 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 20
 				},
 				category = "Apparel",
-				craftingType = "workbench",
-				description = "im am smart put buket on head for protecton"
+				craftingType = {"workbench", "craftingtable"},
+				description = "я умний, нодел ведро на галаву для зощиты."
 			},
 			["CONE"] = {
 				results = JMod.ArmorTable["Traffic Cone"].ent,
@@ -2419,8 +2439,8 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.PLASTIC] = 10
 				},
 				category = "Apparel",
-				craftingType = "workbench",
-				description = "yo you ever played Garry's Mod?"
+				craftingType = {"workbench", "craftingtable"},
+				description = "йо играл ли ты в Garry's Mod?"
 			},
 			["CERAMIC POT"] = {
 				results = JMod.ArmorTable["Ceramic Pot"].ent,
@@ -2428,8 +2448,8 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.CERAMIC] = 30,
 				},
 				category = "Apparel",
-				craftingType = "workbench",
-				description = "will stop a bullet once"
+				craftingType = {"workbench", "craftingtable"},
+				description = "остановит пулю один раз."
 			},
 			["COOKIN POT"] = {
 				results = JMod.ArmorTable["Metal Pot"].ent,
@@ -2437,7 +2457,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 30
 				},
 				category = "Apparel",
-				craftingType = "workbench",
+				craftingType = {"workbench", "craftingtable"},
 				description = "congrats you are now 5"
 			},
 			["Nazi helmet"] = {
@@ -2884,6 +2904,19 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingType = {"workbench", "craftingtable"},
 				description = "Become bugs bunny and kill yosemite sam with a black-powder line!"
 			},
+
+			["EZ Dynamite"] = {
+				results = "ent_jack_gmod_ezdynamite",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 30,
+					[JMod.EZ_RESOURCE_TYPES.PROPELLANT] = 70
+				},
+				category = "Munitions",
+				craftingType = {"workbench", "craftingtable"},
+				description = "Become bugs bunny and kill yosemite sam with a black-powder line!"
+			},
+
+			
 			["EZ Propellant"] = {
 				results = "ent_jack_gmod_ezpropellant",
 				craftingReqs = {
@@ -3066,6 +3099,18 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				description = "Труба для автоматизации."
 			},
 
+			["Point Of Dislocation"] = {
+				results = "ent_rus_spawnbase",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 500,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200
+				},
+				sizeScale = 2,
+				category = "Tools",
+				craftingType = "toolbox",
+				description = "Точка дислокации."
+			},
+
 			
 
 			["Crate Fulton"] = {
@@ -3176,7 +3221,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				description = "проп для строительства."
 			},
 
-			["Tank Shell"] = {
+			["Tank Ammo"] = {
 				results = "lvs_item_ammo",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 30,
@@ -3187,12 +3232,12 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				description = "танковый снаряд."
 			},
 
-			["FT 37mm"] = {
+			["Renault FT"] = {
 				results = "lvs_renaultft_m",
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 450,
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
-					[JMod.EZ_RESOURCE_TYPES.POWER] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 200,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 150,
 					[JMod.EZ_RESOURCE_TYPES.FUEL] = 600,
 					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300
@@ -3203,6 +3248,120 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				description = "Легендарный танк первой мировой."
 			},
 
+			["Sherman"] = {
+				results = "lvs_wheeldrive_dodsherman",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 700,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDPARTS] = 100,
+					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 300,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 600,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 500
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "Легендарный танк второй мировой."
+			},
+
+			--[[["Super Tank"] = {
+				results = "lvs_wheeldrive_t35",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 1500,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 1000,
+					[JMod.EZ_RESOURCE_TYPES.POWER] = 500,
+					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 500,
+					[JMod.EZ_RESOURCE_TYPES.ADVANCEDPARTS] = 300,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 1000,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 1000
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "Его появление должно перевернуть войну."
+			},]]
+
+			--[[["Panzerwagen"] = {
+				results = "lvs_wheeldrive_sdkfz251_base",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 450,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
+				},
+
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "Его появление должно перевернуть войну."
+			},]]
+
+			["BM 13"] = {
+				results = "lvs_wheeldrive_bm13",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 500,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 480
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "МАШИНАА."
+			},
+
+			["Sturm Panzer"] = {
+				results = "lvs_wheeldrive_pz1bison",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 500,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 500,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 300,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 600,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 600
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "МАШИНАА."
+			},
+
+			["MLE 1897"] = {
+				results = "lvs_trailer_75mle1897",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 300,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					--[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					--[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 300
+				},
+				sizeScale = 4.5,
+				category = "Artillery",
+				craftingType = "toolbox",
+				description = "противотанковая пушка."
+			},
+
+			["MLE 1913"] = {
+				results = "lvs_trailer_schneider",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 500,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					--[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					--[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
+					[JMod.EZ_RESOURCE_TYPES.EXPLOSIVES] = 400
+				},
+				sizeScale = 4.5,
+				category = "Artillery",
+				craftingType = "toolbox",
+				description = "гаубица."
+			},
 
 			["truck"] = {
 				results = "lvs_wheeldrive_citroen_type23",
@@ -3210,10 +3369,44 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.STEEL] = 300,
 					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
-					[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
-					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
-					[JMod.EZ_RESOURCE_TYPES.FUEL] = 50,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					--[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
 					--[JMod.EZ_RESOURCE_TYPES.MUNITIONS] = 100
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "МАШИНАА."
+			},
+			
+			["gazm1"] = {
+				results = "lvs_wheeldrive_gazm1",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 300,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					--[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
+					--[JMod.EZ_RESOURCE_TYPES.MUNITIONS] = 100
+				},
+				sizeScale = 4.5,
+				category = "Vehicle",
+				craftingType = "toolbox",
+				description = "МАШИНАА."
+			},
+
+			["BMW r75"] = {
+				results = "lvs_wheeldrive_bmw_r75_upd",
+				craftingReqs = {
+					[JMod.EZ_RESOURCE_TYPES.STEEL] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.LEAD] = 100,
+					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 200,
+					--[JMod.EZ_RESOURCE_TYPES.POWER] = 150,
+					--[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 100,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 150,
+					[JMod.EZ_RESOURCE_TYPES.AMMO] = 200
 				},
 				sizeScale = 4.5,
 				category = "Vehicle",
@@ -3229,7 +3422,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 300,
 					[JMod.EZ_RESOURCE_TYPES.POWER] = 200,
 					[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = 300,
-					[JMod.EZ_RESOURCE_TYPES.FUEL] = 150,
+					[JMod.EZ_RESOURCE_TYPES.FUEL] = 300,
 					--[JMod.EZ_RESOURCE_TYPES.MUNITIONS] = 100
 				},
 				sizeScale = 10,

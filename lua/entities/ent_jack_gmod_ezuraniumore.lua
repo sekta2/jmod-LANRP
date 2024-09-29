@@ -17,7 +17,25 @@ ENT.ImpactNoise1 = "Rock.ImpactHard"
 ENT.DamageThreshold = 120
 ENT.BreakNoise = "Boulder.ImpactHard"
 
-if CLIENT then
+if SERVER then
+
+	function ENT:CustomThink()
+		if math.random(1, 200) <= self:GetResource() then
+			local Ent = ents.Create("ent_jack_gmod_ezfalloutparticle")
+			Ent:SetPos(self:GetPos() + Vector(0, 0, 10))
+			Ent.EZowner = self.EZowner
+			Ent.MaxLife = 15
+			Ent.AffectRange = 250
+			Ent:Spawn()
+			Ent:Activate()
+			Ent.CurVel = self:GetVelocity()
+		end
+
+		self:NextThink(CurTime() + math.Rand(10, 20))
+
+		return true
+	end
+else
     local drawvec, drawang = Vector(0, -12, 1), Angle(90, 0, 90)
 	function ENT:Draw()
 		self:DrawModel()

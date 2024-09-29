@@ -21,6 +21,8 @@ ENT.DetSpeed = 700
 ENT.DetType = "impactdet"
 ENT.Durability = 150
 
+ENT.WhistleSound = "bomb/whistle.wav"
+
 local STATE_BROKEN, STATE_OFF, STATE_ARMED = -1, 0, 1
 
 function ENT:SetupDataTables()
@@ -320,12 +322,42 @@ elseif CLIENT then
 		self.Mdl:SetParent(self)
 		self.Mdl:SetNoDraw(true)
 		self.Guided = false
+
+		self.snd = CreateSound(self, self.WhistleSound)
+		self.snd:SetSoundLevel( 110 )
+		self.snd:PlayEx(0,150)
+	end
+
+	function ENT:CalcDoppler()
+		local Ent = LocalPlayer()
+		local ViewEnt = Ent:GetViewEntity()
+
+		local sVel = self:GetVelocity()
+		local oVel = Ent:GetVelocity()
+		local SubVel = oVel - sVel
+		local SubPos = self:GetPos() - Ent:GetPos()
+	
+		local DirPos = SubPos:GetNormalized()
+		local DirVel = SubVel:GetNormalized()
+		local A = math.acos( math.Clamp( DirVel:Dot( DirPos ) ,-1,1) )
+		return 1 + math.cos( A ) * SubVel:Length() / 13503.9
 	end
 
 	function ENT:Think()
 		if self.EZguidable and (not self.Guided) and self:GetGuided() then
 			self.Guided = true
 			self.Mdl:SetBodygroup(0, 1)
+		end
+
+		if self.snd then
+			self.snd:ChangePitch( 100 * self:CalcDoppler(), 1 )
+			self.snd:ChangeVolume(math.Clamp(-(self:GetVelocity().z + 1000) / 3000,0,1), 2)
+		end
+	end
+
+	function ENT:OnRemove()
+		if self.snd then
+			self.snd:Stop()
 		end
 	end
 

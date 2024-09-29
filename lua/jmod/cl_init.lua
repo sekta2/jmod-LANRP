@@ -659,7 +659,7 @@ hook.Add("PostDrawTranslucentRenderables", "JMOD_PLAYEREFFECTS", function(bDepth
 		local ToolBox = ply:GetActiveWeapon()
 
 		if not IsValid(ToolBox) then return end
-		if not ToolBox:GetClass() == "wep_jack_gmod_eztoolbox" then return end
+		if ToolBox:GetClass() ~= "wep_jack_gmod_eztoolbox" then return end
 		
 		if ToolBox.EZpreview then
 		 	if ToolBox.EZpreview.Box then
@@ -680,10 +680,12 @@ hook.Add("PostDrawTranslucentRenderables", "JMOD_PLAYEREFFECTS", function(bDepth
 					for k, v in pairs(ents.FindByClass("npc_bullseye")) do
 						table.insert(Filter, v)
 					end
-					local Tr = util.QuickTrace(ply:GetShootPos(), ply:GetAimVector() * 100 * math.Clamp((ToolBox.CurrentBuildSize or 1), .5, 100), Filter)
+					local Tr = util.QuickTrace(ply:GetShootPos(), ply:GetAimVector() * 400 * math.Clamp((ToolBox.CurrentBuildSize or 1), .5, 100), Filter)
 					-- this trace code ^ is stolen from the toolbox, had to filter out ply to get a correct trace
-																																													--HSVToColor( CurTime() * 50 % 360, 1, 1 ) :troll:
-					render.DrawWireframeBox(Tr.HitPos + Tr.HitNormal * 20 * (ToolBox.EZpreview.SizeScale or 1), ToolBox.EZpreview.SpawnAngles or Angle(180, ply:EyeAngles().y, 0), ToolBox.EZpreview.Box.mins, ToolBox.EZpreview.Box.maxs, Translucent, true)
+					
+					if Tr.Hit then
+						render.DrawWireframeBox(Tr.HitPos + Tr.HitNormal * 20 * (ToolBox.EZpreview.SizeScale or 1), ToolBox.EZpreview.SpawnAngles or Angle(180, ply:EyeAngles().y, 0), ToolBox.EZpreview.Box.mins, ToolBox.EZpreview.Box.maxs, Translucent, true)
+					end
 				end
 
 			
@@ -819,20 +821,21 @@ local function CommNoise()
 	surface.PlaySound("snds_jack_gmod/radio_static" .. math.random(1, 3) .. ".ogg")
 end
 
-hook.Add("PlayerStartVoice", "JMOD_PLAYERSTARTVOICE", function(ply)
+--[[hook.Add("PlayerStartVoice", "JMOD_PLAYERSTARTVOICE", function(ply)
 	if not ply:Alive() then return end
 	if not LocalPlayer():Alive() then return end
 
 	if JMod.PlyHasArmorEff(ply, "teamComms") and JMod.PlayersCanComm(LocalPlayer(), ply) then
 		surface.PlaySound("snds_jack_gmod/radio_start.ogg")
 	end
-end)
+end)]]
 
 hook.Add("OnPlayerChat", "JMOD_ONPLAYERCHAT", function(ply, text, isTeam, isDead)
 	if not IsValid(ply) then return end
 	if not ply:Alive() then return end
 	if not LocalPlayer():Alive() then return end
 
+	--[[
 	if JMod.PlyHasArmorEff(ply, "teamComms") and JMod.PlayersCanComm(LocalPlayer(), ply) then
 		CommNoise()
 
@@ -847,21 +850,21 @@ hook.Add("OnPlayerChat", "JMOD_ONPLAYERCHAT", function(ply, text, isTeam, isDead
 
 			return true
 		end
-	end
+	end]]
 end)
 
-hook.Add("PlayerEndVoice", "JMOD_PLAYERENDVOICE", function(ply)
+--[[hook.Add("PlayerEndVoice", "JMOD_PLAYERENDVOICE", function(ply)
 	if not ply:Alive() then return end
 	if not LocalPlayer():Alive() then return end
 
 	if JMod.PlyHasArmorEff(ply, "teamComms") and JMod.PlayersCanComm(LocalPlayer(), ply) then
 		CommNoise()
 	end
-end)
+end)]]
 
 hook.Add("CalcVehicleView", "JMOD_VEHICLEVIEWCORRECTION", function(veh, ply, view) 
 	local PodParent = veh:GetParent()
-	if IsValid(PodParent) and ((PodParent:GetClass() == "ent_jack_sleepingbag") or (PodParent:GetClass() == "ent_jack_gmod_ezfieldhospital")) then
+	if IsValid(PodParent) and (PodParent:GetClass() == "ent_jack_gmod_ezfieldhospital") then
 		
 		local ViewOrigin = veh:GetPos() + veh:GetUp() * 64
 		--local LerpedViewAng = LerpAngle(FrameTime() * 100, view.angles, veh:GetAngles())
@@ -899,6 +902,23 @@ concommand.Add("jmod_debug_showgasparticles", function(ply, cmd, args)
 	ply.EZshowGasParticles = not (ply.EZshowGasParticles or false)
 	print("gas particle display: " .. tostring(ply.EZshowGasParticles))
 end, nil, JMod.Lang("command jmod_debug_showgasparticles"))
+
+net.Receive("JMOD_RUS_RadioChat", function()
+	local ply = net.ReadEntity()
+	local text = net.ReadString()
+
+	local nick = ply:Nick()
+
+	--CommNoise()
+
+	local tab = {}
+	table.insert(tab, Color(30, 40, 200))
+	table.insert(tab, "(СВЯЗЬ) ")
+	table.insert(tab, nick)
+	table.insert(tab, Color(255, 255, 255))
+	table.insert(tab, ": " .. text)
+	chat.AddText(unpack(tab))
+end)
 
 net.Receive("JMod_NuclearBlast", function()
 	local pos, renj, intens = net.ReadVector(), net.ReadFloat(), net.ReadFloat()

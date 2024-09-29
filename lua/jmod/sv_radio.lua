@@ -230,10 +230,13 @@ hook.Add("PlayerSay", "JMod_PLAYERSAY", function(ply, txt)
 			end
 		end
 
-		local bestradio = nil
+		------ Буквально радист -----
+
+
+		--[[local bestradio = nil
 		
 		for _, v in ipairs(FindEZradios()) do
-			if v:UserIsAuthorized(ply) and (not(bestradio) or (bestradio:GetPos():DistToSqr(ply:GetPos()) > v:GetPos():DistToSqr(ply:GetPos()))) then
+			if v:UserIsAuthorized(ply) and (not bestradio or (bestradio:GetPos():DistToSqr(ply:GetPos()) > v:GetPos():DistToSqr(ply:GetPos()))) then
 				if (v.GetState and v:GetState() == JMod.EZ_STATION_STATE_READY) then
 					bestradio = v
 				end
@@ -247,7 +250,7 @@ hook.Add("PlayerSay", "JMod_PLAYERSAY", function(ply, txt)
 		elseif not(bestradio) and ((ExplodedString[1] == "supply") or (ExplodedString[1] == "aid")) and (ExplodedString[2] == "radio:") then
 
 			ply:PrintMessage(HUD_PRINTCENTER, "No good radios in range")
-		end
+		end]]
 	end
 end)
 

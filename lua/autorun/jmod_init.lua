@@ -373,7 +373,7 @@ local Handcraft = function(ply, cmd, args)
 		end)
 		
 		local AllDone, Moar = JMod.ConsumeResourcesInRange(PrimitiveBenchReqs, Pos, 200, ply, false, LocalScrap)
-		if not(AllDone) then
+		if not AllDone then
 			JMod.ConsumeResourcesInRange(Moar, Pos, 200, ply, false)
 		end
 	else

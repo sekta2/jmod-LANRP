@@ -93,7 +93,7 @@ if SERVER then
 	end
 
 	local function SpawnItem(itemClass, pos, owner, resourceAmt)
-		--print(itemClass)
+		print(itemClass)
 		local ItemNameParts = string.Explode(" ", itemClass)
 
 		if ItemNameParts and ItemNameParts[1] == "FUNC" then
@@ -253,7 +253,7 @@ if SERVER then
 		Side:GetPhysicsObject():SetVelocity(self:GetPhysicsObject():GetVelocity())
 		Side:GetPhysicsObject():ApplyForceCenter(dir * 2000)
 		Side:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		SafeRemoveEntityDelayed(Side, math.random(8, 16))
+		SafeRemoveEntityDelayed(Side, 3)
 	end
 
 	function ENT:Think()

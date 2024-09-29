@@ -781,13 +781,13 @@ function JMod.GetSalvageYield(ent)
 	if ent:IsNPC() or ent:IsPlayer() then return {}, (tostring(ent.PrintName or "They") .. " don't want to be salvaged") or ".." end
 	
 	local AnnoyedReplyTable = {
-		"no",
-		"...no",
-		"STOP YOU MORON",
-		"I have become wrench, destoyer of entities",
-		"Stop it!",
-		"You can't salvage this",
-		"Stop trying to salvage this already",
+		"нет",
+		"...неет!",
+		"ОСТАНОВИСЬ, ПРИДУРОК!1",
+		"Я стал гаечным ключом, разрушителем сущностей",
+		"ХВАТИТ!",
+		"Ты не разберёшь это",
+		"ДА ТЫ ЗОЕБАЛ",
 	}
 	if ent.IsJackyEZresource or ent.EZammo then return {}, table.Random(AnnoyedReplyTable) end
 	if Class == "ent_jack_gmod_eztoolbox" then return {}, table.Random(AnnoyedReplyTable) end

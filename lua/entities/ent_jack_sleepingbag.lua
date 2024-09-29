@@ -10,71 +10,47 @@ ENT.JModEZstorable = true
 
 local STATE_ROLLED, STATE_UNROLLED = 0, 1
 local MODEL_ROLLED, MODEL_UNROLLED = "models/jmod/props/sleeping_bag_rolled.mdl","models/jmod/props/sleeping_bag.mdl"
-local ClothSounds = {"snds_jack_gmod/equip1.ogg", "snds_jack_gmod/equip2.ogg", "snds_jack_gmod/equip3.ogg", "snds_jack_gmod/equip4.ogg", "snds_jack_gmod/equip5.ogg"}
 
-if (CLIENT) then
-	function ENT:Draw()
-		self:DrawModel()
-	end
-elseif (SERVER) then
+function ENT:SetupDataTables()
+	self:NetworkVar("String", 0, "BaseTitle")
+	self:NetworkVar("Int", 0, "State")
+end
 
+local function IsInside(pos)
+	local tr = util.TraceHull({
+		start = pos, endpos = pos,
+		maxs = Vector(8, 8, 35), mins = Vector(-8, -8, -35)
+	})
+
+	return tr.Hit
+end
+
+if SERVER then
 	function ENT:Initialize()
-		self.State = STATE_ROLLED
+		self:SetState(STATE_ROLLED)
 		self:SetModel(MODEL_ROLLED)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid( SOLID_VPHYSICS )
 		self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
 		JMod.SetEZowner(self, nil)
+
 		local phys = self:GetPhysicsObject()
-		if phys:IsValid()then
+
+		if phys:IsValid() then
 			phys:Wake()
 			phys:SetMass(35)
 			self:SetColor(Color(100, 100, 100))
 		end
 		
 		self:SetUseType(SIMPLE_USE)
-		
-		self.nextSpawnTime = 0
-		--self:CreatePod()
-	end
 
-	function ENT:CreatePod()
-		if(IsValid(self.Pod))then
-			self.Pod:SetParent(nil)
-			self.Pod:Fire("kill")
-			self.Pod = nil
-		end
-		self.Pod = ents.Create("prop_vehicle_prisoner_pod")
-		self.Pod:SetModel("models/vehicles/prisoner_pod_inner.mdl")
-		local Ang, Up, Right, Forward = self:GetAngles(), self:GetUp(), self:GetRight(), self:GetForward()
-		self.Pod:SetPos(self:GetPos()+Up*12-Right*1+Forward*45)
-		--Ang:RotateAroundAxis(Up, 0)
-		--Ang:RotateAroundAxis(Forward, 0)
-		Ang:RotateAroundAxis(Right, 85)
-		self.Pod:SetAngles(Ang)
-		self.Pod:Spawn()
-		self.Pod:Activate()
-		self.Pod:SetParent(self)
-		self.Pod:SetNoDraw(true)
-		self.Pod:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
-		self.Pod:Fire("lock")
-		--self.Pod.IsJackyPod = true
-		--self.Pod.EZvehicleEjectPos = 
-		--self.Pod:SetNotSolid(true)
-		--self.Pod:Fire("lock", "", 0)
-		--self.Pod:SetThirdPersonMode(false)
-		--self.Pod:SetCameraDistance(0)
+		self:SetBaseTitle("none")
 	end
 	
 	function ENT:RollUp()
-		self.State = STATE_ROLLED
+		self:SetState(STATE_ROLLED)
 		--JMod.SetEZowner(self, nil)
-		if(IsValid(self.Pod))then
-			self.Pod:SetParent(nil)
-			self.Pod:Fire("kill")
-			self.Pod = nil
-		end
 
 		self:SetModel(MODEL_ROLLED)
 		self:PhysicsInit(SOLID_VPHYSICS)
@@ -91,10 +67,14 @@ elseif (SERVER) then
 			phys:SetMass(self.Mass)
 		end
 		self:SetPos(self:GetPos() + Vector(0, 0, 20))
+		
+		self:SetColor(Color(100, 100, 100))
+		squad.SpawnsBase[self] = nil
+		self:SetBaseTitle("none")
 	end
 
 	function ENT:UnRoll()
-		self.State = STATE_UNROLLED
+		self:SetState(STATE_UNROLLED)
 		self:SetModel(MODEL_UNROLLED)
 		
 		self:PhysicsInit(SOLID_VPHYSICS)
@@ -121,69 +101,110 @@ elseif (SERVER) then
 			self:SetAngles(Ang)
 		end
 		sound.Play("snd_jack_clothunequip.ogg", self:GetPos(), 65, math.random(90, 110))
-		self:CreatePod()
 	end
 
-	function ENT:Use(ply)
-		if not (ply:IsPlayer()) then return end
-		local Alt = ply:KeyDown(JMod.Config.General.AltFunctionKey)
-		if not IsValid(self.Pod) then self:CreatePod() end
-		if (Alt) then
-			if (self.State == STATE_UNROLLED) then
+	function ENT:Use(activator)
+		if not activator:IsPlayer() then return end
+	
+		local Alt = activator:KeyDown(JMod.Config.General.AltFunctionKey)
+
+		if Alt then
+			if self:GetState() == STATE_UNROLLED then
 				self:RollUp()
 				self.EZowner = nil
-			elseif (self.State == STATE_ROLLED) then
+			elseif self:GetState() == STATE_ROLLED then
 				self:UnRoll()
 			end
 		else
-			if (self.State == STATE_UNROLLED) then
-				if IsValid(self.EZowner) and IsValid(ply.JModSpawnPointEntity) and (ply.JModSpawnPointEntity == self) then
-					if not IsValid(self.Pod:GetDriver()) then -- Get inside if already yours
-						self.Pod.EZvehicleEjectPos = self.Pod:WorldToLocal(ply:GetPos())
-						self.Pod:Fire("EnterVehicle", "nil", 0, ply, ply)
-						sound.Play("snd_jack_clothequip.ogg", self:GetPos(), 65, math.random(90, 110))
-					end
-				elseif IsValid(self.EZowner) and ply != self.EZowner then
-					JMod.Hint(ply,"sleeping bag someone else")
+			if (self:GetState() == STATE_UNROLLED) then
+				if IsValid(self.EZowner) and activator ~= self.EZowner then
+					JMod.Hint(activator,"sleeping bag someone else")
 				else
-					if (IsValid(ply.JModSpawnPointEntity)) then 
-						JMod.SetEZowner(ply.JModSpawnPointEntity, nil) 
-						ply.JModSpawnPointEntity:SetColor(Color(100,100,100))
-					end
-					JMod.Hint(ply, "sleeping bag set spawn")
-					JMod.SetEZowner(self, ply)
-					ply.JModSpawnPointEntity = self
-					local Col = ply:GetPlayerColor()
-					self:SetColor(Color(255*Col.x,255*Col.y,255*Col.z))
-					--JMod.Colorify(self)
+					JMod.SetEZowner(self, activator)
+
+					local Col = activator:GetPlayerColor()
+					self:SetColor(Color(255 * Col.x, 255 * Col.y, 255 * Col.z))
+					
+					net.Start("lanrp.setBaseName")
+					net.WriteEntity(self)
+					net.Send(activator)
 				end
-			elseif (self.State == STATE_ROLLED) then
-				JMod.Hint(ply, "sleeping bag unroll first")
-				ply:PickupObject(self)
+			elseif (self:GetState() == STATE_ROLLED) then
+				JMod.Hint(activator, "sleeping bag unroll first")
+				activator:PickupObject(self)
 			end
 		end
 	end
 
 	function ENT:OnTakeDamage(dmginfo)
 		self:TakePhysicsDamage(dmginfo)
-		if((dmginfo:IsDamageType(DMG_BURN)) or (dmginfo:IsDamageType(DMG_DIRECT)))then
-			if(math.random(1, 3) == 2)then self:Remove() end
+		if (dmginfo:IsDamageType(DMG_BURN) or dmginfo:IsDamageType(DMG_DIRECT)) and math.random(1, 3) == 2 then
+			self:Remove()
 		end
 	end
 
 	function ENT:PhysicsCollide(data, physobj)
-		if((data.Speed > 50) and (data.DeltaTime > 0.2))then
+		if data.Speed > 50 and data.DeltaTime > 0.2 then
 			self:EmitSound("Flesh.ImpactSoft")
 		end
 	end
 
+	function ENT:SpawnPlayer(ply)
+		local pos = self:LocalToWorld(Vector(0, 0, 15))
+		local pos_to_check = self:LocalToWorld(Vector(0, 0, 50))
+
+		if IsInside(pos_to_check) then return end
+
+		ply:SetPos(pos)
+
+		self:EmitSound("snd_jack_turretbatteryload.ogg", 65, math.random(40, 70))
+
+		self:Remove()
+		return true
+	end
+
 	function ENT:OnRemove()
-		if(IsValid(self.EZowner))then self.EZowner.JModSpawnPointEntity=nil end
-		if(self.Pod)then -- machines with seats
-		  if(IsValid(self.Pod) and IsValid(self.Pod:GetDriver()))then
-				self.Pod:GetDriver():ExitVehicle()
-				self.Pod:Remove()
-			end
+		local owner = JMod.GetEZowner(self)
+
+		if self:GetBaseTitle() ~= "none" and owner then
+			local squad = SquadMenu:GetSquad(owner:GetSquadID())
+
+			squad.SpawnsBase[self] = nil
+		end
+	end
+else
+	function ENT:Draw()
+		self:DrawModel()
+
+		local SelfPos, SelfAng = self:LocalToWorld(Vector(0, -10, -33)), self:LocalToWorldAngles(Angle(-90, 90, 0))
+		local Up, Right, Forward = SelfAng:Up(), SelfAng:Right(), SelfAng:Forward()
+		---
+		local BasePos = self:LocalToWorld(self:OBBCenter())
+		local Obscured = util.TraceLine({start = EyePos(), endpos = BasePos, filter = {LocalPlayer(), self}, mask = MASK_OPAQUE}).Hit
+		local Closeness = LocalPlayer():GetFOV() * (EyePos():Distance(SelfPos))
+		local DetailDraw = Closeness < 12000000 -- cutoff point is 400 units when the fov is 90 degrees
+		---
+		--if((not(DetailDraw)) and (Obscured))then return end -- if player is far and sentry is obscured, draw nothing
+		if(Obscured)then DetailDraw = false end -- if obscured, at least disable details
+		---
+
+		if DetailDraw and Closeness < 20000 and self:GetState() == STATE_UNROLLED then
+			local DisplayAng = SelfAng:GetCopy()
+			DisplayAng:RotateAroundAxis(DisplayAng:Right(), -90)
+			DisplayAng:RotateAroundAxis(DisplayAng:Up(), 90)
+
+			local DisplayAng2 = SelfAng:GetCopy()
+			DisplayAng2:RotateAroundAxis(DisplayAng2:Right(), 90)
+			DisplayAng2:RotateAroundAxis(DisplayAng2:Up(), -90)
+			local Opacity = math.random(50, 150)
+			--local R, G, B = JMod.GoodBadColor(Elec / 1000)
+
+			local title = self:GetBaseTitle()
+			title = title == "none" and "Нет названия!" or title
+
+			cam.Start3D2D(SelfPos + Forward * 42 - Up * 6, DisplayAng, .25)
+			draw.SimpleTextOutlined(title, "JMod-Display", 0, 0, Color(200, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
+			cam.End3D2D()
 		end
 	end
 end

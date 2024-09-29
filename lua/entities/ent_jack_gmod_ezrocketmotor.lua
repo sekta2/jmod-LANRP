@@ -9,7 +9,7 @@ ENT.Spawnable = true
 ENT.AdminSpawnable = true
 ---
 ENT.JModPreferredCarryAngles = Angle(90, 0, 0)
-ENT.ThrustPower = 20000
+ENT.ThrustPower = 50000
 ENT.JModHighlyFlammableFunc = "Launch"
 ENT.JModEZstorable = true
 ---
@@ -43,6 +43,7 @@ if SERVER then
 		self:SetSolid(SOLID_VPHYSICS)
 		self:DrawShadow(true)
 		self:SetUseType(ONOFF_USE)
+		self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 		--self:SetUseType(SIMPLE_USE)
 
 		local Phys = self:GetPhysicsObject()
@@ -59,7 +60,7 @@ if SERVER then
 
 		---
 		self:SetState(STATE_OFF)
-		self.FuelLeft = 28
+		self.FuelLeft = 10
 		self.NextStick = 0
 
 		if istable(WireLib) then

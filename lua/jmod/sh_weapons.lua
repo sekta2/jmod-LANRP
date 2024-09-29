@@ -783,11 +783,32 @@ elseif SERVER then
 	concommand.Add("jmod_ez_dropweapon", function(ply, cmd, args)
 		if not ply:Alive() then return end
 		local Wep = ply:GetActiveWeapon()
+		local Class = IsValid(Wep) and Wep:GetClass() or nil
 
 		if IsValid(Wep) and Wep.EZdroppable then
 			Wep.EZdropper = ply
 			ply:DropWeapon(Wep)
 		end
+
+		if IsValid(Wep) and JMOD_DROP_ENT[Class] then	
+			local ent = ents.Create("ent_weapondrop")
+			ent:SetAngles(Angle(0, 0, 0))
+			local ang = ply:GetAngles()
+			ent:SetPos(ply:GetPos() + ang:Forward() * 25 + Vector(0, 0, 50))
+			ent:SetAngles(ply:GetAngles())	
+			ent:SetModel(Wep:GetModel())
+
+			--local clr = ply:GetPlayerColor()
+			--ent:SetColor(Color(clr.x * 255, clr.y * 255, clr.z * 255))
+
+			ent:Spawn()
+			ent:GetPhysicsObject():SetVelocity(ply:GetAimVector() * 300)
+			ent:SetWeaponClass(Class)
+			ent:Activate()
+
+			ply:StripWeapon(Class)
+		end
+
 	end, nil, "Drops your current EZ weapon.")
 
 	concommand.Add("jmod_ez_switchammo", function(ply, cmd, args)

@@ -63,12 +63,57 @@ function JMod.GetBlackBodyColor(fraction)
 	return Color(Red, Green, Blue)
 end
 
+local function sendSpecialChatNet(talker, listener, text)
+	net.Start("JMOD_RUS_RadioChat")
+		net.WriteEntity(talker)
+		net.WriteString(text)
+	net.Send(listener)
+end
+
 --
-function JMod.PlayersCanComm(listener, talker)
+function JMod.PlayersCanComm(listener, talker, text)
 	if listener == talker then return true end
-	if talker.JModFriends and table.HasValue(talker.JModFriends, listener) then return true end
+
+	local listenerInRadio = false 
+	local talkerInRadio = false 
+
+	local radio = nil
+
+	for k, v in pairs(ents.FindInSphere(listener:GetPos(), 1024)) do
+		if v.EZreceiveSpeech and (v.GetState and v:GetState() == JMod.EZ_STATION_STATE_READY) then
+			radio = v
+
+			if listener:GetPos():Distance(v:GetPos()) <= 150 then
+				listenerInRadio = true
+				break
+			end
+		end
+	end
+
+	for k, v in pairs(ents.FindInSphere(talker:GetPos(), 150)) do
+		if v.EZreceiveSpeech and (v.GetState and v:GetState() == JMod.EZ_STATION_STATE_READY) then
+			talkerInRadio = true
+			break
+		end
+	end
+
+	if talker:GetSquadID() == -1 or listener:GetSquadID() == -1 then return false end
 	
-	return listener:Team() == talker:Team()
+	if IsValid(radio) then
+		radio:EmitSound("snds_jack_gmod/radio_static" .. math.random(1, 3) .. ".ogg", 75, math.random(50, 90))
+	end
+
+	if listenerInRadio and talkerInRadio and talker:GetSquadID() == listener:GetSquadID() then
+		sendSpecialChatNet(talker, listener, text)
+		
+		return false
+	end
+
+	if listenerInRadio and talkerInRadio and SquadMenu:GetSquad(talker:GetSquadID()).Alliance[listener:GetSquadID()] then
+		sendSpecialChatNet(talker, listener, text)
+		
+		return false
+	end
 end
 
 ---
