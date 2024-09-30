@@ -44,7 +44,7 @@ if SERVER then
 		local NearbyParticles = 0
 		for key, obj in ipairs(ents.FindInSphere(SelfPos, self.AffectRange*1.5)) do
 			if not(obj == self) and self:CanSee(obj) then
-				if obj.EZgasParticle and not(obj.EZvirusParticle) then
+				if obj.EZgasParticle and not obj.EZvirusParticle then
 					-- repel in accordance with Ideal Gas Law
 					local Vec = (obj:GetPos() - SelfPos):GetNormalized()
 					Force = Force - Vec * 1

@@ -217,11 +217,11 @@ if(SERVER)then
 		timer.Simple(1, function()
 			if IsValid(self) then
 				if reassign and (OldID == OutpostID) then
-					self:Speak("No other avaliable J.I. Radio Outpost found")
+					self:Speak("Ни один LANRP Radio Outpost не найден.")
 				elseif Station and istable(Station) then
-					self:Speak("Comm line established with J.I. Radio Outpost " .. OutpostID .. "\nBearing: " .. tostring(math.Round(Station.outpostDirection:Angle().y)))
+					self:Speak("Установлена линия связи с LANRP Radio Outpost " .. OutpostID .. "\nBearing: " .. tostring(math.Round(Station.outpostDirection:Angle().y)))
 				else
-					self:Speak("Comm line lost with J.I. Radio Outpost...")
+					self:Speak("Линия связи потеряна с LANRP Radio Outpost...")
 				end
 			end
 		end)
@@ -239,7 +239,7 @@ if(SERVER)then
 				self:ConsumeElectricity()
 
 				if self:TryFindSky() then
-					self:Speak("Broadcast received, establishing comm line...")
+					self:Speak("Принята передача, устанавливается линия связи...")
 					self:Connect(self.EZowner)
 				else
 					JMod.Hint(JMod.GetEZowner(self), "aid sky")
@@ -247,7 +247,7 @@ if(SERVER)then
 				self.ConnectionAttempts = self.ConnectionAttempts + 1
 
 					if self.ConnectionAttempts > 3 then
-						self:Speak("Can not establish connection to any outpost. Shutting down.")
+						self:Speak("Не удается установить соединение ни с одним аванпостом. Отключаемся.")
 
 						timer.Simple(1.2, function()
 							if IsValid(self) then
@@ -432,10 +432,10 @@ if(SERVER)then
 					if Words then
 						self:Speak(Words, ParrotPhrase, ply)
 					else
-						self:Speak("Transmission recieved", ParrotPhrase, ply)
+						self:Speak("Передача получена", ParrotPhrase, ply)
 					end
 				else
-					self:Speak("I don't understand. Try 'help'", ParrotPhrase, ply)
+					self:Speak("Я не понимаю. Попробуй 'help'", ParrotPhrase, ply)
 				end
 			end
 		end
@@ -478,10 +478,10 @@ elseif(CLIENT)then
 	end
 
 	local GlowSprite, StateMsgs = Material("sprites/mat_jack_basicglow"), {
-		[STATE_CONNECTING] = "Connecting...",
-		[JMod.EZ_STATION_STATE_READY] = "Ready",
-		[JMod.EZ_STATION_STATE_DELIVERING] = "Delivering",
-		[JMod.EZ_STATION_STATE_BUSY] = "Busy"
+		[STATE_CONNECTING] = "Подключаемся...",
+		[JMod.EZ_STATION_STATE_READY] = "Готов",
+		[JMod.EZ_STATION_STATE_DELIVERING] = "Отправляем",
+		[JMod.EZ_STATION_STATE_BUSY] = "Заняты"
 	}
 
 	function ENT:Draw()
@@ -549,17 +549,17 @@ elseif(CLIENT)then
 				cam.Start3D2D(SelfPos + Up * 38 - Forward * 5, DisplayAng, .075)
 
 				if State > 1 then
-					draw.SimpleTextOutlined("Connected to:", "JMod-Display", 0, 0, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
-					draw.SimpleTextOutlined("J.I. Radio Outpost " .. self:GetOutpostID(), "JMod-Display", 0, 40, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
+					draw.SimpleTextOutlined("Подключено к:", "JMod-Display", 0, 0, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
+					draw.SimpleTextOutlined("LANRP Radio Outpost " .. self:GetOutpostID(), "JMod-Display", 0, 40, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
 				end
 
 				local ElecFrac = self:GetElectricity() / self.MaxElectricity
 				local R, G, B = JMod.GoodBadColor(ElecFrac)
-				draw.SimpleTextOutlined("Power: " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", 0, 70, Color(R, G, B, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
+				draw.SimpleTextOutlined("ЭНЕРГИЯ: " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", 0, 70, Color(R, G, B, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined(StateMsgs[State], "JMod-Display", 0, 100, Color(255, 255, 255, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 2, Color(0, 0, 0, Opacity))
 
 				if State == JMod.EZ_STATION_STATE_READY then
-					draw.SimpleTextOutlined('say "supply radio: help"', "JMod-Display-S", 0, 140, Color(255, 255, 255, Opacity / 2), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0, 0, 0, Opacity / 2))
+					draw.SimpleTextOutlined('надристай "supply radio: help"', "JMod-Display-S", 0, 140, Color(255, 255, 255, Opacity / 2), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0, 0, 0, Opacity / 2))
 				end
 
 				cam.End3D2D()

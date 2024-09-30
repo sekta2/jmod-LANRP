@@ -132,8 +132,8 @@ if SERVER then
 				Pof:SetOrigin(SelfPos)
 				util.Effect("eff_jack_gmod_ezthermonuke", Pof, true, true)
 
-				if i == 10 then
-					--[[for j = 1, 10 do
+				--[[if i == 10 then
+					for j = 1, 10 do
 						timer.Simple(j / 5, function()
 							for k = 1, 30 * JMod.Config.Particles.NuclearRadiationMult do
 								local Gas = ents.Create("ent_jack_gmod_ezfalloutparticle")
@@ -144,8 +144,8 @@ if SERVER then
 								Gas.CurVel = (VectorRand() * math.random(1, 1000) + Vector(0, 0, 2000 * JMod.Config.Particles.NuclearRadiationMult))
 							end
 						end)
-					end]]--
-				end
+					end
+				end]]--
 			end)
 		end
 

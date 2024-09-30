@@ -91,7 +91,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 			FumigatorGasAmount = 1,
 			PoisonGasDamage = 1,
 			PoisonGasLingerTime = 1,
-			NuclearRadiationMult = 1
+			NuclearRadiationMult = 8
 		},
 		ResourceEconomy = {
 			ResourceRichness = 2.5,
@@ -754,6 +754,16 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 					description = "Бомбят!!!",
 					category = "Airstrikes",
 					JBuxPrice = 35000,
+				},
+
+
+
+
+
+				["global message"] = {
+					description = "Глобальное послание всем фракциям",
+					category = ".Squad",
+					JBuxPrice = 5000,
 				},
 			
 			

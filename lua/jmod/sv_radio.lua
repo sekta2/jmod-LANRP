@@ -1,16 +1,16 @@
 ﻿-- EZ Radio Code --
 JMod.NotifyAllMsgs = {
 	["normal"] = {
-		["good drop"] = "good drop, package away, returning to base",
-		["drop failed"] = "drop failed, pilot could not locate a good drop position for the reported coordinates. Aircraft is RTB",
-		["drop soon"] = "be advised, aircraft on site, drop imminent",
-		["ready"] = "attention, this outpost is now ready to carry out delivery missions"
+		["good drop"] = "хорошее падение, посылка рядом, возвращение на базу",
+		["drop failed"] = "Сброс не удался, пилот не смог найти подходящую позицию для сброса по заявленным координатам. Самолет возвращен на базу",
+		["drop soon"] = "Внимание, самолет на месте, сброс неизбежно",
+		["ready"] = "внимание, теперь этот форпост готов к выполнению миссий по доставке грузов"
 	},
 	["bff"] = {
-		["good drop"] = "AIGHT we dropped it, watch out yo",
-		["drop failed"] = "yo WHERE THE DROP SITE AT THO soz i gotta get back to base",
-		["drop soon"] = "ay dudes watch yo head we abouta drop the box",
-		["ready"] = "aight we GOOD TO GO out here jus tell us whatchya need anytime"
+		["good drop"] = "МИ УРОНЫЛЫ ЕГШО, БЭРЭГИС",
+		["drop failed"] = "ЙО БРАТИК Я ПОТЕРЯЛ ПОСИЛКУ, СИДИ БЕЗ ПОСЫЛОК КОРОЧ",
+		["drop soon"] = "КОРОЧ СКОР БУД",
+		["ready"] = "ТЫ ГДЕЛ ТАМ Я УЖЕ ГОТОВ АЛЕ"
 	}
 }
 
@@ -466,13 +466,13 @@ local function GetTimeString(seconds)
 	local Minutes, Seconds, Result = math.floor(seconds / 60), math.floor(seconds % 60), ""
 
 	if Minutes > 0 then
-		Result = Minutes .. " minutes"
+		Result = Minutes .. " мин"
 
 		if Seconds > 0 then
-			Result = Result .. ", " .. Seconds .. " seconds"
+			Result = Result .. ", " .. Seconds .. " сек"
 		end
 	elseif Seconds > 0 then
-		Result = Seconds .. " seconds"
+		Result = Seconds .. " сек"
 	end
 
 	return Result
@@ -499,9 +499,9 @@ local function StartDelivery(pkg, transceiver, id, bff, ply)
 	Station.notified = false
 	Station.nextNotifyTime = Time + (DeliveryTime - 5)
 	JMod.NotifyAllRadios(id) -- do a notify to update all radio states
-	if bff then return "ayo GOOD COPY homie, we sendin " .. GetArticle(pkg) .. " " .. pkg .. " box right over to " .. math.Round(Pos.x) .. " " .. math.Round(Pos.y) .. " " .. math.Round(Pos.z) .. " in prolly like " .. DeliveryTime .. " seconds" end
+	if bff then return "АЛО, ПОНЯТНО, ОТПРАВЛЯЕМ  " .. GetArticle(pkg) .. " " .. pkg .. " КОРОБКА ПРЯМО В " .. math.Round(Pos.x) .. " " .. math.Round(Pos.y) .. " " .. math.Round(Pos.z) .. " ГДЕТ ЧРЗ " .. DeliveryTime .. " СЕК" end
 
-	return "roger wilco, sending " .. GetArticle(pkg) .. " " .. pkg .. " package to coordinates " .. math.Round(Pos.x) .. ", " .. math.Round(Pos.z) .. "; ETA " .. DeliveryTime .. " seconds"
+	return "аська, отправляем " .. GetArticle(pkg) .. " " .. pkg .. " пакет к координатам " .. math.Round(Pos.x) .. ", " .. math.Round(Pos.z) .. "; РВП " .. DeliveryTime .. " секунд"
 end
 
 function JMod.EZradioRequest(transceiver, id, ply, pkg, bff)
@@ -510,23 +510,23 @@ function JMod.EZradioRequest(transceiver, id, ply, pkg, bff)
 	JMod.NotifyAllRadios(id) -- do a notify to update all radio states
 	transceiver.BFFd = bff
 	local override, msg = hook.Run("JMod_CanRadioRequest", ply, transceiver, pkg)
-	if override == false then return msg or "negative on that request." end
+	if override == false then return msg or "отрицательный ответ на этот запрос." end
 
 	if Station.state == JMod.EZ_STATION_STATE_DELIVERING then
-		if bff then return "no can do bro, we deliverin somethin else" end
+		if bff then return "Не получится, бро, мы доставляем кое-что другое." end
 
-		return "negative on that request, we're currently delivering another package"
+		return "В настоящее время мы доставляем еще одну посылку по этому запросу."
 	elseif Station.state == JMod.EZ_STATION_STATE_BUSY then
-		if bff then return "nah fam we ain't ready yet tryagin l8r aight" end
+		if bff then return "Мех мы яще не готовы попробуйтен через... пАтом" end
 
-		return "negative on that request, the delivery team isn't currently on station"
+		return "отрицательный ответ на этот запрос, команда доставки в настоящее время не находится на станции"
 	elseif Station.state == JMod.EZ_STATION_STATE_READY then
 		if table.HasValue(JMod.Config.RadioSpecs.RestrictedPackages, pkg) then
 			if not JMod.Config.RadioSpecs.RestrictedPackagesAllowed then
 				if bff then
-					return "can't do that fam, HQ is dry and so are we"
+					return "Не могу. Штаб-квартира сухая, как и мы."
 				else
-					return "negative on that request, neither we nor regional HQ have any of that at this time"
+					return "Отрицательный ответ на этот запрос, ни у нас, ни у регионального штаба на данный момент ничего подобного нет."
 				end
 			end
 
@@ -537,9 +537,9 @@ function JMod.EZradioRequest(transceiver, id, ply, pkg, bff)
 			else
 				if Station.restrictedPackageDelivering then
 					if bff then
-						return "bro, HQ is busy with another special shipment, you gotta wait some more"
+						return "Чувак, штаб-квартира занята другим специальным грузом, тебе придется подождать еще немного."
 					else
-						return "negative on that request, we don't have any of that in stock and HQ is currently delivering another special shipment"
+						return "По этому запросу у нас нет ничего подобного на складе, и в настоящее время штаб-квартира доставляет еще одну специальную партию."
 					end
 				else
 					Station.restrictedPackageDelivering = pkg
@@ -547,9 +547,9 @@ function JMod.EZradioRequest(transceiver, id, ply, pkg, bff)
 					Station.restrictedPackageDeliveryTime = Time + DeliveryTime
 
 					if bff then
-						return "homie, we gon get you that special delivery straight from HQ. give us " .. GetTimeString(DeliveryTime) .. " yea?"
+						return "приятель, мы доставим вам специальную посылку прямо из штаб-квартиры. Дайте нам " .. GetTimeString(DeliveryTime) .. " оке?"
 					else
-						return "roger, we don't have any of that in stock but we've ordered it from regional HQ, it'll be at this outpost in " .. GetTimeString(DeliveryTime)
+						return "Так точно, у нас нет этого на складе, но мы заказали его в региональной штаб-квартире, он будет на этом форпосте в " .. GetTimeString(DeliveryTime)
 					end
 				end
 			end
@@ -559,6 +559,7 @@ function JMod.EZradioRequest(transceiver, id, ply, pkg, bff)
 	end
 end
 
+
 function JMod.EZradioStatus(transceiver, id, ply, bff)
 	local Station, Time, Msg = JMod.EZ_RADIO_STATIONS[id], CurTime(), ""
 	if not Station then return end
@@ -566,22 +567,22 @@ function JMod.EZradioStatus(transceiver, id, ply, bff)
 	transceiver.BFFd = bff
 
 	if Station.state == JMod.EZ_STATION_STATE_DELIVERING then
-		Msg = "this outpost is currently delivering a package"
+		Msg = "этот форпост в настоящее время доставляет посылку"
 
 		if bff then
-			Msg = "hey we gettin somethin fo someone else righ now"
+			Msg = "Хей, мы получаем кое-что для кого-то другого прямо сейчас."
 		end
 	elseif Station.state == JMod.EZ_STATION_STATE_BUSY then
-		Msg = "this outpost is currently preparing for deliveries"
+		Msg = "В настоящее время этот форпост готовится к поставкам"
 
 		if bff then
-			Msg = "hey homie we pretty busy out here right now jus hol up"
+			Msg = "Эй, дружище, мы сейчас очень заняты, просто задержись."
 		end
 	elseif Station.state == JMod.EZ_STATION_STATE_READY then
-		Msg = "this outpost is ready to accept delivery missions"
+		Msg = "этот форпост готов принять задания по доставке грузов"
 
 		if bff then
-			Msg = "ANYTHING U NEED WE GOTCHU"
+			Msg = "ВСО ЧТО ТЕБЕ НУЖН - НАХОДИТСЯ У НАС"
 		end
 	end
 
@@ -592,11 +593,11 @@ function JMod.EZradioStatus(transceiver, id, ply, bff)
 			InventoryList = InventoryList .. v .. ", "
 		end
 
-		Msg = Msg .. ", and has a special stock of " .. InventoryList
+		Msg = Msg .. ", и имеет специальный запас " .. InventoryList
 	end
 
 	if Station.restrictedPackageDelivering then
-		Msg = Msg .. ", and has a special delivery of " .. Station.restrictedPackageDelivering .. " arriving from regional HQ in " .. GetTimeString(Station.restrictedPackageDeliveryTime - Time)
+		Msg = Msg .. ", и имеет специальную доставку " .. Station.restrictedPackageDelivering .. " прибывает из регионального штаба в " .. GetTimeString(Station.restrictedPackageDeliveryTime - Time)
 	end
 
 	return Msg
