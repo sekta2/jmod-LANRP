@@ -35,10 +35,10 @@ ENT.AmmoTypes = {
 		TargetLockTime = .5,
 		TurnSpeed = 1.5
 	}, -- multiple bullets each doing self.Damage
-	["API Bullet"] = {
+	--[[["API Bullet"] = {
 		FireRate = .75,
 		Damage = .3
-	}, -- Armor Piercing Incendiary, pierces through things and lights fires
+	}, -- Armor Piercing Incendiary, pierces through things and lights fires]]
 	["HE Grenade"] = {
 		MaxAmmo = .25,
 		FireRate = .3,
@@ -55,12 +55,12 @@ ENT.AmmoTypes = {
 		TargetingRadius = 1.5,
 		SearchSpeed = 0.75
 	}, -- explosive projectile]]
-	["Pulse Laser"] = {
+	--[[["Pulse Laser"] = {
 		Accuracy = 3,
 		Damage = .25,
 		MaxElectricity = 2,
 		BarrelLength = .75
-	} -- bzew
+	} -- bzew]]
 	
 }
 
@@ -94,7 +94,7 @@ ENT.StaticPerfSpecs = {
 ENT.DynamicPerfSpecs={
 	MaxAmmo=300,
 	TurnSpeed=60,
-	TargetingRadius=15,
+	TargetingRadius=25,
 	Armor=3,
 	FireRate=6,
 	Damage=15,

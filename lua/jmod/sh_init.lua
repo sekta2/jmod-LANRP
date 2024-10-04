@@ -79,8 +79,15 @@ function JMod.PlayersCanComm(listener, talker, text)
 
 	local radio = nil
 
-	for k, v in pairs(ents.FindInSphere(listener:GetPos(), 1024)) do
+	for k, v in pairs(ents.FindInSphere(talker:GetPos(), 150)) do
 		if v.EZreceiveSpeech and (v.GetState and v:GetState() == JMod.EZ_STATION_STATE_READY) then
+			talkerInRadio = true
+			break
+		end
+	end
+
+	for k, v in pairs(ents.FindInSphere(listener:GetPos(), 1024)) do
+		if v.EZreceiveSpeech and (v:GetState() == JMod.EZ_STATION_STATE_READY) then
 			radio = v
 
 			if listener:GetPos():Distance(v:GetPos()) <= 150 then
@@ -90,30 +97,26 @@ function JMod.PlayersCanComm(listener, talker, text)
 		end
 	end
 
-	for k, v in pairs(ents.FindInSphere(talker:GetPos(), 150)) do
-		if v.EZreceiveSpeech and (v.GetState and v:GetState() == JMod.EZ_STATION_STATE_READY) then
-			talkerInRadio = true
-			break
-		end
-	end
-
 	if talker:GetSquadID() == -1 or listener:GetSquadID() == -1 then return false end
-	
+	if (talker:GetSquadID() ~= listener:GetSquadID()) or SquadMenu:GetSquad(talker:GetSquadID()).Alliance[listener:GetSquadID()] ~= nil then return false end
+
 	if IsValid(radio) then
 		radio:EmitSound("snds_jack_gmod/radio_static" .. math.random(1, 3) .. ".ogg", 75, math.random(50, 90))
 	end
 
-	if listenerInRadio and talkerInRadio and talker:GetSquadID() == listener:GetSquadID() then
+	if listenerInRadio and talkerInRadio then
 		sendSpecialChatNet(talker, listener, text)
 		
 		return false
 	end
 
-	if listenerInRadio and talkerInRadio and SquadMenu:GetSquad(talker:GetSquadID()).Alliance[listener:GetSquadID()] then
+	if listenerInRadio and talkerInRadio then
 		sendSpecialChatNet(talker, listener, text)
 		
 		return false
 	end
+
+	return false
 end
 
 ---

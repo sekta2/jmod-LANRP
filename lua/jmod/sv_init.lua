@@ -1091,9 +1091,16 @@ end
 util.AddNetworkString("JMOD_RUS_RadioChat")
 
 hook.Add("PlayerCanSeePlayersChat", "JMOD_PLAYERSEECHAT", function(text, teamOnly, listener, talker)
-	if not IsValid(talker) then return end
-	if listener == talker then return true end
-	if talker.EZarmor and talker.EZarmor.effects.teamComms then return JMod.PlayersCanComm(listener, talker, text) end
+	local maxDistance = GetConVar("proximity_radius"):GetInt()
+    local proximityEnabled = GetConVar("proximity_enabled"):GetInt()
+	
+    local distance = listener:GetPos():Distance(talker:GetPos())
+
+    if distance > maxDistance then
+        return JMod.PlayersCanComm(listener, talker, text)
+	else
+		return true
+	end
 end)
 
 --[[hook.Add("PlayerCanHearPlayersVoice", "JMOD_PLAYERHEARVOICE", function(listener, talker)

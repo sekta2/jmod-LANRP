@@ -86,8 +86,8 @@ JMod.EZ_RESOURCE_TYPE_ICONS = {}
 JMod.EZ_RESOURCE_TYPE_ICONS_SMOL = {}
 
 for k, v in pairs(JMod.EZ_RESOURCE_TYPES) do
-	JMod.EZ_RESOURCE_TYPE_ICONS[v] = Material("ez_resource_icons/" .. v .. ".png")
-	JMod.EZ_RESOURCE_TYPE_ICONS_SMOL[v] = Material("ez_resource_icons/" .. v .. " smol.png")
+	JMod.EZ_RESOURCE_TYPE_ICONS[v] = Material("ez_resource_icons/" .. v .. ".png", "smooth 1")
+	JMod.EZ_RESOURCE_TYPE_ICONS_SMOL[v] = Material("ez_resource_icons/" .. v .. " smol.png", "smooth 1")
 end
 
 JMod.EZ_RESOURCE_ENTITIES = {

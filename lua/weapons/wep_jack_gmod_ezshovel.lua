@@ -121,7 +121,7 @@ function SWEP:OnHit(swingProgress, tr)
 	if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or string.find(tr.Entity:GetClass(),"prop_ragdoll") then
 		tr.Entity:SetVelocity( self:GetOwner():GetAimVector() * Vector( 1, 1, 0 ) * self.HitPushback )
 		
-		self:SetTaskProgress(self:GetTaskProgress() + 3)
+		self:SetTaskProgress(self:GetTaskProgress() + 5)
 		self:SetResourceType("могилу")
 
 		if tr.Entity.IsEZcorpse and self:GetTaskProgress() >= 100 then

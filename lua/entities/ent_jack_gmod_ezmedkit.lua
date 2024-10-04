@@ -105,9 +105,13 @@ if SERVER then
 	end
 
 	function ENT:Use(activator)
-		if activator:KeyDown(JMod.Config.General.AltFunctionKey) then
-			activator:PickupObject(self)
-		elseif not activator:HasWeapon("wep_jack_gmod_ezmedkit") then
+		
+		local WepGetSlot = ents.Create("wep_jack_gmod_ezmedkit")
+		WepGetSlot:Spawn()
+		local slot = WepGetSlot:GetSlot()
+		WepGetSlot:Remove()
+
+		if activator:KeyDown(JMod.Config.General.AltFunctionKey) and activator:IsSlotEmpty(slot) then
 			activator:Give("wep_jack_gmod_ezmedkit")
 			activator:SelectWeapon("wep_jack_gmod_ezmedkit")
 

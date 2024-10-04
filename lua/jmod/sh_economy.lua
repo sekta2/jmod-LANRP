@@ -214,7 +214,7 @@ JMod.ResourceDepositInfo = {
 		}
 	},
 	[JMod.EZ_RESOURCE_TYPES.URANIUMORE] = {
-		frequency = 2,
+		frequency = 1,
 		avgamt = 400,
 		avgsize = 200,
 		limits = {
@@ -985,8 +985,8 @@ if SERVER then
 
 		if Ent then
 			local Yield, Msg = JMod.GetSalvageYield(Ent)
-			print(Msg)
-			PrintTable(Yield)
+			--print(Msg) -- ДЕБАГ
+			--PrintTable(Yield) -- ДЕБАГ
 		end
 	end, nil, "prints out the potential resource yield from the object you're looking at")
 

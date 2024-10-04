@@ -919,7 +919,18 @@ function JMod.Nail(ply)
 end
 
 function JMod.GetPackagableObject(packager, origin, dir)
-	local PackageBlacklist = {"func_"}
+	local PackageBlacklist = {
+		"func_",
+
+		"ent_jack_gmod_ezcrate",
+
+		"ent_jack_gmod_ezcrate_uni",
+
+		"ent_aboot_jsmod_ezcrate_fulton",
+
+		"ent_jack_gmod_ezbombbay"		
+
+		}
 	local Tr = util.QuickTrace(origin or packager:GetShootPos(), (dir or packager:GetAimVector()) * 80, {packager})
 
 	local Ent = Tr.Entity
@@ -1164,58 +1175,6 @@ function JMod.EZprogressTask(ent, pos, deconstructor, task, mult)
 					end
 				end
 			end
-		end
-	end
-end
-
-function JMod.BuildRecipe(results, ply, Pos, Ang, skinNum)
-	if istable(results) then
-		for n = 1, (results[2] or 1) do
-			local Ent = ents.Create(results[1])
-			Ent:SetPos(Pos)
-			Ent:SetAngles(Ang)
-			JMod.SetEZowner(Ent, ply)
-			Ent:SetCreator(ply)
-			Ent:Spawn()
-			Ent:Activate()
-			if (results[3]) then
-				Ent:SetEZsupplies(Ent.EZsupplies, results[3])
-			end
-		end
-	else
-		local StringParts=string.Explode(" ", results)
-		if((StringParts[1])and(StringParts[1] == "FUNC"))then
-			local FuncName = StringParts[2]
-			if((JMod.LuaConfig) and (JMod.LuaConfig.BuildFuncs) and (JMod.LuaConfig.BuildFuncs[FuncName]))then
-				local Ent = JMod.LuaConfig.BuildFuncs[FuncName](ply, Pos, Ang)
-			else
-				print("JMOD WORKBENCH ERROR: JMod.LuaConfig is missing, corrupt, or doesn't have an entry for that build function")
-			end
-		elseif string.Right(results, 4) == ".mdl" then
-			local Ent = ents.Create("prop_physics")
-			Ent:SetModel(results)
-			Ent:SetPos(Pos)
-			Ent:SetAngles(Ang)
-			JMod.SetEZowner(Ent, ply)
-			Ent:SetCreator(ply)
-			Ent:Spawn()
-			Ent:Activate()
-			if skinNum then
-				if istable(skinNum) then
-					Ent:SetSkin(table.Random(skinNum))
-				else
-					Ent:SetSkin(skinNum)
-				end
-			end
-		else
-			local Ent = ents.Create(results)
-			Ent:SetPos(Pos)
-			Ent:SetAngles(Ang)
-			JMod.SetEZowner(Ent, ply)
-			Ent:SetCreator(ply)
-			Ent:Spawn()
-			Ent:Activate()
-			JMod.Hint(ply, results)
 		end
 	end
 end

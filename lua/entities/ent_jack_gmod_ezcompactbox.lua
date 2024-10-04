@@ -12,6 +12,9 @@ ENT.EZunpackagable = true
 ENT.JModPreferredCarryAngles = Angle(0, 0, 0)
 ENT.DamageThreshold = 120
 
+ENT.JModEZstorable = true
+ENT.EZstorageVolumeOverride = 20
+
 --- Refrence:
 --- Scl, Mass, HoloPos, HoloScale
 ENT.ScaleSpecs = {
@@ -46,13 +49,18 @@ if SERVER then
 
 		if Mass <= 35 then
 			self:SetSizeScale(1)
+			self.EZstorageVolumeOverride = 20
 		elseif Mass <= 300 then
 			self:SetSizeScale(2)
+			self.EZstorageVolumeOverride = 20
 		elseif Mass <= 1200 then
 			self:SetSizeScale(3)
+			self.EZstorageVolumeOverride = 50
 		else
 			self:SetSizeScale(3)
 			self:MultiplePackage(Mass - 1200)
+
+			self.EZstorageVolumeOverride = 50
 			self.ExtraMass = 1200
 		end
 

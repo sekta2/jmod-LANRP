@@ -65,9 +65,7 @@ if SERVER then
 	end
 
 	function ENT:Use(activator)
-		if activator:KeyDown(JMod.Config.General.AltFunctionKey) then
-			activator:PickupObject(self)
-		elseif not activator:HasWeapon("wep_jack_gmod_ezpickaxe") then
+		if activator:KeyDown(JMod.Config.General.AltFunctionKey) and not activator:HasWeapon("wep_jack_gmod_ezpickaxe") then
 			activator:Give("wep_jack_gmod_ezpickaxe")
 			activator:SelectWeapon("wep_jack_gmod_ezpickaxe")
 

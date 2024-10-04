@@ -801,6 +801,14 @@ elseif SERVER then
 			--local clr = ply:GetPlayerColor()
 			--ent:SetColor(Color(clr.x * 255, clr.y * 255, clr.z * 255))
 
+			if Wep.MaxElectricity ~= nil then
+				ent.Electricity = Wep:GetElectricity()
+			end
+
+			if Wep.MaxGas ~= nil then
+				ent.Gas = Wep:GetGas()
+			end
+
 			ent:Spawn()
 			ent:GetPhysicsObject():SetVelocity(ply:GetAimVector() * 300)
 			ent:SetWeaponClass(Class)

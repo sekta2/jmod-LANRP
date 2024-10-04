@@ -163,7 +163,7 @@ if SERVER then
 		JMod.MachineSpawnResource(self, JMod.EZ_RESOURCE_TYPES.POWER, Amt, SpawnPos, Angle(0, 0, 0), Forward * 10, false)
 		self:SetState(OldState)
 
-		PrintTable(self.EZconnections)
+		--PrintTable(self.EZconnections) -- ДЕБАГ
 
 		for entID, cable in pairs(self.EZconnections) do
 			local Ent, Cable = Entity(entID), cable

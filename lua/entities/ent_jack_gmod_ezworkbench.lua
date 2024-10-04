@@ -87,6 +87,25 @@ if(SERVER)then
 			JMod.Hint(activator, "destroyed")
 		end
 	end
+
+	function ENT:ConsumeElectricity(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetElectricity() - amt, 0.0, self.MaxElectricity)
+		self:SetElectricity(NewAmt)
+		if(NewAmt <= 0) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.POWER, amt * 2)
+		end
+	end
+
+	function ENT:ConsumeGas(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetGas() - amt, 0.0, self.MaxGas)
+		self:SetGas(NewAmt)
+		if(NewAmt <= 0) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.GAS, amt * 2)
+		end
+	end
+
 	function ENT:TryBuild(itemName,ply)
 		local ItemInfo=self.Craftables[itemName]
 
@@ -98,7 +117,7 @@ if(SERVER)then
 			end
 			local Pos,Ang,BuildSteps=self:GetPos()+self:GetUp()*55+self:GetForward()*0-self:GetRight()*5,self:GetAngles(),10
 			JMod.ConsumeResourcesInRange(ItemInfo.craftingReqs,Pos,nil,self,true)
-			PrintTable(ItemInfo.craftingReqs)
+			--PrintTable(ItemInfo.craftingReqs) -- ДЕБАГ
 			timer.Simple(1,function()
 				if(IsValid(self))then
 					for i=1,BuildSteps do
@@ -110,7 +129,7 @@ if(SERVER)then
 									JMod.BuildRecipe(ItemInfo.results, ply, Pos, Ang, ItemInfo.skin)
 									JMod.BuildEffect(Pos)
 									self:ConsumeElectricity(8)
-									self:SetGas(math.Clamp(self:GetGas()-6,0,self.MaxGas))
+									self:ConsumeGas(6)
 									self:UpdateWireOutputs()
 								end
 							end

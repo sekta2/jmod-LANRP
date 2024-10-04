@@ -93,7 +93,7 @@ if SERVER then
 	end
 
 	local function SpawnItem(itemClass, pos, owner, resourceAmt)
-		print(itemClass)
+		--print(itemClass) -- Debug
 		local ItemNameParts = string.Explode(" ", itemClass)
 
 		if ItemNameParts and ItemNameParts[1] == "FUNC" then

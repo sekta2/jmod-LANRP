@@ -14,14 +14,14 @@ ENT.EZfalloutParticle = true
 ENT.JModDontIrradiate = true
 ENT.AffectRange = 500
 ENT.ThinkRate = .5
-ENT.MaxLifeTime = 200
+ENT.MaxLifeTime = 60
 --
 
 if SERVER then
 	function ENT:CustomInit()
 		local Time = CurTime()
 		self.MaxVel = 250
-		self:SetLifeTime(math.random(100, 200) * JMod.Config.Particles.NuclearRadiationMult)
+		self:SetLifeTime(math.random(60, 80))
 		self.NextDmg = Time + math.random(1, 10)
 		--self.FalloutEff = true--math.random(1, 5) == 1
 	end

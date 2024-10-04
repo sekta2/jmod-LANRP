@@ -41,30 +41,25 @@ if SERVER then
 		if self.Exploded then return end
 		self.Exploded = true
 		local SelfPos = self:GetPos()
+		JMod.Sploom(self.EZowner, self:GetPos(), math.random(10, 20), 254)
 		self:EmitSound("snd_jack_fragsplodeclose.ogg", 90, 100)
+		local plooie = EffectData()
+		plooie:SetOrigin(SelfPos)
+		plooie:SetScale(.5)
+		plooie:SetRadius(1)
+		plooie:SetNormal(vector_up)
+		util.Effect("eff_jack_minesplode", plooie, true, true)
+		util.ScreenShake(SelfPos, 20, 20, 1, 1000)
 
-		--[[if self.Splitterring then
-			local plooie = EffectData()
-			plooie:SetOrigin(SelfPos)
-			plooie:SetScale(.5)
-			plooie:SetRadius(1)
-			plooie:SetNormal(vector_up)
-			util.Effect("eff_jack_minesplode", plooie, true, true)
-			util.ScreenShake(SelfPos, 20, 20, 1, 1000)
-			JMod.FragSplosion(self, SelfPos + Vector(0, 0, 20), 3000, 70, 5000, JMod.GetEZowner(self))
-			self:Remove()
-		else]]
-			JMod.Sploom(JMod.GetEZowner(self), SelfPos, 150)
-			local plooie = EffectData()
-			plooie:SetOrigin(SelfPos)
-			plooie:SetScale(.5)
-			plooie:SetRadius(1)
-			plooie:SetNormal(vector_up)
-			util.Effect("eff_jack_minesplode", plooie, true, true)
-			util.ScreenShake(SelfPos, 20, 20, 1, 1000)
-			JMod.FragSplosion(self, SelfPos + Vector(0, 0, 20), 3000, 70, 5000, JMod.GetEZowner(self))
-			self:Remove()
-		--end
+		local GroundTr = util.QuickTrace(SelfPos + Vector(0, 0, 5), Vector(0, 0, -15), {self})
+
+		--              shooter, origin, fragNum, fragDmg, fragMaxDist, attacker, direction, spread, zReduction
+		if GroundTr.Hit then
+			JMod.FragSplosion(self, SelfPos + Vector(0, 0, 5), 3000, 100, 2500, JMod.GetEZowner(self), GroundTr.HitNormal, .8, 40)
+		else
+			JMod.FragSplosion(self, SelfPos, 3000, 100, 2500, JMod.GetEZowner(self), nil, nil, 2)
+		end
+		self:Remove()
 	end
 elseif CLIENT then
 	language.Add("ent_jack_gmod_ezsticknade", "EZ Stick Grenade")

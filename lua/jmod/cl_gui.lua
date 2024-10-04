@@ -36,7 +36,7 @@ list.Set("ContentCategoryIcons", "JMod - LEGACY Misc.", JModLegacyIcon )
 list.Set("ContentCategoryIcons", "JMod - LEGACY NPCs", JModLegacyIcon )
 list.Set("ContentCategoryIcons", "JMod - LEGACY Weapons", JModLegacyIcon )
 
-local function BlurBackground(panel)
+function BlurBackground(panel)
 	if not (IsValid(panel) and panel:IsVisible()) then return end
 	local layers, density, alpha = 1, 1, 255
 	local x, y = panel:LocalToScreen(0, 0)
@@ -114,7 +114,7 @@ local function PopulateList(parent, friendList, myself, W, H)
 	end
 end
 
-function JMod.StandardResourceDisplay(typ, amt, maximum, x, y, siz, vertical, font, opacity, rateDisplay, brite)
+function JMod.StandardResourceDisplay(typ, amt, maximum, x, y, siz, vertical, font, opacity, rateDisplay, brite, showunits)
 	font = font or "JMod-Stencil"
 	opacity = opacity or 150
 	brite = brite or 200
@@ -130,10 +130,14 @@ function JMod.StandardResourceDisplay(typ, amt, maximum, x, y, siz, vertical, fo
 
 	if vertical then
 		draw.SimpleText(typ, font, x, y - siz / 2 - 10, Col, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-		draw.SimpleText(UnitText, font, x, y + siz / 2 + 10, Col, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		if not showunits then
+			draw.SimpleText(UnitText, font, x, y + siz / 2 + 10, Col, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 	else
 		draw.SimpleText(typ, font, x - siz / 2 - 10, y, Col, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-		draw.SimpleText(UnitText, font, x + siz / 2 + 10, y, Col, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		if not showunits then
+			draw.SimpleText(UnitText, font, x + siz / 2 + 10, y, Col, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		end
 	end
 end
 
@@ -1286,10 +1290,9 @@ local function CreateInvButton(parent, itemTable, x, y, w, h, scrollFrame, invEn
 		Buttalony = vgui.Create("SpawnIcon", scrollFrame)
 		Buttalony:SetModel(itemTable.name)
 	else
-		Matty = CacheSelectionMenuIcon(itemTable.name, itemTable.ent:GetClass())
-		if Matty then
-			Buttalony:SetMaterial(Matty)
-		end
+		Buttalony:Remove()
+		Buttalony = vgui.Create("SpawnIcon", scrollFrame)
+		Buttalony:SetModel(itemTable.ent:GetModel())
 	end
 
 	Buttalony:SetText("")--itemTable.name)

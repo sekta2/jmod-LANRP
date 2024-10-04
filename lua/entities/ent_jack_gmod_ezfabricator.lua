@@ -44,7 +44,7 @@ if(SERVER)then
 			phys:SetBuoyancyRatio(.3)
 		end
 		---
-		if not(self.EZowner)then self:SetColor(Color(45, 101, 153)) end
+		if not self.EZowner then self:SetColor(Color(45, 101, 153)) end
 		self:UpdateConfig()
 		---
 		if self.SpawnFull then
@@ -87,6 +87,42 @@ if(SERVER)then
 		end
 	end
 
+	function ENT:ConsumeElectricity(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetElectricity() - amt, 0.0, self.MaxElectricity)
+		self:SetElectricity(NewAmt)
+		if(NewAmt <= 10) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.POWER, amt * 5)
+		end
+	end
+
+	function ENT:ConsumeGas(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetGas() - amt, 0.0, self.MaxGas)
+		self:SetGas(NewAmt)
+		if(NewAmt <= 10) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.GAS, amt * 5)
+		end
+	end
+
+	function ENT:ConsumeChemicals(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetChemicals() - amt, 0.0, self.MaxChemicals)
+		self:SetChemicals(NewAmt)
+		if(NewAmt <= 10) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.CHEMICALS, amt * 5)
+		end
+	end
+
+	function ENT:ConsumeWater(amt)
+		amt = (amt or .2)
+		local NewAmt = math.Clamp(self:GetWater() - amt, 0.0, self.MaxWater)
+		self:SetWater(NewAmt)
+		if(NewAmt <= 10) then
+			self:LoadFromDonor(JMod.EZ_RESOURCE_TYPES.WATER, amt * 5)
+		end
+	end
+
 	function ENT:TryBuild(itemName, ply)
 		local ItemInfo = self.Craftables[itemName]
 
@@ -102,7 +138,7 @@ if(SERVER)then
 				return
 			end
 
-			local Pos, Ang, BuildSteps = self:GetPos() + self:GetUp()*75 - self:GetForward()*10 - self:GetRight()*5, self:GetAngles(), 10
+			local Pos, Ang, BuildSteps = self:LocalToWorld(Vector(16,-45,30)), self:GetAngles(), 10
 			JMod.ConsumeResourcesInRange(ItemInfo.craftingReqs, Pos, nil, self, true)
 
 			timer.Simple(1,function()
@@ -115,10 +151,10 @@ if(SERVER)then
 								else
 									JMod.BuildRecipe(ItemInfo.results, ply, Pos, Ang, ItemInfo.skin)
 									JMod.BuildEffect(Pos)
-									self:SetElectricity(math.Clamp(self:GetElectricity() - 15, 0.0, self.MaxElectricity))
-									self:SetGas(math.Clamp(self:GetGas() - 10, 0.0, self.MaxGas))
-									self:SetWater(math.Clamp(self:GetWater() - 5, 0.0, self.MaxWater))
-									self:SetChemicals(math.Clamp(self:GetChemicals() - 5, 0.0, self.MaxChemicals))
+									self:ConsumeElectricity(15)
+									self:ConsumeGas(10)
+									self:ConsumeWater(5)
+									self:ConsumeChemicals(5)
 								end
 							end
 						end)

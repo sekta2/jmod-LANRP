@@ -113,9 +113,14 @@ if SERVER then
 	end
 
 	function ENT:Use(activator)
-		if activator:KeyDown(JMod.Config.General.AltFunctionKey) then
-			activator:PickupObject(self)
-		elseif not activator:HasWeapon("wep_jack_gmod_eztoolbox") then
+
+		local WepGetSlot = ents.Create("wep_jack_gmod_eztoolbox")
+		WepGetSlot:Spawn()
+		local slot = WepGetSlot:GetSlot()
+		WepGetSlot:Remove()
+
+		print(slot, activator:IsSlotEmpty(slot))
+		if activator:KeyDown(JMod.Config.General.AltFunctionKey) and activator:IsSlotEmpty(slot) then
 			activator:Give("wep_jack_gmod_eztoolbox")
 			activator:SelectWeapon("wep_jack_gmod_eztoolbox")
 
