@@ -28,11 +28,6 @@ local Props = {
 	"models/props_c17/tools_pliers01a.mdl"
 }
 
-function ENT:SetupDataTables() 
-	self:NetworkVar("Float", 0, "Electricity")
-	self:NetworkVar("Float", 1, "Gas")
-end
-
 if SERVER then
 	function ENT:SpawnFunction(ply, tr)
 		local SpawnPos = tr.HitPos + tr.HitNormal * 40
@@ -64,12 +59,6 @@ if SERVER then
 			Phys:SetMass(50)
 			Phys:Wake()
 		end)
-		self.MaxElectricity = 200
-		self.MaxGas = 200
-		if self.SpawnFull then
-			self:SetElectricity(self.MaxElectricity)
-			self:SetGas(self.MaxGas)
-		end
 	end
 
 	function ENT:PhysicsCollide(data, physobj)
@@ -119,14 +108,11 @@ if SERVER then
 		local slot = WepGetSlot:GetSlot()
 		WepGetSlot:Remove()
 
-		print(slot, activator:IsSlotEmpty(slot))
-		if activator:KeyDown(JMod.Config.General.AltFunctionKey) and activator:IsSlotEmpty(slot) then
+		if activator:KeyDown(JMod.Config.General.AltFunctionKey) and true then
 			activator:Give("wep_jack_gmod_eztoolbox")
 			activator:SelectWeapon("wep_jack_gmod_eztoolbox")
 
 			local ToolBox = activator:GetWeapon("wep_jack_gmod_eztoolbox")
-			ToolBox:SetElectricity(self:GetElectricity())
-			ToolBox:SetGas(self:GetGas())
 
 			self:Remove()
 		else
@@ -136,17 +122,9 @@ if SERVER then
 
 elseif CLIENT then
 	function ENT:Initialize()
-		self.MaxElectricity = 200
-		self.MaxGas = 200
 	end
 	function ENT:Draw()
 		self:DrawModel()
-		local Opacity = math.random(50, 200)
-		local ElecFrac, GasFrac = self:GetElectricity()/self.MaxElectricity, self:GetGas()/self.MaxGas
-		JMod.HoloGraphicDisplay(self, Vector(0, -5, 17), Angle(90, -50, 90), .05, 300, function()
-			draw.SimpleTextOutlined("POWER "..math.Round(ElecFrac*100).."%","JMod-Display",-200,10,JMod.GoodBadColor(ElecFrac, true, Opacity),TEXT_ALIGN_CENTER,TEXT_ALIGN_TOP,3,Color(0,0,0,Opacity))
-			draw.SimpleTextOutlined("GAS "..math.Round(GasFrac*100).."%","JMod-Display",0,10,JMod.GoodBadColor(GasFrac, true, Opacity),TEXT_ALIGN_CENTER,TEXT_ALIGN_TOP,3,Color(0,0,0,Opacity))
-		end)
 	end
 
 	language.Add("ent_jack_gmod_eztoolbox", "EZ Toolbox")

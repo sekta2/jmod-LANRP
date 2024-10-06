@@ -2509,7 +2509,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				craftingType = "workbench",
 				description = "Simple lightweight helmet that doesn't block much damage."
 			},
-			["Steel helmet"] = {
+			--[[["Steel helmet"] = {
 				results = JMod.ArmorTable["ST-Helmet"].ent,
 				craftingReqs = {
 					[JMod.EZ_RESOURCE_TYPES.BASICPARTS] = 5,
@@ -2518,7 +2518,7 @@ function JMod.InitGlobalConfig(forceNew, configToApply)
 				category = "Apparel",
 				craftingType = "workbench",
 				description = "Simple lightweight helmet that doesn't block much damage."
-			},
+			},]]
 			--[[["EZ Light Helmet"] = {
 				results = JMod.ArmorTable["Light-Helmet"].ent,
 				craftingReqs = {

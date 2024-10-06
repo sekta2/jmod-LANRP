@@ -31,9 +31,11 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 SWEP.ShowWorldModel = true
+--[[
 SWEP.EZconsumes = {JMod.EZ_RESOURCE_TYPES.POWER, JMod.EZ_RESOURCE_TYPES.GAS}
 SWEP.MaxElectricity = 200
 SWEP.MaxGas = 200
+]]
 
 SWEP.VElements = {
 	--[[["wrench"] = {
@@ -238,9 +240,6 @@ function SWEP:Initialize()
 			end
 		end
 	end
-
-	self:SetGas(0)
-	self:SetElectricity(0)
 end
 
 function SWEP:PreDrawViewModel(vm, wep, ply)
@@ -274,8 +273,6 @@ end
 function SWEP:SetupDataTables()
 	self:NetworkVar("String", 0, "SelectedBuild")
 	self:NetworkVar("Float", 1, "TaskProgress")
-	self:NetworkVar("Int", 0, "Electricity")
-	self:NetworkVar("Int", 1, "Gas")
 end
 
 function SWEP:UpdateNextIdle()
@@ -287,8 +284,8 @@ function SWEP:GetEZsupplies(resourceType, getter)
 	local BuildSizeMult = self.CurrentBuildSize or 0
 	if IsValid(getter) and getter == self then BuildSizeMult = 0 end
 	local AvaliableResources = {
-		[JMod.EZ_RESOURCE_TYPES.POWER] = math.floor(self:GetElectricity() - 8 * BuildSizeMult),
-		[JMod.EZ_RESOURCE_TYPES.GAS] = math.floor(self:GetGas() - 4 * BuildSizeMult)
+		[JMod.EZ_RESOURCE_TYPES.POWER] = 200,
+		[JMod.EZ_RESOURCE_TYPES.GAS] = 200
 	}
 	if resourceType then
 		if AvaliableResources[resourceType] and AvaliableResources[resourceType] > 0 then
@@ -315,10 +312,6 @@ function SWEP:BuildItem(selectedBuild)
 	debugoverlay.Axis( Pos, Angle(0,0,0), 10, 3, true )
 	local BuildInfo = self.Craftables[selectedBuild]
 	if not BuildInfo then return end
-	if not(self:GetElectricity() >= 8 * (BuildInfo.sizeScale or 1)) or not(self:GetGas() >= 6 * (BuildInfo.sizeScale or 1)) then
-		self:Msg("   You need to refill your gas and/or power\nPress Reload on gas or batteries to refill")
-		return
-	end
 
 	if not Hit then self:Msg("Тебе надо строить на земле.") return end
 	local Sound = not BuildInfo.noSound
@@ -397,10 +390,7 @@ function SWEP:BuildItem(selectedBuild)
 								end
 							end
 							JMod.Hint(self:GetOwner(), Class)
-							self:SetElectricity(math.Clamp(self:GetElectricity() - 8 * (BuildInfo.sizeScale or 1), 0, self.MaxElectricity))
-							self:SetGas(math.Clamp(self:GetGas() - 4 * (BuildInfo.sizeScale or 1), 0, self.MaxGas))
 						end
-						self:Msg("Power: " .. self:GetElectricity() .. " " .. "Gas: " .. self:GetGas() .. " ")
 					end
 				end
 			end)
@@ -657,19 +647,6 @@ function SWEP:TryLoadResource(typ, amt)
 	if amt < 1 then return 0 end
 	local Accepted = 0
 
-	for _, v in pairs(self.EZconsumes) do
-		if typ == v then
-			local CurAmt = (self:GetEZsupplies(typ, self) or 0) --+ 8 * (self.CurrentBuildSize or 1)
-			local Take = math.min(amt, self.MaxElectricity - CurAmt)
-			
-			if Take > 0 then
-				self:SetEZsupplies(typ, CurAmt + Take)
-				sound.Play("snds_jack_gmod/gas_load.ogg", self:GetPos(), 65, math.random(90, 110))
-				Accepted = Take
-			end
-		end
-	end
-
 	return Accepted
 end
 
@@ -722,9 +699,6 @@ function SWEP:OnDrop()
 	Kit:SetAngles(self:GetAngles())
 	Kit:Spawn()
 	Kit:Activate()
-
-	Kit:SetElectricity(self:GetElectricity())
-	Kit:SetGas(self:GetGas())
 
 	local Phys = Kit:GetPhysicsObject()
 
@@ -887,9 +861,6 @@ function SWEP:DrawHUD()
 		draw.SimpleTextOutlined(Build, "Trebuchet24", W * .5, H * .7 - 60, Color(255, 255, 255, 150), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 150))
 	end
 
-	draw.SimpleTextOutlined("Power: "..math.floor(self:GetElectricity()), "Trebuchet24", W * .1, H * .5, Color(255, 255, 255, 100), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 50))
-	draw.SimpleTextOutlined("Gas: "..math.floor(self:GetGas()), "Trebuchet24", W * .1, H * .5 + 30, Color(255, 255, 255, 100), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 50))
-	
 	draw.SimpleTextOutlined("ALT+R: clear build item", "Trebuchet24", W * .4, H * .7 - 30, Color(255, 255, 255, 30), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 10))
 	draw.SimpleTextOutlined("R: select build item", "Trebuchet24", W * .4, H * .7, Color(255, 255, 255, 30), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 10))
 	draw.SimpleTextOutlined("LMB: build or upgrade", "Trebuchet24", W * .4, H * .7 + 30, Color(255, 255, 255, 30), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, 10))

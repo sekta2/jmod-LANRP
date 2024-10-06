@@ -86,7 +86,7 @@ if SERVER then
 			local slot = WepGetSlot:GetSlot()
 			WepGetSlot:Remove()
 
-			if not activator:HasWeapon(self.Specs.swep) and activator:IsSlotEmpty(slot) then
+			if not activator:HasWeapon(self.Specs.swep) and true then
 				activator:Give(self.Specs.swep)
 				local GivenWep = activator:GetWeapon(self.Specs.swep)
 
